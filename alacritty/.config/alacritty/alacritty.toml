@@ -1,0 +1,42 @@
+[general]
+import = [
+    "~/.config/alacritty/themes/custom_01.toml",
+    "~/.config/alacritty/fonts.toml"
+]
+live_config_reload = true
+
+[window]
+decorations = "none"
+dynamic_title = true
+opacity = 0.4
+padding = { x = 10, y = 4 }
+dynamic_padding = true
+resize_increments = true
+
+[env]
+TERM = "xterm-256color" # "alacritty" #
+WINIT_X11_SCALE_FACTOR = "1.0"
+
+[cursor]
+blink_interval = 550
+unfocused_hollow = false
+thickness = 0.15
+
+[cursor.style]
+blinking = "On"
+shape = "Block"
+
+[scrolling]
+history = 100000
+multiplier = 6
+
+[selection]
+save_to_clipboard = true
+
+[terminal.shell]
+program = "/usr/bin/zsh"
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"
