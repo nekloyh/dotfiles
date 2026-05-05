@@ -1,0 +1,8 @@
+[user]
+	name = nekloyh
+    email = nlminky04@gmail.com
+    
+[core]
+	excludesfile = ~/.config/git/ignore
+[init]
+	defaultBranch = main
