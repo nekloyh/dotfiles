@@ -1,0 +1,11 @@
+*/cache/
+*/.cache/
+*.log
+*.tmp
+*token*
+*secret*
+*credentials*
+.zsh_history
+.bash_history
+history
+*/zsh/.zsh_sessions/
