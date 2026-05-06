@@ -1,6 +1,6 @@
 [general]
 import = [
-    "~/.config/alacritty/themes/custom_01.toml",
+    "~/.config/alacritty/themes/CatppuccinMochaBlack.toml",
     "~/.config/alacritty/fonts.toml"
 ]
 live_config_reload = true
