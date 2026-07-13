@@ -16,6 +16,7 @@ history
 fish/.config/fish/fish_variables
 fish/.config/fish/fish_history
 fish/.config/fish/fisher_path
+fcitx5/.config/fcitx5/conf/cached_layouts
 
 # ── secrets (belt-and-suspenders — none tracked, keep it that way) ─
 *token*

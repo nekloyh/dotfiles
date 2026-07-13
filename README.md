@@ -29,6 +29,7 @@ the repo (then `git diff` to review).
 | WM / desktop | `hypr` `waybar` `swaync` `walker` `wlogout` |
 | Theme / look | `colors` `gtk` `qt` `xsettingsd` |
 | Shell / terminal / tools | `zsh` `fish` `alacritty` `tmux` `starship` `btop` `mpv` |
+| Input (Vietnamese IME) | `fcitx5` |
 | Misc | `bash` `git` |
 
 ## Dependencies (Arch/CachyOS names)
@@ -36,7 +37,25 @@ the repo (then `git diff` to review).
 `hyprland hyprpaper hypridle hyprlock hyprpolkitagent waybar swaync walker elephant
 wl-clip-persist wlogout fish zsh starship alacritty tmux btop mpv fastfetch
 qt5ct qt6ct kvantum xsettingsd papirus-icon-theme ttf-jetbrains-mono-nerd inter-font
-bibata-cursor-theme` — plus `power-profiles-daemon` for the waybar profile module.
+bibata-cursor-theme fcitx5 fcitx5-gtk fcitx5-qt fcitx5-lotus` — plus
+`power-profiles-daemon` for the waybar profile module.
+
+### Vietnamese IME (fcitx5 + lotus) — config alone is NOT enough
+
+The `fcitx5` package carries the config (incl. `conf/lotus.conf` → `Mode="Uinput
+(Super Smooth)"`), but a working setup on a new machine also needs:
+
+- **Env vars** — already in `hypr/.config/hypr/modules/env.conf` (`QT_IM_MODULE`,
+  `XMODIFIERS`, `SDL_IM_MODULE`, `INPUT_METHOD` = `fcitx`; `GTK_IM_MODULE` left empty
+  for Wayland text-input). Needs a re-login to take effect.
+- **Electron flags** — `~/.config/{code,antigravity-ide}-flags.conf` with
+  `--enable-wayland-ime --wayland-text-input-version=3` (NOT tracked here — these are
+  the excluded `*-flags.conf`; recreate them for VS Code / Antigravity IME).
+- **Uinput service** — lotus' "Uinput" modes inject via `/dev/uinput` through a
+  privilege-separated `uinput_proxy` user and `fcitx5-lotus-server@<user>.service`
+  (system unit from the `fcitx5-lotus` package). Enable it:
+  `sudo systemctl enable --now fcitx5-lotus-server@$USER.service`. If uinput typing
+  misbehaves in an app, fall back to `Mode="Preedit"` in `conf/lotus.conf`.
 
 ## ⚠️ Machine-specific — review after cloning
 
@@ -56,4 +75,7 @@ These carry values tied to this laptop; edit them on a new machine:
 
 - **Secrets** — SSH/GPG keys, `.git-credentials`, tokens, `.env` (see `.gitignore`).
 - **App state / caches** — browsers, Electron apps, package stores.
-- **fcitx5 IME**, `mimeapps.list`, `*-flags.conf` — left out of this repo.
+- **`mimeapps.list`, `*-flags.conf`** — default-app associations and per-app Electron
+  flags (the latter still needed for IME — see the IME section above).
+- **System-level IME bits** — the `uinput_proxy` user + `fcitx5-lotus-server@.service`
+  are package/root-managed, not dotfiles (see IME section).
