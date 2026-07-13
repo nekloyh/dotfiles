@@ -1,0 +1,1 @@
+/home/n91ym1nhky/.config/colors/graphite-vivid/graphite-vivid.fish

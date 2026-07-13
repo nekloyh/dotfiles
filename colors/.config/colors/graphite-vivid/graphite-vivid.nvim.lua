@@ -1,0 +1,125 @@
+-- ============================================================================
+-- Graphite Vivid — graphite-neutral base, vivid accents
+-- Drop-in palette table; pair with craftzdog/solarized-osaka.nvim or roll your
+-- own colorscheme module.
+--
+-- Suggested Neovim usage with solarized-osaka.nvim:
+--   require("solarized-osaka").setup({
+--     on_colors = function(colors)
+--       local vivid = require("graphite-vivid")
+--       for k, v in pairs(vivid) do colors[k] = v end
+--     end,
+--   })
+-- ============================================================================
+return {
+
+  -- Solarized-style base names
+  base04         = "#070709",
+  base03         = "#11131a",
+  base02         = "#1a1c22",
+  base01         = "#595e63",
+  base00         = "#696e73",
+  base0          = "#969ca0",
+  base1          = "#b0b5b9",
+  base2          = "#d9dedc",
+  base3          = "#ece8dc",
+  base4          = "#f7f4ea",
+
+  -- Runtime/UI aliases
+  bg             = "#11131a",
+  bg_highlight   = "#22252c",
+  fg             = "#c8ccd0",
+  black          = "#020203",
+  border         = "#363b46",
+  bg_popup       = "#070709",
+  bg_statusline  = "#1a1c22",
+  bg_sidebar     = "#0c0d10",
+  bg_float       = "#0c0d10",
+  fg_float       = "#c8ccd0",
+
+  -- Named foreground / overlay / selection aliases (parity với css/toml/sh/fish)
+  text           = "#c8ccd0",
+  text_bright    = "#e7e8ea",
+  subtext1       = "#b0b5b9",
+  subtext0       = "#969ca0",
+  overlay2       = "#7d8388",
+  overlay1       = "#696e73",
+  overlay0       = "#595e63",
+  selection      = "#2e3252",
+
+  -- Accents and ramps
+  yellow         = "#e3b42c",
+  yellow50       = "#fff7d4",
+  yellow100      = "#ffe999",
+  yellow300      = "#fbd064",
+  yellow500      = "#e3b42c",
+  yellow700      = "#a27d00",
+  yellow900      = "#4a3805",
+  yellow950      = "#261c02",
+  orange         = "#ea7b47",
+  orange50       = "#ffdfc8",
+  orange100      = "#ffb88a",
+  orange300      = "#ff9c6f",
+  orange500      = "#ea7b47",
+  orange700      = "#ab4400",
+  orange900      = "#4f2306",
+  orange950      = "#2a1102",
+  red            = "#ea6b62",
+  red50          = "#ffd6d4",
+  red100         = "#ffa19e",
+  red300         = "#ff8d83",
+  red500         = "#ea6b62",
+  red700         = "#af2c2b",
+  red900         = "#5a0e0c",
+  red950         = "#2e0504",
+  magenta        = "#e36da7",
+  magenta50      = "#ffd0e6",
+  magenta100     = "#ff95c6",
+  magenta300     = "#fa8dc1",
+  magenta500     = "#e36da7",
+  magenta700     = "#a83071",
+  magenta900     = "#531338",
+  magenta950     = "#2a081c",
+  violet         = "#8388e8",
+  violet50       = "#ecedff",
+  violet100      = "#d4d7ff",
+  violet300      = "#a5a9ee",
+  violet500      = "#8388e8",
+  violet700      = "#4e54c5",
+  violet900      = "#25285b",
+  violet950      = "#0e103a",
+  blue           = "#3aabf4",
+  blue50         = "#d9efff",
+  blue100        = "#aedaff",
+  blue300        = "#76c5ff",
+  blue500        = "#3aabf4",
+  blue700        = "#0072ae",
+  blue900        = "#103956",
+  blue950        = "#062439",
+  cyan           = "#39c0b4",
+  cyan50         = "#d8fff9",
+  cyan100        = "#a8fff0",
+  cyan300        = "#6bdace",
+  cyan500        = "#39c0b4",
+  cyan700        = "#00857b",
+  cyan900        = "#103a3c",
+  cyan950        = "#052223",
+  green          = "#99be42",
+  green50        = "#ecffd0",
+  green100       = "#d6ffa0",
+  green300       = "#b5d86d",
+  green500       = "#99be42",
+  green700       = "#668400",
+  green900       = "#2c3300",
+  green950       = "#161d00",
+
+  -- Semantic aliases — all vivid
+  primary        = "#8388e8",
+  secondary      = "#ea7b47",
+  error          = "#ea6b62",
+  warning        = "#e3b42c",
+  success        = "#99be42",
+  info           = "#3aabf4",
+  hint           = "#39c0b4",
+  special        = "#e36da7",
+}

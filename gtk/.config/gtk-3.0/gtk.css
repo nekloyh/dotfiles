@@ -1,0 +1,24 @@
+/* Graphite Vivid — GTK3 accent overrides.
+ * GTK3 tự load file này ĐÈ LÊN theme Graphite-purple-Dark.
+ * Chỉ override accent/selection (semantic); không repaint surface —
+ * theme GTK3 dùng nhiều hex literal nội bộ, repaint bg sẽ thành chắp vá. */
+@import url("file:///home/n91ym1nhky/.config/colors/graphite-vivid/graphite-vivid.css");
+
+@define-color theme_selected_bg_color @violet;
+@define-color theme_selected_fg_color @base;
+@define-color theme_unfocused_selected_bg_color @violet700;
+@define-color theme_unfocused_selected_fg_color @base;
+
+@define-color accent_bg_color @violet;
+@define-color accent_fg_color @base;
+@define-color accent_color @violet300;
+
+@define-color link_color @blue;
+@define-color success_color @green;
+@define-color warning_color @yellow;
+@define-color error_color @red;
+
+selection {
+  background-color: alpha(@violet, 0.35);
+  color: @text-bright;
+}

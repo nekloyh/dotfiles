@@ -1,0 +1,441 @@
+@import "colors.css";
+
+/* ===== Base ===== */
+
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 12px;
+  font-weight: 600;
+  font-feature-settings: "tnum";
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+window#waybar {
+  background-color: @background;
+  color: @foreground;
+}
+
+window#waybar.hidden { opacity: 0.2; }
+
+/* ===== LAUNCHER (Arch icon, transparent, cyan) ===== */
+
+#custom-launcher {
+  background-color: transparent;
+  color: @cyan;
+  padding: 0 14px;
+  margin: 3px 4px 3px 6px;
+  font-size: 18px;
+  border-radius: 8px;
+}
+#custom-launcher:hover {
+  background-color: alpha(@cyan, 0.15);
+  color: @cyan300;
+}
+
+/* ===== LEFT STATS — strip trong suốt, icon/text màu accent per-module
+ * (user chọn giữ màu 2026-07-12); warning/critical vẫn nổi bằng bg + outline ===== */
+
+#cpu, #memory, #temperature, #disk {
+  background-color: transparent;
+  padding: 0 5px;
+  margin: 3px 2px;
+  border-radius: 6px;
+  min-height: 22px;
+}
+
+#cpu              { color: @cyan; }
+#memory           { color: @violet300; }
+#temperature      { color: @orange; }
+#disk             { color: @blue; }
+
+#cpu:hover, #memory:hover, #temperature:hover, #disk:hover {
+  background-color: alpha(@text, 0.10);
+}
+
+#cpu.warning,
+#memory.warning,
+#disk.warning {
+  color: @yellow;
+  background-color: alpha(@yellow, 0.10);
+  box-shadow: inset 0 0 0 1px alpha(@yellow, 0.30);
+}
+
+#cpu.critical,
+#memory.critical,
+#disk.critical {
+  color: @red;
+  background-color: alpha(@red, 0.14);
+  box-shadow: inset 0 0 0 1px alpha(@red, 0.40);
+}
+#temperature.critical {
+  color: @red;
+  background-color: alpha(@red, 0.14);
+  box-shadow: inset 0 0 0 1px alpha(@red, 0.40);
+  animation: pulse 1.2s linear infinite alternate;
+}
+
+/* ===== MPRIS (track) — quiet, phân cụm bằng separator như bên phải ===== */
+
+#mpris {
+  background-color: transparent;
+  color: @violet300;
+  border-left: 1px solid alpha(@text, 0.25);
+  padding: 0 8px;
+  margin: 3px 2px;
+  border-radius: 0 6px 6px 0;
+  min-height: 22px;
+}
+#mpris:hover {
+  background-color: alpha(@text, 0.10);
+}
+#mpris.paused {
+  color: @overlay2;
+  font-style: italic;
+}
+#mpris.stopped {
+  background-color: transparent;
+  color: transparent;
+  border-left: none;
+  padding: 0;
+  margin: 0;
+  min-height: 0;
+  min-width: 0;
+}
+
+/* ===== Window title — minimal italic ===== */
+
+#window {
+  background-color: transparent;
+  color: @subtext0;
+  font-style: italic;
+  font-weight: 500;
+  border-left: 1px solid alpha(@text, 0.25);
+  padding: 0 10px;
+  margin: 3px 2px;
+}
+
+/* ===== CENTER — submap mode indicator (violet pill, tự ẩn) ===== */
+
+#submap {
+  background-color: @violet;
+  color: @pill_text;
+  font-weight: 700;
+  padding: 0 12px;
+  margin: 3px 6px;
+  border-radius: 7px;
+  min-height: 22px;
+}
+
+/* ===== CENTER — workspaces (active = cyan pill) ===== */
+
+#workspaces {
+  background-color: transparent;
+  padding: 0 4px;
+  margin: 3px 6px;
+}
+#workspaces button {
+  color: @subtext0;
+  padding: 0 10px;
+  margin: 0 4px;
+  font-size: 14px;
+  font-weight: 600;
+
+  /* Defeat ALL GTK default button chrome that causes "white line on top"
+     and text-shadow blur on hover */
+  background-color: transparent;
+  background-image: none;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-size: 60% 2px;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  text-shadow: none;
+  -gtk-icon-shadow: none;
+
+  border-radius: 7px;
+  min-width: 24px;
+  /* Specific transitions — never transition background-image (causes blur ghost) */
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+/* --- State: has windows but not active/visible/urgent — 60%-wide cyan underline --- */
+#workspaces button:not(.empty):not(.active):not(.visible):not(.urgent) {
+  color: @text;
+  background-image: linear-gradient(alpha(@cyan, 0.65), alpha(@cyan, 0.65));
+}
+#workspaces button:not(.empty):not(.active):not(.visible):not(.urgent):hover {
+  color: @text-bright;
+  background-color: alpha(@surface2, 0.85);
+}
+
+/* --- State: active (focus this monitor) — full cyan fill, no underline --- */
+#workspaces button.active {
+  color: @pill_text;
+  background-color: @cyan;
+  background-image: none;
+  font-weight: 700;
+  padding: 0 22px;
+  min-width: 56px;
+}
+#workspaces button.active:hover {
+  background-color: @cyan300;
+}
+
+/* --- State: visible on other monitor — brighter underline + text tint, no border ring --- */
+#workspaces button.visible:not(.active) {
+  color: @cyan300;
+  background-image: linear-gradient(@cyan, @cyan);
+}
+#workspaces button.visible:not(.active):hover {
+  background-color: alpha(@cyan, 0.18);
+}
+
+/* --- State: urgent --- */
+#workspaces button.urgent {
+  color: @pill_text;
+  background-color: @red;
+  background-image: none;
+  font-weight: 700;
+}
+#workspaces button.urgent:hover {
+  background-color: @red700;
+}
+
+/* --- State: empty — no underline --- */
+#workspaces button.empty {
+  color: @overlay0;
+  background-image: none;
+}
+#workspaces button.empty:hover {
+  color: @subtext0;
+  background-color: alpha(@surface2, 0.50);
+}
+
+/* ===== RIGHT — quiet strip: uniform icon cells, thin separators between clusters ===== */
+
+/* Groups — không còn outline box; phân cụm bằng separator 1px mảnh.
+ * LƯU Ý: node CSS của "group/xxx" là #xxx (đã verify thực nghiệm) —
+ * selector #group-xxx không match gì cả. */
+#indicators,
+#connectivity,
+#controls,
+#status {
+  background-color: transparent;
+  padding: 0 5px;
+  margin: 3px 0;
+  min-height: 22px;
+}
+#connectivity,
+#controls,
+#status {
+  border-left: 1px solid alpha(@text, 0.25);
+}
+
+/* Base cho mọi module phải — một hệ khoảng cách duy nhất: gap siblings = 6px */
+#tray,
+#idle_inhibitor,
+#custom-swaync,
+#network,
+#custom-vpn,
+#bluetooth,
+#pulseaudio,
+#backlight,
+#custom-nightmode,
+#power-profiles-daemon,
+#battery,
+#clock {
+  background-color: transparent;
+  margin: 0 3px;
+  padding: 0;
+  border-radius: 6px;
+  min-height: 22px;
+  font-size: 13px;
+  color: @text;
+}
+
+/* Icon-only — ô đồng nhất 26px, glyph căn giữa → nhịp đều bất kể ink width */
+#idle_inhibitor,
+#custom-swaync,
+#custom-vpn,
+#bluetooth,
+#network,
+#pulseaudio,
+#backlight,
+#custom-nightmode,
+#power-profiles-daemon {
+  font-size: 14px;
+  min-width: 26px;
+}
+
+/* Text modules — co theo nội dung, padding nhẹ */
+#battery,
+#clock {
+  padding: 0 4px;
+}
+#tray {
+  padding: 0 2px;
+}
+
+/* Tray icons */
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: alpha(@red, 0.18);
+  border-radius: 6px;
+}
+#tray > .passive { -gtk-icon-effect: dim; }
+
+/* Hover — group-neutral tint */
+#tray:hover,
+#idle_inhibitor:hover,
+#custom-swaync:hover,
+#network:hover,
+#custom-vpn:hover,
+#bluetooth:hover,
+#pulseaudio:hover,
+#backlight:hover,
+#custom-nightmode:hover,
+#power-profiles-daemon:hover,
+#battery:hover,
+#clock:hover {
+  background-color: alpha(@text, 0.10);
+  color: @text-bright;
+}
+
+/* ===== Semantic colors per group ===== */
+
+/* --- Group: Indicators --- */
+#idle_inhibitor                  { color: @overlay2; }
+#idle_inhibitor.activated        { color: @yellow; }
+
+#custom-swaync                            { color: @blue300; }
+#custom-swaync.notification               { color: @violet; font-weight: 700; }
+#custom-swaync.dnd-notification,
+#custom-swaync.dnd-none                   { color: @overlay1; }
+#custom-swaync.inhibited-notification,
+#custom-swaync.inhibited-none             { color: @overlay2; }
+
+/* --- Group: Connectivity (blue family) --- */
+#custom-vpn.off           { color: @overlay2; }
+#custom-vpn.on            { color: @violet; font-weight: 700; }
+
+#network                  { color: @blue; }
+#network.disconnected     { color: @overlay1; }
+
+#bluetooth                { color: @blue300; }
+#bluetooth.disconnected,
+#bluetooth.off            { color: @overlay1; }
+#bluetooth.connected      { color: @cyan; }
+
+/* --- Group: Controls (audio = cyan, light = yellow) --- */
+#pulseaudio               { color: @cyan; }
+#pulseaudio.muted         { color: @overlay1; }
+#pulseaudio.bluetooth     { color: @blue300; }
+
+#backlight                { color: @yellow; }
+
+#custom-nightmode         { color: @overlay2; }
+#custom-nightmode.night   { color: @orange; }
+
+/* --- Group: Status (battery = green health, clock = soft violet) --- */
+#power-profiles-daemon              { color: @subtext0; }
+#power-profiles-daemon.power-saver  { color: @green; }
+#power-profiles-daemon.performance  { color: @orange; }
+
+#battery                              { color: @green; }
+#battery.warning                      { color: @yellow; }
+#battery.critical:not(.charging) {
+  color: @pill_text;
+  background-color: @red;
+  border-radius: 6px;
+  animation: pulse 1.2s linear infinite alternate;
+}
+#battery.charging,
+#battery.plugged,
+#battery.full                         { color: @cyan; }
+
+#clock {
+  color: @violet300;
+  font-weight: 700;
+}
+
+/* ===== PRIVACY (kept colored — critical visual indicator) ===== */
+
+#privacy {
+  background-color: transparent;
+  padding: 0 2px;
+  margin: 3px 4px;
+  min-height: 22px;
+}
+#privacy-item {
+  background-color: @card;
+  padding: 0 7px;
+  margin: 0 2px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+#privacy-item.screenshare {
+  color: @orange;
+  box-shadow: inset 0 0 0 1px alpha(@orange, 0.55);
+}
+#privacy-item.audio-in {
+  color: @red;
+  box-shadow: inset 0 0 0 1px alpha(@red, 0.55);
+}
+
+/* ===== SCREEN RECORDING — sống cạnh cụm privacy, đỏ + pulse khi đang quay ===== */
+
+#custom-recording {
+  background-color: @card;
+  color: @red;
+  box-shadow: inset 0 0 0 1px alpha(@red, 0.55);
+  padding: 0 8px;
+  margin: 3px 2px;
+  border-radius: 6px;
+  font-weight: 600;
+  min-height: 22px;
+  animation: pulse 1.4s ease-in-out infinite alternate;
+}
+#custom-recording:hover {
+  box-shadow: inset 0 0 0 1px alpha(@red, 0.85);
+}
+
+/* ===== POWER — outlined wireframe to match right cluster, red accent only ===== */
+
+#custom-power-menu {
+  background-color: transparent;
+  color: @red;
+  box-shadow: inset 0 0 0 1px alpha(@red, 0.40);
+  padding: 0 12px;
+  margin: 3px 6px 3px 2px;
+  border-radius: 8px;
+  font-size: 14px;
+  min-width: 28px;
+  min-height: 22px;
+}
+#custom-power-menu:hover {
+  background-color: alpha(@red, 0.16);
+  color: @red;
+  box-shadow: inset 0 0 0 1px alpha(@red, 0.70);
+}
+
+/* ===== Animations ===== */
+
+@keyframes pulse {
+  to { background-color: alpha(@red, 0.28); }
+}
+
+/* ===== Tooltip ===== */
+
+tooltip {
+  background-color: @mantle;
+  border: 1px solid @surface1;
+  border-radius: 8px;
+}
+tooltip label {
+  color: @text;
+  padding: 4px 6px;
+}

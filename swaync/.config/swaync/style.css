@@ -1,0 +1,407 @@
+/* SwayNC — Graphite Vivid, đồng bộ ngôn ngữ pill/card với Waybar.
+ * Palette: colors/colors.css → /home/n91ym1nhky/.config/colors/graphite-vivid/graphite-vivid.css */
+@import 'colors/colors.css';
+
+/* SwayNC 0.12 still uses CSS variables in parts of the packaged stylesheet.
+ * Giá trị = Graphite Vivid (CSS var không dùng được @define-color → hardcode,
+ * sync tay với colors/graphite-vivid/graphite-vivid.css khi đổi palette). */
+:root {
+  --cc-bg: rgba(17, 19, 26, 0.92);                /* base #11131a @ 92% */
+  --noti-border-color: rgba(105, 110, 115, 0.20); /* overlay1 #696e73 @ 20% */
+  --noti-bg: 26, 28, 34;                          /* surface0 #1a1c22 */
+  --noti-bg-alpha: 0.72;
+  --noti-bg-darker: rgb(12, 13, 16);              /* mantle #0c0d10 */
+  --noti-bg-hover: rgba(34, 37, 44, 0.75);        /* surface1 #22252c @ 75% */
+  --noti-bg-focus: rgba(131, 136, 232, 0.16);     /* violet #8388e8 @ 16% */
+  --noti-close-bg: rgba(105, 110, 115, 0.18);     /* overlay1 @ 18% */
+  --noti-close-bg-hover: rgba(234, 107, 98, 0.20); /* red #ea6b62 @ 20% */
+  --text-color: #c8ccd0;                          /* text */
+  --text-color-disabled: #7d8388;                 /* overlay2 */
+  --bg-selected: #8388e8;                         /* violet */
+  --notification-icon-size: 40px;
+  --notification-app-icon-size: calc(var(--notification-icon-size) / 3);
+  --notification-group-icon-size: 28px;
+  --border: 1px solid var(--noti-border-color);
+  --border-radius: 12px;
+  --font-size-body: 12px;
+  --font-size-summary: 13px;
+  --mpris-album-art-overlay: rgba(12, 13, 16, 0.68); /* mantle @ 68% */
+  --mpris-button-hover: rgba(131, 136, 232, 0.18);   /* violet @ 18% */
+  --mpris-album-art-icon-size: 96px;
+  --mpris-album-art-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
+  --widget-volume-row-icon-size: 24px;
+}
+
+/* ===== Base ===== */
+
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 13px;
+  font-weight: 500;
+  font-feature-settings: "tnum";
+  border: none;
+  background-color: transparent;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+/* ===== Control Center (panel) ===== */
+
+.control-center {
+  background-color: @panel_bg;
+  border: 1px solid @border_subtle;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
+  margin: 8px;
+  padding: 12px;
+}
+
+/* Scrollbar inside the control-center */
+.control-center trough {
+  background-color: transparent;
+  border-radius: 9999px;
+  min-width: 6px;
+}
+
+.control-center slider {
+  background-color: alpha(@overlay1, 0.45);
+  border-radius: 9999px;
+  min-width: 4px;
+  min-height: 28px;
+}
+
+.control-center slider:hover  { background-color: alpha(@overlay2, 0.65); }
+.control-center slider:active { background-color: @violet; }
+
+/* ===== Title widget ===== */
+
+.widget-title {
+  padding: 4px 6px 10px 6px;
+  margin: 0;
+}
+
+.widget-title label {
+  font-size: 16px;
+  font-weight: 700;
+  color: @text;
+  margin-left: 4px;
+}
+
+.widget-title button {
+  background-color: @card;
+  color: @text;
+  border-radius: 8px;
+  padding: 4px 12px;
+  margin-right: 4px;
+  min-height: 22px;
+}
+
+.widget-title button label {
+  font-size: 12px;
+  font-weight: 600;
+  color: @text;
+  margin: 0;
+}
+
+.widget-title button:hover  { background-color: @card_alt; color: @violet; }
+.widget-title button:active { background-color: @violet; color: @pill_text; }
+
+/* ===== Notifications (popup + in panel) ===== */
+
+/* Force all popup wrapper layers transparent. Hyprland may ask SwayNC to use a
+ * fullscreen layer-shell surface; only the card itself should ever get a fill. */
+notificationwindow,
+blankwindow,
+.blank-window,
+.background,
+.floating-notifications,
+.floating-notifications.background,
+.floating-notifications.background:focus,
+.floating-notifications .notification-row:focus,
+.floating-notifications .notification-row,
+.floating-notifications .notification-row .notification-background,
+.floating-notifications .notification-row .notification-background .notification,
+.control-center .notification-row,
+.control-center .notification-row .notification-background,
+.control-center .notification-row .notification-background .notification {
+  background: transparent;
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.floating-notifications .notification-row:focus,
+.floating-notifications .notification-row:hover {
+  background: transparent;
+  background-color: transparent;
+}
+
+.control-center .notification-row .notification-background .notification {
+  margin-top: 6px;
+}
+
+.control-center .notification-row .notification-background .notification box,
+.control-center .notification-row .notification-background .notification widget,
+.control-center .notification-row .notification-background .notification .notification-content,
+.floating-notifications .notification-row .notification-background .notification box,
+.floating-notifications .notification-row .notification-background .notification widget,
+.floating-notifications .notification-row .notification-background .notification .notification-content {
+  border-radius: 10px;
+}
+
+/* The visible notification card — only this gets a fill */
+.control-center .notification-row .notification-background .notification .notification-content {
+  background-color: @card;
+  padding: 12px;
+}
+
+.floating-notifications .notification-row .notification-background .notification .notification-content {
+  background-color: @panel_bg;
+  border: 1px solid @border_subtle;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  padding: 12px;
+  margin: 6px;
+}
+
+/* Text — low / normal */
+.control-center .notification-row .notification-background .notification.low .notification-content label,
+.control-center .notification-row .notification-background .notification.normal .notification-content label,
+.floating-notifications.background .notification-background .notification.low .notification-content label,
+.floating-notifications.background .notification-background .notification.normal .notification-content label {
+  color: @text;
+  margin: 0 0 0 8px;
+}
+
+.control-center .notification-row .notification-background .notification.low .notification-content image,
+.control-center .notification-row .notification-background .notification.normal .notification-content image,
+.floating-notifications.background .notification-background .notification.low .notification-content image,
+.floating-notifications.background .notification-background .notification.normal .notification-content image {
+  color: @text;
+}
+
+.control-center .notification-row .notification-background .notification.low .notification-content .body,
+.control-center .notification-row .notification-background .notification.normal .notification-content .body,
+.floating-notifications.background .notification-background .notification.low .notification-content .body,
+.floating-notifications.background .notification-background .notification.normal .notification-content .body {
+  color: @subtext0;
+  margin: 0 0 0 8px;
+}
+
+/* Critical */
+.control-center .notification-row .notification-background .notification.critical .notification-content,
+.floating-notifications.background .notification-background .notification.critical .notification-content {
+  background-color: alpha(@red, 0.22);
+  border: 1px solid alpha(@red, 0.55);
+}
+
+.control-center .notification-row .notification-background .notification.critical .notification-content image,
+.floating-notifications.background .notification-background .notification.critical .notification-content image {
+  background-color: transparent;
+  color: @red;
+}
+
+.control-center .notification-row .notification-background .notification.critical .notification-content label,
+.floating-notifications.background .notification-background .notification.critical .notification-content label {
+  color: @text;
+}
+
+/* Summary / time / body typography */
+.control-center .notification-row .notification-background .notification .notification-content .summary,
+.floating-notifications.background .notification-background .notification .notification-content .summary {
+  font-size: 13px;
+  font-weight: 600;
+  color: @text;
+}
+
+.control-center .notification-row .notification-background .notification .notification-content .time,
+.floating-notifications.background .notification-background .notification .notification-content .time {
+  font-size: 11px;
+  font-weight: 500;
+  color: @subtext0;
+  margin-right: 12px;
+}
+
+.control-center .notification-row .notification-background .notification .notification-content .body,
+.floating-notifications.background .notification-background .notification .notification-content .body {
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 4px;
+}
+
+/* Close button */
+.control-center .notification-row .close-button,
+.floating-notifications.background .close-button {
+  background-color: transparent;
+  color: @subtext0;
+  border-radius: 9999px;
+  margin-right: 10px;
+  margin-top: 6px;
+  min-height: 22px;
+  min-width: 22px;
+  text-shadow: none;
+}
+
+.control-center .notification-row .close-button:hover,
+.floating-notifications.background .close-button:hover {
+  background-color: alpha(@red, 0.20);
+  color: @red;
+}
+
+/* Inline reply */
+.notification-action,
+.notification-default-action {
+  border-radius: 8px;
+}
+
+.notification-action {
+  background-color: @card;
+  color: @text;
+  margin: 4px;
+  padding: 4px 10px;
+}
+
+.notification-action:hover {
+  background-color: @card_alt;
+  color: @violet;
+}
+
+/* ===== Do Not Disturb ===== */
+
+.widget-dnd {
+  background-color: @card;
+  border-radius: 12px;
+  padding: 10px;
+  margin: 6px 0;
+  color: @text;
+}
+
+.widget-dnd label {
+  color: @text;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.widget-dnd switch {
+  background-color: alpha(@overlay1, 0.35);
+  border-radius: 9999px;
+  margin-left: 8px;
+  min-height: 20px;
+  min-width: 38px;
+  padding: 2px;
+}
+
+.widget-dnd switch:checked {
+  background-color: @violet;
+}
+
+.widget-dnd switch slider {
+  background-color: @text;
+  border-radius: 9999px;
+  min-height: 16px;
+  min-width: 16px;
+}
+
+.widget-dnd switch:checked slider {
+  background-color: @pill_text;
+}
+
+/* ===== Volume widget ===== */
+
+.widget-volume {
+  background-color: @card;
+  border-radius: 12px;
+  padding: 10px;
+  margin: 6px 0;
+  color: @text;
+}
+
+.widget-volume label { color: @text; }
+
+.widget-volume trough {
+  background-color: alpha(@overlay1, 0.35);
+  border-radius: 9999px;
+  min-height: 6px;
+}
+
+.widget-volume trough highlight,
+.widget-volume trough progress {
+  background-color: @violet;
+  border-radius: 9999px;
+}
+
+.widget-volume trough slider {
+  background-color: @violet;
+  border-radius: 9999px;
+  min-height: 14px;
+  min-width: 14px;
+  margin: -6px;
+}
+
+.widget-volume trough slider:hover  { background-color: @lavender; }
+.widget-volume trough slider:active { background-color: @pink; }
+
+/* Per-app rows */
+.widget-volume .per-app-volume {
+  background-color: transparent;
+  margin-top: 6px;
+}
+
+.widget-volume button {
+  background-color: transparent;
+  color: @text;
+  border-radius: 8px;
+  padding: 2px 8px;
+}
+
+.widget-volume button:hover { background-color: @card_alt; color: @violet; }
+
+/* ===== MPRIS ===== */
+
+.widget-mpris {
+  background-color: @card;
+  border-radius: 12px;
+  padding: 10px;
+  margin: 6px 0;
+}
+
+.widget-mpris-player {
+  padding: 6px;
+  margin: 4px;
+  background-color: transparent;
+}
+
+.widget-mpris-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: @text;
+}
+
+.widget-mpris-subtitle {
+  font-size: 12px;
+  color: @subtext0;
+}
+
+.widget-mpris button {
+  background-color: transparent;
+  color: @text;
+  border-radius: 9999px;
+  padding: 4px 8px;
+  min-width: 28px;
+  min-height: 28px;
+}
+
+.widget-mpris button:hover  { background-color: @card_alt; color: @violet; }
+.widget-mpris button:active { background-color: @violet;    color: @pill_text; }
+
+/* ===== Tooltip — match Waybar ===== */
+
+tooltip {
+  background-color: @mantle;
+  border: 1px solid @surface1;
+  border-radius: 8px;
+}
+
+tooltip label {
+  color: @text;
+  padding: 4px 6px;
+}

@@ -1,12 +1,31 @@
-*/cache/
-*/.cache/
+# ── caches / logs / temp ──────────────────────────────────────────
+**/cache/
+**/.cache/
 *.log
 *.tmp
-*token*
-*secret*
-*credentials*
+*.bak
+*.old
+*.swp
+
+# ── history / session state ───────────────────────────────────────
 .zsh_history
 .bash_history
 history
 */zsh/.zsh_sessions/
 **/.zcompdump*
+fish/.config/fish/fish_variables
+fish/.config/fish/fish_history
+fish/.config/fish/fisher_path
+
+# ── secrets (belt-and-suspenders — none tracked, keep it that way) ─
+*token*
+*secret*
+*credentials*
+*.key
+*.pem
+*.gpg
+id_rsa*
+id_ed25519*
+.env
+.env.*
+.netrc

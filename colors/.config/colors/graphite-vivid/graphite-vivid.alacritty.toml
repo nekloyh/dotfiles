@@ -1,0 +1,111 @@
+# ============================================================================
+# Graphite Vivid — Alacritty color scheme
+# Drop-in import for ~/.config/alacritty/alacritty.toml:
+#
+#   [general]
+#   import = ["~/.config/colors/graphite-vivid.alacritty.toml"]
+#
+# Sibling files: graphite-vivid.css / .hypr.conf / .sh / .toml / .nvim.lua
+#
+# ANSI mapping:
+#   normal/0..7   = canonical vivid accents     (used by most CLI tools)
+#   bright/8..15  = lighter vivid for emphasis  (bold, btop, fzf highlights)
+#   dim/0..7      = 700-stop variants           (used when `dim` SGR is sent)
+#
+# Conventional terminal "black" is mapped to a UI surface, not pure #000000,
+# so output sitting on top of the terminal background reads as a softly
+# raised element rather than disappearing into the void.
+# ============================================================================
+
+
+[colors]
+# Render bold text in the bright color variants by default. Disable if you
+# prefer bold weight without a color shift.
+draw_bold_text_with_bright_colors = true
+
+
+[colors.primary]
+background        = "#11131a"   # base
+foreground        = "#c8ccd0"   # text
+dim_foreground    = "#969ca0"   # subtext0
+bright_foreground = "#e7e8ea"   # text_bright
+
+
+[colors.cursor]
+text   = "#11131a"              # base (text under cursor)
+cursor = "#8388e8"              # primary (violet) — the block itself
+
+
+[colors.vi_mode_cursor]
+text   = "#11131a"
+cursor = "#39c0b4"              # cyan, distinguishes vi-mode from insert
+
+
+[colors.selection]
+text       = "#e7e8ea"          # text_bright
+background = "#2e3252"          # violet-tinted selection
+
+
+[colors.search.matches]
+foreground = "#11131a"
+background = "#e3b42c"          # yellow — all matches
+
+[colors.search.focused_match]
+foreground = "#11131a"
+background = "#ea7b47"          # orange — current match, hotter than yellow
+
+
+[colors.hints.start]
+foreground = "#11131a"
+background = "#e3b42c"
+
+[colors.hints.end]
+foreground = "#11131a"
+background = "#99be42"
+
+
+[colors.footer_bar]
+foreground = "#c8ccd0"
+background = "#1a1c22"          # surface0 — slightly raised
+
+
+[colors.line_indicator]
+foreground = "None"
+background = "None"
+
+
+# ----------------------------------------------------------------------------
+# ANSI 16
+# ----------------------------------------------------------------------------
+
+[colors.normal]
+black   = "#22252c"             # surface1 — readable "black" on the bg
+red     = "#ea6b62"
+green   = "#99be42"
+yellow  = "#e3b42c"
+blue    = "#3aabf4"
+magenta = "#e36da7"
+cyan    = "#39c0b4"
+white   = "#b0b5b9"             # subtext1
+
+
+[colors.bright]
+black   = "#3a3e4a"             # surface3 — comments / bright black
+red     = "#ff8d83"
+green   = "#b5d86d"
+yellow  = "#fbd064"
+blue    = "#76c5ff"
+magenta = "#fa8dc1"
+cyan    = "#6bdace"
+white   = "#e7e8ea"             # text_bright
+
+
+[colors.dim]
+black   = "#1a1c22"             # surface0
+red     = "#af2c2b"
+green   = "#668400"
+yellow  = "#a27d00"
+blue    = "#0072ae"
+magenta = "#a83071"
+cyan    = "#00857b"
+white   = "#969ca0"             # subtext0

@@ -1,0 +1,151 @@
+/* ============================================================================
+ * Graphite Vivid — graphite-neutral base, vivid accents
+ * Canonical palette for CSS-based Linux tools (Waybar, SwayNC, GTK overrides).
+ * Sibling files: graphite-vivid.hypr.conf / .sh / .toml / .nvim.lua / .alacritty.toml
+ *
+ * Design intent:
+ *   - Neutral graphite surfaces (slight cool bias for warmth contrast with accents).
+ *   - Accents lifted from Solarized 500 to a vivid canonical.
+ *   - 300 stops are lighter than 500 (highlight), 700/900/950 darker (dim variants).
+ *   - Semantic aliases use the canonical vivid set, consistent across the palette.
+ *
+ * Layered bg (darkest → lightest):
+ *   --crust → --mantle → --base → --surface0 → --surface1 → --surface2 → --surface3
+ * Foreground (most → least prominent):
+ *   --text-bright → --text → --subtext1 → --subtext0 → --overlay2 → --overlay1 → --overlay0
+ * ============================================================================ */
+
+
+/* Solarized-style base names (kept for compat with Solarized-aware configs) */
+@define-color base04          #070709;
+@define-color base03          #11131a;
+@define-color base02          #1a1c22;
+@define-color base01          #595e63;
+@define-color base00          #696e73;
+@define-color base0           #969ca0;
+@define-color base1           #b0b5b9;
+@define-color base2           #d9dedc;
+@define-color base3           #ece8dc;
+@define-color base4           #f7f4ea;
+
+/* Linux surface aliases */
+@define-color crust           #070709;
+@define-color mantle          #0c0d10;
+@define-color base            #11131a;
+@define-color surface0        #1a1c22;
+@define-color surface1        #22252c;
+@define-color surface2        #2c303a;
+@define-color surface3        #3a3e4a;
+@define-color bg              #11131a;
+@define-color bg-highlight    #22252c;
+@define-color bg-popup        #070709;
+@define-color bg-statusline   #1a1c22;
+@define-color bg-sidebar      #0c0d10;
+@define-color bg-float        #0c0d10;
+@define-color border          #363b46;
+@define-color black           #020203;
+
+/* Foregrounds */
+@define-color text-bright     #e7e8ea;
+@define-color text            #c8ccd0;
+@define-color subtext1        #b0b5b9;
+@define-color subtext0        #969ca0;
+@define-color overlay2        #7d8388;
+@define-color overlay1        #696e73;
+@define-color overlay0        #595e63;
+@define-color fg              #c8ccd0;
+@define-color fg-float        #c8ccd0;
+
+/* Accents and ramps */
+@define-color yellow          #e3b42c;
+@define-color yellow50        #fff7d4;
+@define-color yellow100       #ffe999;
+@define-color yellow300       #fbd064;
+@define-color yellow500       #e3b42c;
+@define-color yellow700       #a27d00;
+@define-color yellow900       #4a3805;
+@define-color yellow950       #261c02;
+@define-color orange          #ea7b47;
+@define-color orange50        #ffdfc8;
+@define-color orange100       #ffb88a;
+@define-color orange300       #ff9c6f;
+@define-color orange500       #ea7b47;
+@define-color orange700       #ab4400;
+@define-color orange900       #4f2306;
+@define-color orange950       #2a1102;
+@define-color red             #ea6b62;
+@define-color red50           #ffd6d4;
+@define-color red100          #ffa19e;
+@define-color red300          #ff8d83;
+@define-color red500          #ea6b62;
+@define-color red700          #af2c2b;
+@define-color red900          #5a0e0c;
+@define-color red950          #2e0504;
+@define-color magenta         #e36da7;
+@define-color magenta50       #ffd0e6;
+@define-color magenta100      #ff95c6;
+@define-color magenta300      #fa8dc1;
+@define-color magenta500      #e36da7;
+@define-color magenta700      #a83071;
+@define-color magenta900      #531338;
+@define-color magenta950      #2a081c;
+@define-color violet          #8388e8;
+@define-color violet50        #ecedff;
+@define-color violet100       #d4d7ff;
+@define-color violet300       #a5a9ee;
+@define-color violet500       #8388e8;
+@define-color violet700       #4e54c5;
+@define-color violet900       #25285b;
+@define-color violet950       #0e103a;
+@define-color blue            #3aabf4;
+@define-color blue50          #d9efff;
+@define-color blue100         #aedaff;
+@define-color blue300         #76c5ff;
+@define-color blue500         #3aabf4;
+@define-color blue700         #0072ae;
+@define-color blue900         #103956;
+@define-color blue950         #062439;
+@define-color cyan            #39c0b4;
+@define-color cyan50          #d8fff9;
+@define-color cyan100         #a8fff0;
+@define-color cyan300         #6bdace;
+@define-color cyan500         #39c0b4;
+@define-color cyan700         #00857b;
+@define-color cyan900         #103a3c;
+@define-color cyan950         #052223;
+@define-color green           #99be42;
+@define-color green50         #ecffd0;
+@define-color green100        #d6ffa0;
+@define-color green300        #b5d86d;
+@define-color green500        #99be42;
+@define-color green700        #668400;
+@define-color green900        #2c3300;
+@define-color green950        #161d00;
+
+/* Semantic aliases — all vivid, consistent */
+@define-color primary         #8388e8;
+@define-color secondary       #ea7b47;
+@define-color error           #ea6b62;
+@define-color warning         #e3b42c;
+@define-color success         #99be42;
+@define-color info            #3aabf4;
+@define-color hint            #39c0b4;
+@define-color special         #e36da7;
+@define-color selection       #2e3252;
+@define-color selection-text  #e7e8ea;
+
+/* Catppuccin-name compat aliases — for tools/styles authored against Catppuccin.
+ * Mapped semantically to nearest Graphite Vivid equivalent so existing CSS
+ * (Waybar, SwayNC, wlogout) keeps working without per-file rewrites. */
+@define-color sapphire        #3aabf4;  /* → blue (info-leaning blue accent) */
+@define-color sky             #76c5ff;  /* → blue300 (lighter info blue) */
+@define-color teal            #39c0b4;  /* → cyan (hint) */
+@define-color lavender        #a5a9ee;  /* → violet300 (lighter primary) */
+@define-color maroon          #af2c2b;  /* → red700 (darker red) */
+@define-color peach           #ea7b47;  /* → orange (secondary) */
+@define-color rosewater       #ff95c6;  /* → magenta100 (soft pink) */
+@define-color flamingo        #fa8dc1;  /* → magenta300 */
+@define-color pink            #e36da7;  /* → magenta */
+@define-color mauve           #8388e8;  /* → violet (primary) — legacy compat */
+
+/* GTK CSS does not support :root {}; use @name in Waybar/SwayNC/GTK configs. */

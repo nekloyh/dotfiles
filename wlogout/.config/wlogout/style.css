@@ -1,0 +1,78 @@
+/* wlogout — Graphite Vivid */
+@import url("file:///home/n91ym1nhky/.config/colors/graphite-vivid/graphite-vivid.css");
+
+* {
+    background-image: none;
+    box-shadow: none;
+    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+window {
+    background-color: rgba(17, 19, 26, 0.85);   /* base #11131a @ 85% */
+    font-family: "JetBrainsMono Nerd Font", monospace;
+}
+
+button {
+    color: @text;
+    background-color: @surface0;
+    border: 2px solid @overlay0;
+    border-radius: 12px;
+    margin: 12px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 30%;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+button:focus,
+button:hover {
+    color: @base;
+    background-color: @violet;
+    border-color: @violet;
+    outline: none;
+}
+
+button:active {
+    background-color: @lavender;
+    border-color: @lavender;
+}
+
+#shutdown:hover,
+#shutdown:focus {
+    background-color: @red;
+    border-color: @red;
+}
+
+#reboot:hover,
+#reboot:focus {
+    background-color: @peach;
+    border-color: @peach;
+}
+
+#logout:hover,
+#logout:focus {
+    background-color: @yellow;
+    border-color: @yellow;
+}
+
+#lock:hover,
+#lock:focus {
+    background-color: @violet;
+    border-color: @violet;
+}
+
+#suspend:hover,
+#suspend:focus,
+#hibernate:hover,
+#hibernate:focus {
+    background-color: @sky;
+    border-color: @sky;
+}
+
+#lock      { background-image: image(url("/usr/share/wlogout/icons/lock.png")); }
+#logout    { background-image: image(url("/usr/share/wlogout/icons/logout.png")); }
+#suspend   { background-image: image(url("/usr/share/wlogout/icons/suspend.png")); }
+#hibernate { background-image: image(url("/usr/share/wlogout/icons/hibernate.png")); }
+#shutdown  { background-image: image(url("/usr/share/wlogout/icons/shutdown.png")); }
+#reboot    { background-image: image(url("/usr/share/wlogout/icons/reboot.png")); }

@@ -1,0 +1,68 @@
+/* Graphite Vivid — GTK4/libadwaita.
+ * File này THAY symlink cũ (gtk.css → Graphite-purple-Dark).
+ * graphite-vivid-theme.css = bản COPY của theme gốc đã map toàn bộ literal hex
+ * sang palette (theme dùng literal khắp nơi nên override named-color không đủ;
+ * vd sidebar accent #BA68C8 sơn thẳng vào .sidebar-pane scrolledwindow).
+ * Regenerate khi theme gốc update: xem sed map trong lịch sử hoặc chạy lại
+ * diff với /usr/share/themes/Graphite-purple-Dark/gtk-4.0/gtk.css.
+ * Rollback: xoá 2 file này, tạo lại symlink:
+ *   ln -sf /usr/share/themes/Graphite-purple-Dark/gtk-4.0/gtk.css ~/.config/gtk-4.0/gtk.css */
+@import url("file:///home/n91ym1nhky/.config/gtk-4.0/graphite-vivid-theme.css");
+@import url("file:///home/n91ym1nhky/.config/colors/graphite-vivid/graphite-vivid.css");
+
+/* Accent */
+@define-color accent_bg_color @violet;
+@define-color accent_fg_color @base;
+@define-color accent_color @violet300;
+
+/* Semantic */
+@define-color destructive_bg_color @red;
+@define-color destructive_fg_color @base;
+@define-color destructive_color @red300;
+@define-color success_bg_color @green;
+@define-color success_fg_color @base;
+@define-color success_color @green300;
+@define-color warning_bg_color @yellow;
+@define-color warning_fg_color @base;
+@define-color warning_color @yellow300;
+@define-color error_bg_color @red;
+@define-color error_fg_color @base;
+@define-color error_color @red300;
+
+/* Surfaces — cùng tầng lớp với waybar/swaync */
+@define-color window_bg_color @base;
+@define-color window_fg_color @text;
+@define-color view_bg_color @mantle;
+@define-color view_fg_color @text;
+@define-color headerbar_bg_color @mantle;
+@define-color headerbar_fg_color @text;
+@define-color headerbar_border_color @surface1;
+@define-color headerbar_backdrop_color @crust;
+/* Sidebar: theme sơn accent lên .sidebar-pane scrolledwindow (signature Graphite,
+ * giờ là violet sau khi map). Các define dưới chỉ áp cho app không theo cấu trúc đó. */
+@define-color sidebar_bg_color @mantle;
+@define-color sidebar_fg_color @text;
+@define-color sidebar_backdrop_color @crust;
+@define-color secondary_sidebar_bg_color @crust;
+@define-color secondary_sidebar_fg_color @text;
+@define-color card_bg_color @surface0;
+@define-color card_fg_color @text;
+@define-color popover_bg_color @surface0;
+@define-color popover_fg_color @text;
+@define-color dialog_bg_color @surface0;
+@define-color dialog_fg_color @text;
+@define-color thumbnail_bg_color @surface0;
+@define-color thumbnail_fg_color @text;
+@define-color shade_color rgba(0, 0, 0, 0.36);
+@define-color scrollbar_outline_color @surface1;
+
+/* Sidebar: về surface tối neutral — đè "signature accent sidebar" của Graphite
+ * theme (sơn accent lên .sidebar-pane scrolledwindow). User chọn 2026-07-12. */
+.sidebar-pane toolbarview > scrolledwindow,
+.sidebar-pane toolbarview > placessidebar > scrolledwindow,
+.sidebar-pane toolbarview > stacksidebar.sidebar > scrolledwindow,
+.nautilus-window flap.unfolded > placessidebar,
+.nautilus-window flap.unfolded > placessidebar > scrolledwindow > scrollbar {
+  background-color: @mantle;
+  color: @text;
+}

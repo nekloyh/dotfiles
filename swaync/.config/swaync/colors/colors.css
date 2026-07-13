@@ -1,0 +1,12 @@
+/* SwayNC — Graphite Vivid.
+ * style.css chỉ dùng 5 alias tool-specific dưới + tên palette import trực tiếp (@base, @violet...);
+ * khối map Material You/MD3 cũ đã bỏ (swaync không đọc @define-color, style.css không tham chiếu). */
+@import url("file:///home/n91ym1nhky/.config/colors/graphite-vivid/graphite-vivid.css");
+
+/* Tool-specific aliases — match Waybar conventions for visual consistency
+ * (giá trị card/card_alt = đúng waybar/colors.css) */
+@define-color panel_bg   rgba(17, 19, 26, 0.92);    /* @base #11131a @ 92% — main panel */
+@define-color card       rgba(26, 28, 34, 0.55);    /* @surface0 #1a1c22 @ 55% — inner widgets */
+@define-color card_alt   rgba(34, 37, 44, 0.70);    /* @surface1 #22252c @ 70% — hover */
+@define-color pill_text  @base;                     /* dark text on bright pill bg */
+@define-color border_subtle rgba(105, 110, 115, 0.20); /* @overlay1 #696e73 @ 20% */
