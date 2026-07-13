@@ -138,7 +138,7 @@ window#waybar.hidden { opacity: 0.2; }
 }
 #workspaces button {
   color: @subtext0;
-  padding: 0 10px;
+  padding: 0 12px;
   margin: 0 4px;
   font-size: 14px;
   font-weight: 600;
@@ -157,7 +157,10 @@ window#waybar.hidden { opacity: 0.2; }
   -gtk-icon-shadow: none;
 
   border-radius: 7px;
-  min-width: 24px;
+  /* Uniform width cho MỌI state — active không đổi kích thước nữa nên chuyển ws
+     không đẩy hàng xóm (GTK không tween được width/padding → nếu đổi sẽ giật).
+     Chuyển ws chỉ còn cross-fade màu qua transition bên dưới → mượt. */
+  min-width: 38px;
   /* Specific transitions — never transition background-image (causes blur ghost) */
   transition: background-color 160ms ease, color 160ms ease;
 }
@@ -178,8 +181,7 @@ window#waybar.hidden { opacity: 0.2; }
   background-color: @cyan;
   background-image: none;
   font-weight: 700;
-  padding: 0 22px;
-  min-width: 56px;
+  /* KHÔNG override padding/min-width — giữ nguyên geometry đồng nhất để không reflow */
 }
 #workspaces button.active:hover {
   background-color: @cyan300;
