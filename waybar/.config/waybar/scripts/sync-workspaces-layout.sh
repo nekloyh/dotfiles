@@ -45,4 +45,29 @@ if [ -f "${selected_file}" ] && ! cmp -s "${selected_file}" "${target_file}" 2>/
     pkill -SIGUSR2 -x waybar 2>/dev/null || true
 fi
 
+# ── Rebind ws 6-10 theo monitor hiện diện ─────────────────────────────────────
+# Mặc định (workspacerules.conf) 6-10 bind cứng vào màn ngoài. Khi rút màn ngoài,
+# Hyprland KHÔNG persistent chúng (monitor gán biến mất) → 6-10 sinh/hủy theo
+# occupancy trong khi waybar ép persistent [1..10] → giằng co = "khoảng tắt".
+# Sửa: đơn màn → bind 6-10 sang màn đang có + persistent thật; đa màn → trả về
+# màn ngoài (ws8 = default cụm ngoài, khớp workspacerules.conf). eDP-1 là tên màn
+# trong (máy-cụ-thể). Idempotent, chạy mỗi lần sync.
+internal="eDP-1"
+if command -v hyprctl >/dev/null 2>&1; then
+    if [ "${monitor_count}" -ge 2 ]; then
+        external="$(printf '%s\n' "${monitor_names}" | grep -vx "${internal}" | head -n1)"
+        home_mon="${external:-${internal}}"
+        for ws in 6 7 9 10; do
+            hyprctl keyword workspace "${ws},monitor:${home_mon},persistent:true" >/dev/null 2>&1 || true
+        done
+        hyprctl keyword workspace "8,monitor:${home_mon},persistent:true,default:true" >/dev/null 2>&1 || true
+    else
+        home_mon="$(printf '%s\n' "${monitor_names}" | head -n1)"
+        # KHÔNG set default cho ws8 ở đơn màn — tránh đụng ws3 (default của eDP-1).
+        for ws in 6 7 8 9 10; do
+            hyprctl keyword workspace "${ws},monitor:${home_mon},persistent:true" >/dev/null 2>&1 || true
+        done
+    fi
+fi
+
 print_empty

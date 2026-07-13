@@ -161,8 +161,11 @@ window#waybar.hidden { opacity: 0.2; }
      không đẩy hàng xóm (GTK không tween được width/padding → nếu đổi sẽ giật).
      Chuyển ws chỉ còn cross-fade màu qua transition bên dưới → mượt. */
   min-width: 38px;
-  /* Specific transitions — never transition background-image (causes blur ghost) */
-  transition: background-color 160ms ease, color 160ms ease;
+  /* Cross-fade màu khi chuyển ws = "trượt" khả thi nhất trong GTK: nút cũ phai
+     cyan→trong, nút mới hiện cyan→đầy, cùng 190ms → highlight như lướt qua.
+     (GTK/waybar không dời được 1 pill giữa các nút — mỗi ws là 1 button riêng.)
+     Không transition background-image (gây blur ghost). */
+  transition: background-color 190ms ease, color 190ms ease;
 }
 
 /* --- State: has windows but not active/visible/urgent — 60%-wide cyan underline --- */
@@ -181,7 +184,10 @@ window#waybar.hidden { opacity: 0.2; }
   background-color: @cyan;
   background-image: none;
   font-weight: 700;
-  /* KHÔNG override padding/min-width — giữ nguyên geometry đồng nhất để không reflow */
+  /* Nổi bật bằng CAPSULE + nền đặc, KHÔNG hào quang, KHÔNG rộng thêm.
+     bo tròn hết cỡ (9999px → GTK kẹp về nửa chiều cao = capsule).
+     Không đụng padding/min-width nên không reflow; không box-shadow (productivity). */
+  border-radius: 9999px;
 }
 #workspaces button.active:hover {
   background-color: @cyan300;

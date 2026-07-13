@@ -51,18 +51,6 @@
         "modules": ["power-profiles-daemon", "battery", "clock"]
     },
 
-    // ==================== CENTER MODULES ====================
-
-    // 1..10 luôn hiện (persistent) → nút không sinh/hủy theo occupancy nên cụm
-    // center không re-center, hết cảnh nhấp nháy/dịch ngang khi rời ws trống.
-    "hyprland/workspaces": {
-        "format": "{id}",
-        "sort-by": "number",
-        "persistent-workspaces": {
-            "*": 10
-        }
-    },
-
     // ==================== LEFT MODULES ====================
 
     "custom/launcher": {
