@@ -1,25 +1,20 @@
-# powerlevel10k prompt
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
-
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # PATH
 export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
 export PATH="$PATH:$HOME/Applications"
+export PATH="$HOME/.cargo/bin:$PATH"
 
-# oh-my-zsh
+# oh-my-zsh (no theme — starship takes over at end of file)
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="powerlevel10k/powerlevel10k"
+ZSH_THEME=""
 
 fpath=(/usr/share/zsh/site-functions $fpath)
 
 plugins=(
-  git 
-  zsh-autosuggestions 
-  zsh-syntax-highlighting
+  git
+  zsh-autosuggestions
 )
+# NOTE: zsh-syntax-highlighting is intentionally NOT here — it is sourced at the
+# VERY END of this file (it must load after all custom widgets/keybindings).
 
 source "$ZSH/oh-my-zsh.sh"
 
@@ -50,6 +45,11 @@ export FZF_DEFAULT_OPTS="
   --layout=reverse
   --border
   --info=inline
+  --color=fg:#c8ccd0,bg:#11131a,hl:#e0b020
+  --color=fg+:#e7e8ea,bg+:#2e3252,hl+:#f5d04a
+  --color=info:#4cc4b8,prompt:#8388e8,pointer:#e25aa0
+  --color=marker:#9bc23c,spinner:#e26a2c,header:#74d6cc
+  --color=border:#363b46,gutter:#11131a
 "
 
 # zoxide
@@ -59,19 +59,28 @@ fi
 
 # environment
 export EDITOR="nvim"
+export VISUAL="nvim"
 export BROWSER="firefox"
 export TERMINAL="alacritty"
+export MANPAGER="sh -c 'col -bx | bat -l man -p --paging=always'"
+export MANROFFOPT="-c"
+# HISTFILE is set ONCE in ~/.zshenv (XDG: ~/.local/state/zsh/history) so every
+# zsh — interactive or not — agrees on a single history file. Do not set it here.
 
 HISTSIZE=10000
 SAVEHIST=10000
 
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_SPACE
-setopt HIST_VERIFY
-setopt SHARE_HISTORY
-setopt APPEND_HISTORY
-setopt INC_APPEND_HISTORY
-setopt EXTENDED_HISTORY
+setopt EXTENDED_HISTORY        # ghi timestamp + thời lượng cho mỗi lệnh
+setopt SHARE_HISTORY           # chia sẻ history giữa các phiên
+setopt INC_APPEND_HISTORY      # ghi ngay xuống file — CẦN để hook _persist_ok_history flush print -sr
+setopt HIST_IGNORE_SPACE       # lệnh mở đầu bằng dấu cách -> không lưu
+setopt HIST_IGNORE_DUPS        # bỏ trùng LIÊN TIẾP (giữ các lần lặp cách quãng + timestamp)
+setopt HIST_FIND_NO_DUPS       # Ctrl-R bỏ qua bản trùng (chỉ ảnh hưởng hiển thị, KHÔNG xoá khỏi file)
+setopt HIST_REDUCE_BLANKS      # gọn khoảng trắng thừa trong lệnh
+setopt HIST_VERIFY             # bung history-expansion ra dòng lệnh trước khi chạy
+# (Cố ý KHÔNG bật HIST_SAVE_NO_DUPS / HIST_IGNORE_ALL_DUPS — chúng sẽ xoá mọi
+#  bản trùng cũ khỏi toàn bộ file, làm mất phần lớn lịch sử. Bật nếu bạn muốn
+#  history gọn hơn và chấp nhận đánh đổi.)
 setopt AUTO_CD
 setopt INTERACTIVE_COMMENTS
 
@@ -112,8 +121,8 @@ alias docs='cd ~/Documents'
 alias desk='cd ~/Desktop'
 alias proj='cd ~/Projects'
 
-alias night='redshift -O 2400'
-alias day='redshift -x'
+alias night='pkill gammastep 2>/dev/null; gammastep -O 2400 >/dev/null 2>&1 & disown'
+alias day='pkill gammastep 2>/dev/null'
 
 alias tm='tmux'
 alias tml='tmux list-sessions'
@@ -142,6 +151,150 @@ if [ -d "$FNM_PATH" ]; then
   eval "$(fnm env --shell zsh)"
 fi
 
-# powerlevel10k config
-[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+# uv
+[[ -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 
+# starship prompt
+export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+
+  # Minimal-unique abbreviated cwd: mỗi thư mục cha rút xuống tiền tố ngắn nhất
+  # đủ phân biệt với các thư mục anh em thực tế; thư mục hiện tại giữ nguyên.
+  # /home/user1/project/sr1c/app  ->  /h/user1/p/sr1/app
+  function _starship_short_pwd() {
+    emulate -L zsh
+    local p=${PWD/#$HOME/\~}
+    local prefix=""
+    [[ $p == /* ]] && prefix="/"
+
+    local -a segs realsegs
+    segs=("${(@s:/:)p}")
+    segs=("${(@)segs:#}")
+    realsegs=("${segs[@]}")
+    [[ $realsegs[1] == "~" ]] && realsegs[1]=$HOME   # đường dẫn thật để glob
+
+    local n=${#segs} out="" i seg parent L len other ok
+    local -a sibs
+
+    for (( i = 1; i <= n; i++ )); do
+      seg=$segs[i]
+      if (( i == n )); then
+        out+=$seg                       # thư mục hiện tại: giữ đầy đủ
+      elif [[ $seg == "~" ]]; then
+        out+="~/"                        # giữ nguyên xử lý ~ như cũ
+      else
+        # thư mục cha thật (dùng tên gốc, ~ đã được đổi về $HOME)
+        parent="${prefix}${(j:/:)realsegs[1,i-1]}"
+        [[ -z $parent ]] && parent="/"
+
+        # các thư mục anh em (cả ẩn lẫn thường)
+        sibs=( ${parent}/*(/N:t) ${parent}/.*(/N:t) )
+
+        # tiền tố ngắn nhất khiến seg là duy nhất trong số anh em
+        len=0
+        for (( L=1; L<=${#seg}; L++ )); do
+          ok=1
+          for other in $sibs; do
+            [[ $other == $seg ]] && continue
+            if [[ ${other[1,L]} == ${seg[1,L]} ]]; then ok=0; break; fi
+          done
+          (( ok )) && { len=$L; break; }
+        done
+        (( len == 0 )) && len=${#seg}                        # không phân biệt được -> cả tên
+        [[ $seg == .* ]] && (( len < 2 )) && (( ${#seg} >= 2 )) && len=2
+
+        out+="${seg[1,len]}/"
+      fi
+    done
+
+    print -rn -- "$prefix$out"
+  }
+
+  # Transient prompt: on Enter, collapse the just-executed prompt to a short path + character
+  function zle-line-init() {
+    emulate -L zsh
+    # Re-enable application cursor-key mode: this widget overrides oh-my-zsh's
+    # zle-line-init (which called `echoti smkx`). Without it the terminal stays
+    # in normal mode, so Up/Down send ^[[A/^[[B instead of the ^[OA/^[OB that
+    # omz bound to history search -> arrow up/down would stop working.
+    (( ${+terminfo[smkx]} )) && echoti smkx
+    [[ $CONTEXT == start ]] || return 0
+    while true; do
+      zle .recursive-edit
+      local -i ret=$?
+      [[ $ret == 0 && $KEYS == $'\4' ]] || break
+      [[ -o ignore_eof ]] || exit 0
+    done
+    local saved_prompt=$PROMPT
+    local saved_rprompt=$RPROMPT
+    PROMPT="%B%F{#74bdec}$(_starship_short_pwd)%f%b $(starship module character)"
+    RPROMPT=''
+    zle .reset-prompt
+    PROMPT=$saved_prompt
+    RPROMPT=$saved_rprompt
+    if (( ret )); then
+      zle .send-break
+    else
+      zle .accept-line
+    fi
+    return ret
+  }
+  zle -N zle-line-init
+fi
+
+# --- Di chuyển con trỏ theo DÒNG MÀN HÌNH cho lệnh dài bị wrap ---------------
+# zle chỉ biết "dòng logic" (tách bởi \n). Với một lệnh dài duy nhất bị wrap
+# tràn nhiều dòng trên màn hình (vd: echo "đoạn văn rất dài..."), Up/Down mặc
+# định không nhảy được giữa các dòng wrap -> nó coi cả lệnh là 1 dòng và rơi
+# vào history. Cặp widget dưới đây cho phép Up/Down di chuyển theo dòng-màn-hình
+# (bước = $COLUMNS ký tự) KHI buffer không có newline thật; ngược lại (lệnh
+# nhiều dòng thật hoặc lệnh ngắn) thì giữ nguyên hành vi cũ: lên/xuống dòng
+# logic, hoặc tìm trong lịch sử. Lưu ý: prompt nằm cùng dòng nên ở sát dòng
+# trên cùng vị trí ngang có thể lệch vài cột — đây là giới hạn không tránh được.
+_up_screen_line() {
+  emulate -L zsh
+  if [[ $BUFFER != *$'\n'* ]] && (( CURSOR >= COLUMNS )); then
+    (( CURSOR -= COLUMNS ))
+  else
+    zle up-line-or-beginning-search
+  fi
+}
+_down_screen_line() {
+  emulate -L zsh
+  if [[ $BUFFER != *$'\n'* ]] && (( CURSOR + COLUMNS <= $#BUFFER )); then
+    (( CURSOR += COLUMNS ))
+  elif [[ $BUFFER != *$'\n'* ]] && (( CURSOR / COLUMNS < $#BUFFER / COLUMNS )); then
+    CURSOR=$#BUFFER            # dòng wrap cuối (chưa đầy) -> về cuối buffer
+  else
+    zle down-line-or-beginning-search
+  fi
+}
+zle -N _up_screen_line
+zle -N _down_screen_line
+bindkey '^[[A' _up_screen_line   '^[OA' _up_screen_line
+bindkey '^[[B' _down_screen_line '^[OB' _down_screen_line
+
+# --- Chỉ lưu lệnh THÀNH CÔNG (exit 0) vào history ----------------------------
+# zshaddhistory chạy TRƯỚC khi thực thi nên chưa biết exit code -> trả về 1 để
+# giữ lệnh trong phiên hiện tại (Up-arrow vẫn gọi lại sửa được) nhưng KHÔNG ghi
+# xuống file. Sau khi lệnh chạy xong, precmd kiểm tra $?; nếu == 0 mới ghi.
+autoload -Uz add-zsh-hook
+zshaddhistory() { _pending=${1%%$'\n'}; return 1; }
+_persist_ok_history() {
+  local r=$?
+  if (( r == 0 )) && [[ -n $_pending ]]; then
+    print -sr -- "$_pending"
+  fi
+  _pending=
+}
+add-zsh-hook precmd _persist_ok_history
+# Đặt hook này chạy ĐẦU TIÊN trong precmd để đọc đúng $? của lệnh vừa chạy,
+# trước khi precmd của starship thay đổi $?.
+precmd_functions=(_persist_ok_history ${precmd_functions:#_persist_ok_history})
+
+# --- zsh-syntax-highlighting: BẮT BUỘC nạp ở DÒNG CUỐI, sau mọi widget/bindkey
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# opencode
+export PATH=/home/n91ym1nhky/.opencode/bin:$PATH

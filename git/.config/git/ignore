@@ -270,3 +270,6 @@ temp/
 *.mp3
 *.wav
 *.flac
+**/.claude/settings.local.json
+
+**/.claude/settings.local.json

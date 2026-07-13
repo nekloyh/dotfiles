@@ -1,6 +1,6 @@
 [general]
 import = [
-    "~/.config/alacritty/themes/CatppuccinMochaBlack.toml",
+    "~/.config/colors/graphite-vivid/graphite-vivid.alacritty.toml",
     "~/.config/alacritty/fonts.toml"
 ]
 live_config_reload = true
@@ -8,14 +8,13 @@ live_config_reload = true
 [window]
 decorations = "none"
 dynamic_title = true
-opacity = 0.4
+opacity = 0.8
 padding = { x = 10, y = 4 }
 dynamic_padding = true
 resize_increments = true
 
 [env]
-TERM = "xterm-256color" # "alacritty" #
-WINIT_X11_SCALE_FACTOR = "1.0"
+TERM = "xterm-256color"
 
 [cursor]
 blink_interval = 550
