@@ -13,7 +13,7 @@ edits in `~/.config/…` write straight back to this repo.
 ```sh
 git clone git@github.com:nekloyh/dotfiles.git ~/Dotfiles
 cd ~/Dotfiles
-sudo pacman -S stow                      # if not present
+sudo pacman -S --needed stow uwsm        # stow = linking, uwsm = autostart wrapper
 stow */                                  # link every package …
 # …or pick: stow hypr waybar fish starship
 ```
@@ -21,6 +21,22 @@ stow */                                  # link every package …
 Stow refuses to overwrite existing real files — move/delete the conflicting
 `~/.config/<app>` first, or use `stow --adopt <pkg>` to pull the current file into
 the repo (then `git diff` to review).
+
+### Enable services (not carried by dotfiles)
+
+The autostart deliberately does *not* `exec-once` these — they run as `enable`d
+systemd units (sole owner via systemd + D-Bus activation, so exec-once would
+double-start). On a fresh machine:
+
+```sh
+# user session
+systemctl --user enable --now \
+  hyprpolkitagent.service swaync.service elephant.service gnome-keyring-daemon.socket
+
+# system
+sudo systemctl enable --now power-profiles-daemon.service
+sudo systemctl enable --now fcitx5-lotus-server@$USER.service   # see IME section
+```
 
 ## Packages
 
@@ -34,11 +50,19 @@ the repo (then `git diff` to review).
 
 ## Dependencies (Arch/CachyOS names)
 
-`hyprland hyprpaper hypridle hyprlock hyprpolkitagent waybar swaync walker elephant
-wl-clip-persist wlogout fish zsh starship alacritty tmux btop mpv fastfetch
-qt5ct qt6ct kvantum xsettingsd papirus-icon-theme ttf-jetbrains-mono-nerd inter-font
-bibata-cursor-theme fcitx5 fcitx5-gtk fcitx5-qt fcitx5-lotus` — plus
-`power-profiles-daemon` for the waybar profile module.
+```sh
+sudo pacman -S --needed \
+  stow uwsm \
+  hyprland hyprpaper hypridle hyprlock hyprpolkitagent waybar swaync walker elephant \
+  wl-clip-persist wlogout fish zsh starship alacritty tmux btop mpv fastfetch \
+  qt5ct qt6ct kvantum xsettingsd papirus-icon-theme ttf-jetbrains-mono-nerd inter-font \
+  bibata-cursor-theme power-profiles-daemon \
+  fcitx5 fcitx5-gtk fcitx5-qt fcitx5-lotus
+```
+
+`power-profiles-daemon` powers the waybar profile module; `uwsm` wraps every
+autostart entry into its own systemd scope. AUR/extra: `elephant` (walker
+clipboard backend) may need `paru`/`yay` depending on your repos.
 
 ### Vietnamese IME (fcitx5 + lotus) — config alone is NOT enough
 
