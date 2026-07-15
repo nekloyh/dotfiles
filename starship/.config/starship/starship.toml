@@ -78,13 +78,16 @@ number_threshold = 1
 format = "[ $symbol$number ]($style)"
 
 [git_branch]
-symbol = "[](violet950) "
-style = "fg:lavender bg:violet950"
-format = '[$symbol$branch(:$remote_branch)]($style)[](violet950) '
+# Pill = cap trái + thân (bg) + cap phải. Cap là glyph Powerline U+E0B6/U+E0B4 tô
+# fg = màu bg của pill → bo tròn 2 đầu. GIỮ NGUYÊN 2 glyph này: editor/pipe
+# non-UTF8 hay nuốt PUA → mất cap, pill thành khối vuông (đã dính 1 lần).
+style = "fg:lavender bg:violet900"
+format = '[](fg:violet900)[ $branch(:$remote_branch) ]($style)[](fg:violet900) '
 
 [git_state]
+# Trailing space (không phải leading) — git_branch đã tự chừa 1 space phía sau.
 style = "bold fg:peach"
-format = '[ \($state( $progress_current/$progress_total)\)]($style)'
+format = '[\($state( $progress_current/$progress_total)\)]($style) '
 
 [git_status]
 style = "fg:overlay2"
