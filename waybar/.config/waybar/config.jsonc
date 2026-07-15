@@ -109,10 +109,16 @@
     },
 
     "mpris": {
+        // Icon LUÔN là {player_icon}, kể cả khi paused: icon chỉ trả lời "app nào".
+        // Trạng thái paused thể hiện bằng màu xám + italic qua #mpris.paused (CSS).
         "format": "{player_icon} {dynamic}",
-        "format-paused": "{status_icon} <i>{dynamic}</i>",
+        "format-paused": "{player_icon} <i>{dynamic}</i>",
         "format-stopped": "",
-        "dynamic-len": 25,
+        // title-len PHẢI <= dynamic-len. Thiếu title-len thì {dynamic} VỨT NGUYÊN title
+        // khi title dài hơn dynamic-len, chỉ còn artist (man waybar-mpris khuyến cáo).
+        "title-len": 24,
+        "artist-len": 14,
+        "dynamic-len": 36,
         "dynamic-order": ["title", "artist"],
         "player-icons": {
             "default": "▶",
@@ -123,11 +129,6 @@
             "chromium": "󰊯",
             "google-chrome": "󰊯",
             "brave": "󱆯"
-        },
-        "status-icons": {
-            "paused": "󰏤",
-            "playing": "󰐊",
-            "stopped": "󰓛"
         },
         "tooltip-format": "{player} · {status}\n{title}\n{artist} — {album}",
         "on-click": "playerctl play-pause",
@@ -140,15 +141,23 @@
     "hyprland/window": {
         "format": "{title}",
         "max-length": 30,
+        // LƯU Ý waybar 0.15 (src/util/rewrite_string.cpp): regex là ECMAScript + icase,
+        // regex_match = khớp TOÀN chuỗi, và MỌI rule khớp đều được áp dụng nối tiếp
+        // (không dừng ở rule đầu) -> không được để 2 rule cùng khớp 1 title.
         "rewrite": {
-            "(.*) — Mozilla Firefox": "󰈹 $1",
+            // Firefox chèn tên container/profile: "Trang — ai_bless_u — Mozilla Firefox".
+            // (.*?) lazy + nhóm container tuỳ chọn (1 token, không khoảng trắng) -> cắt
+            // container mà vẫn giữ được title có chứa " — ". Một rule lo cả 2 dạng.
+            "(.*?) — (?:[^ ]+ — )?Mozilla Firefox": "󰈹 $1",
+            "(.*) - Google Chrome": "󰊯 $1",
             "(.*) - Visual Studio Code": "󰨞 $1",
             "(.*) - Code - OSS": "󰨞 $1",
             "(.*) - Cursor": "󰨞 $1",
             "(.*) - Zed": "󰓻 $1",
             "(.*) — Telegram": "󰭱 $1",
             "(.*) - Discord": "󰙯 $1",
-            "": "󰧵 desktop"
+            // Prompt zsh "user@host:~/path" -> chỉ giữ path cho gọn.
+            "[^@ ]+@[^: ]+:(~?/[^ ]*)": "󰆍 $1"
         },
         "separate-outputs": true,
         "icon": false

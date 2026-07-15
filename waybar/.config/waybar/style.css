@@ -77,44 +77,69 @@ window#waybar.hidden { opacity: 0.2; }
   animation: pulse 1.2s linear infinite alternate;
 }
 
-/* ===== MPRIS (track) — quiet, phân cụm bằng separator như bên phải ===== */
+/* ===== MPRIS + Window — chung MỘT hệ hộp, phân cụm bằng separator như bên phải.
+ * Gutter quanh separator = 7px đều hai bên, khớp với 5px padding + 2px margin của
+ * #cpu…#disk. Trước đây mỗi module một kiểu (stats 5px / mpris 8px / window 10px)
+ * nên separator #2 lệch 12px|10px trong khi #1 là 8px|8px — đo trực tiếp từ ảnh bar.
+ * margin ngang = 0: khoảng cách do padding lo, separator không bị đẩy lệch.
+ * (Không còn khối #mpris.stopped: format-stopped = "" đã khiến waybar ẩn hẳn
+ *  module — đã kiểm chứng, CSS đó là code chết.) ===== */
 
-#mpris {
+#mpris,
+#window {
   background-color: transparent;
-  color: @violet300;
   border-left: 1px solid alpha(@text, 0.25);
-  padding: 0 8px;
-  margin: 3px 2px;
+  padding: 0 7px;
+  margin: 3px 0;
+  /* Góc TRÁI phải vuông (0): border-radius bo cả border-left, nên nếu bo 4 góc thì
+     đường separator 1px cong thành dấu ngoặc "(" thay vì đường thẳng. Bo phải 6px
+     để nền hover vẫn tròn cạnh ngoài. (Bản gốc để 0 6px 6px 0 là có chủ đích.) */
   border-radius: 0 6px 6px 0;
   min-height: 22px;
 }
-#mpris:hover {
+#mpris:hover,
+#window:hover {
   background-color: alpha(@text, 0.10);
 }
+
+#mpris  { color: @violet300; }
+#window {
+  color: @subtext0;
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* Màu theo player — waybar cấp sẵn class #mpris.${player} (man waybar-mpris). */
+#mpris.spotify                { color: @green; }
+#mpris.firefox                { color: @orange; }
+#mpris.chromium,
+#mpris.google-chrome,
+#mpris.brave                  { color: @blue300; }
+#mpris.mpv,
+#mpris.vlc                    { color: @cyan; }
+
+/* .paused PHẢI đứng sau các class player: cùng specificity (1,1,0) nên rule sau
+   thắng → paused luôn xám bất kể đang phát bằng app nào. */
 #mpris.paused {
   color: @overlay2;
   font-style: italic;
 }
-#mpris.stopped {
-  background-color: transparent;
-  color: transparent;
-  border-left: none;
-  padding: 0;
-  margin: 0;
-  min-height: 0;
-  min-width: 0;
+
+/* Các class dưới đây waybar gắn lên CHÍNH window#waybar, không phải lên #window
+ * (man waybar-hyprland-window) — nên phải viết dạng hậu duệ. Specificity (2,1,1)
+ * nên luôn thắng #window (1,0,0), không cần !important. */
+
+/* Không còn cửa sổ nào trong workspace → giấu cả chữ lẫn separator.
+   Dùng opacity thay vì bỏ padding/border: không gây reflow, và #window là module
+   cuối của modules-left nên phần rỗng còn lại không đẩy gì cả. */
+window#waybar.empty #window {
+  opacity: 0;
 }
 
-/* ===== Window title — minimal italic ===== */
-
-#window {
-  background-color: transparent;
-  color: @subtext0;
-  font-style: italic;
-  font-weight: 500;
-  border-left: 1px solid alpha(@text, 0.25);
-  padding: 0 10px;
-  margin: 3px 2px;
+/* Có cửa sổ fullscreen → title chuyển violet + đậm, liếc là biết. */
+window#waybar.fullscreen #window {
+  color: @violet300;
+  font-weight: 700;
 }
 
 /* ===== CENTER — submap mode indicator (violet pill, tự ẩn) ===== */
