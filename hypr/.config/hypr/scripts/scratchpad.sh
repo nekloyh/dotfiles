@@ -17,4 +17,12 @@ if ! has_pad; then
     # nhưng có thể lâu hơn); tránh reveal special rỗng, tránh phụ thuộc timing.
     for _ in $(seq 40); do has_pad && break; sleep 0.05; done
 fi
+# follow_mouse=1 + spawn 'silent': pad không tự nhận focus khi map, và khi special
+# trượt vào, focus bị hút về cửa sổ nằm dưới con trỏ → gõ nhầm. Ghi lại trạng thái
+# TRƯỚC toggle: nếu special đang ẩn thì lần này là REVEAL → chủ động focus pad (focus
+# giữ tới khi chuột di chuyển, đúng như window mới). Khi HIDE thì không đụng vào focus.
+was_active=$(hyprctl monitors -j | jq -r 'any(.[]; .specialWorkspace.name == "special:magic")')
 hyprctl dispatch togglespecialworkspace magic >/dev/null
+if [ "$was_active" = "false" ]; then
+    hyprctl dispatch focuswindow "class:^scratchpad$" >/dev/null
+fi
