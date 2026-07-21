@@ -36,11 +36,11 @@ read_only_style = "fg:red"
 
 [directory.substitutions]
 "Documents" = "󰈙 "
-"Downloads" = " "
-"Music" = " "
-"Pictures" = " "
+"Downloads" = "󰇚 "
+"Music" = "󰝚 "
+"Pictures" = "󰋩 "
 "Developer" = "󰲋 "
-"Others" = " "
+"Others" = "󰉋 "
 
 [line_break]
 disabled = true
