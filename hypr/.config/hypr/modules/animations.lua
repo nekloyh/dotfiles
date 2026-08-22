@@ -46,6 +46,7 @@ hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 2.4, bezier = 
 
 -- == Border ==
 hl.animation({ leaf = "border", enabled = true, speed = 4, bezier = "easeOutExpo" })
--- borderangle KHÔNG loop (style mặc định = "once"): loop = re-render liên tục → tốn GPU/pin.
--- Không loop thì gradient chỉ xoay 1 vòng lúc reload — đủ làm "chào sân".
-hl.animation({ leaf = "borderangle", enabled = true, speed = 30, bezier = "linear" })
+-- borderangle: đã TẮT — border giờ là màu đặc (không gradient) nên xoay góc
+-- không có gì để render. Nếu quay lại gradient border thì bật lại dòng dưới
+-- (style mặc định "once" — chỉ xoay 1 vòng lúc reload, không loop tốn pin).
+-- hl.animation({ leaf = "borderangle", enabled = true, speed = 30, bezier = "linear" })

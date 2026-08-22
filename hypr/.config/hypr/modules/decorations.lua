@@ -4,11 +4,13 @@
 local c = require("modules/colors")
 
 -- Border palette
--- rgb()  takes 6 hex (RRGGBB), for opaque gradient stops
--- rgba() takes 8 hex (RRGGBBAA), for alpha
-local activeBorderColor   = { colors = { "rgb(" .. c.primaryAlpha .. ")", "rgb(" .. c.blueAlpha .. ")" }, angle = 45 }
+-- rgb()  takes 6 hex (RRGGBB), rgba() takes 8 hex (RRGGBBAA)
+-- Màu ĐẶC theo ví dụ chuẩn của palette (col.active_border = $primary) và
+-- ngữ nghĩa accent trên waybar: violet = identity/focus, orange = group.
+-- Bản gradient cũ (violet→blue / orange→yellow 45deg): xem git log file này.
+local activeBorderColor   = c.primary    -- rgb(8388E8) — tím đặc
 local inactiveBorderColor = "rgba(" .. c.overlay1Alpha .. "55)"
-local groupActiveColor    = { colors = { "rgb(" .. c.orangeAlpha .. ")", "rgb(" .. c.yellowAlpha .. ")" }, angle = 45 }
+local groupActiveColor    = c.secondary  -- rgb(EA7B47) — cam đặc
 local groupInactiveColor  = "rgba(" .. c.overlay1Alpha .. "55)"
 
 hl.config({
