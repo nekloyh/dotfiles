@@ -105,7 +105,7 @@ return {
 				pattern = "background",
 				callback = function()
 					require("solarized-osaka").setup(build_opts())
-					vim.cmd.colorscheme("solarized-osaka")
+					vim.cmd.colorscheme("graphite-vivid")
 				end,
 			})
 		end,
