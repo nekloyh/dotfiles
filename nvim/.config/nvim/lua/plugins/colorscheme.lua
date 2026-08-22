@@ -15,12 +15,15 @@ local HUES = { "yellow", "orange", "red", "magenta", "violet", "blue", "cyan", "
 -- màu Solarized cũ.
 local FILL = { ["200"] = "300", ["400"] = "500", ["600"] = "700", ["800"] = "900" }
 
+local last_vivid
+
 local function load_vivid()
 	local ok, vivid = pcall(dofile, vim.fn.expand("~/.config/colors/graphite-vivid/graphite-vivid.nvim.lua"))
 	if not ok or type(vivid) ~= "table" then
 		vim.notify("graphite-vivid.nvim.lua không đọc được — giữ màu solarized-osaka gốc", vim.log.levels.WARN)
 		return nil
 	end
+	last_vivid = vivid
 	return vivid
 end
 
@@ -77,6 +80,43 @@ local function apply_light(colors, vivid)
 	colors.todo = colors.violet500
 end
 
+-- Remap vai trò màu theo ngữ nghĩa Graphite Vivid (engine solarized-osaka
+-- phân vai kiểu Solarized: keyword xanh lá, số dòng vàng đất — không mang
+-- identity violet của hệ theme):
+--   keyword/statement → violet primary (khớp waybar/hyprland)
+--   Visual            → token `selection` của palette (README: violet-tinted)
+--   LineNr            → xám overlay (khớp nano numbercolor)
+local function graphite_highlights(hl, _)
+	local vivid = last_vivid or load_vivid()
+	if not vivid then
+		return
+	end
+	local light = require("solarized-osaka.config").is_light()
+	-- violet canonical đủ nổi trên nền tối; trên nền cream dùng bản đậm hơn
+	local kw = light and vivid.violet700 or vivid.violet
+
+	local function set_fg(name, fg)
+		local d = hl[name]
+		if type(d) == "table" and not d.link then
+			d.fg = fg
+		else
+			hl[name] = { fg = fg }
+		end
+	end
+
+	set_fg("Keyword", kw)
+	set_fg("Statement", kw)
+	for name, d in pairs(hl) do
+		if name:sub(1, 8) == "@keyword" and type(d) == "table" and not d.link then
+			d.fg = kw
+		end
+	end
+
+	hl.Visual = { bg = light and vivid.violet100 or vivid.selection }
+	set_fg("LineNr", vivid.overlay1)
+	set_fg("CursorLineNr", kw)
+end
+
 local function build_opts()
 	local light = vim.o.background == "light"
 	return {
@@ -92,6 +132,7 @@ local function build_opts()
 				apply_dark(colors, vivid)
 			end
 		end,
+		on_highlights = graphite_highlights,
 	}
 end
 

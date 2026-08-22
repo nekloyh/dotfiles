@@ -1,9 +1,13 @@
+-- nvim-treesitter branch MAIN (bản viết lại) — KHÔNG override `config`:
+-- logic cài parser + bật highlight/indent/fold nằm trong spec của LazyVim,
+-- đè config là mất auto-install (bài học 2026-08-22: 0 parser được cài).
+-- opts_extend gộp ensure_installed với danh sách mặc định của LazyVim.
+--
+-- playground đã bỏ: plugin archive, chỉ chạy với branch master cũ;
+-- main có sẵn :InspectTree / :EditQuery thay thế.
 return {
-	{ "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
-
 	{
 		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
 		opts = {
 			ensure_installed = {
 				"astro",
@@ -22,47 +26,10 @@ return {
 				"sql",
 				"svelte",
 			},
-
-			-- matchup = {
-			-- 	enable = true,
-			-- },
-
-			-- https://github.com/nvim-treesitter/playground#query-linter
-			query_linter = {
-				enable = true,
-				use_virtual_text = true,
-				lint_events = { "BufWrite", "CursorHold" },
-			},
-
-			playground = {
-				enable = true,
-				disable = {},
-				updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
-				persist_queries = true, -- Whether the query persists across vim sessions
-				keybindings = {
-					toggle_query_editor = "o",
-					toggle_hl_groups = "i",
-					toggle_injected_languages = "t",
-					toggle_anonymous_nodes = "a",
-					toggle_language_display = "I",
-					focus_language = "f",
-					unfocus_language = "F",
-					update = "R",
-					goto_node = "<cr>",
-					show_help = "?",
-				},
-			},
 		},
-		config = function(_, opts)
-			local TS = require("nvim-treesitter")
-			TS.setup(opts)
-
-			-- MDX
-			vim.filetype.add({
-				extension = {
-					mdx = "mdx",
-				},
-			})
+		-- MDX chưa có parser riêng — đăng ký dùng parser markdown
+		init = function()
+			vim.filetype.add({ extension = { mdx = "mdx" } })
 			vim.treesitter.language.register("markdown", "mdx")
 		end,
 	},

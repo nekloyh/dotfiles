@@ -10,7 +10,6 @@ return {
 				"shellcheck",
 				"shfmt",
 				"tailwindcss-language-server",
-				"typescript-language-server",
 				"css-lsp",
 			})
 		end,
@@ -25,40 +24,15 @@ return {
 			servers = {
 				cssls = {},
 				tailwindcss = {
-					root_dir = function(...)
-						return require("lspconfig.util").root_pattern(".git")(...)
-					end,
+					-- API mới (nvim 0.11 / lspconfig v2): root_markers thay cho
+					-- root_dir = lspconfig.util.root_pattern(...) kiểu cũ
+					root_markers = { ".git" },
 				},
-				tsserver = {
-					root_dir = function(...)
-						return require("lspconfig.util").root_pattern(".git")(...)
-					end,
-					single_file_support = false,
-					settings = {
-						typescript = {
-							inlayHints = {
-								includeInlayParameterNameHints = "literal",
-								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-								includeInlayFunctionParameterTypeHints = true,
-								includeInlayVariableTypeHints = false,
-								includeInlayPropertyDeclarationTypeHints = true,
-								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
-							},
-						},
-						javascript = {
-							inlayHints = {
-								includeInlayParameterNameHints = "all",
-								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-								includeInlayFunctionParameterTypeHints = true,
-								includeInlayVariableTypeHints = true,
-								includeInlayPropertyDeclarationTypeHints = true,
-								includeInlayFunctionLikeReturnTypeHints = true,
-								includeInlayEnumMemberValueHints = true,
-							},
-						},
-					},
-				},
+				-- TypeScript: KHÔNG config ở đây — extras.lang.typescript (lazy.lua)
+				-- chọn vtsls và force-disable tsserver/ts_ls/tsgo còn lại.
+				-- Block tsserver cũ (root_dir + inlayHints) đã chết từ khi extra
+				-- chuyển sang vtsls → xoá 2026-08-22; inlay hints vốn tắt toàn cục
+				-- (inlay_hints.enabled = false ở trên).
 				html = {},
 				yamlls = {
 					settings = {
@@ -69,7 +43,6 @@ return {
 				},
 				lua_ls = {
 					-- enabled = false,
-					single_file_support = true,
 					settings = {
 						Lua = {
 							workspace = {
@@ -137,20 +110,24 @@ return {
 		},
 	},
 	{
+		-- gd qua telescope, không reuse window.
+		-- (keymaps.get() cũ đã deprecated — LazyVim giờ nhận keys qua servers["*"])
 		"neovim/nvim-lspconfig",
-		opts = function()
-			local keys = require("lazyvim.plugins.lsp.keymaps").get()
-			vim.list_extend(keys, {
-				{
-					"gd",
-					function()
-						-- DO NOT RESUSE WINDOW
-						require("telescope.builtin").lsp_definitions({ reuse_win = false })
-					end,
-					desc = "Goto Definition",
-					has = "definition",
+		opts = {
+			servers = {
+				["*"] = {
+					keys = {
+						{
+							"gd",
+							function()
+								require("telescope.builtin").lsp_definitions({ reuse_win = false })
+							end,
+							desc = "Goto Definition",
+							has = "definition",
+						},
+					},
 				},
-			})
-		end,
+			},
+		},
 	},
 }
