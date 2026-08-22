@@ -1,0 +1,40 @@
+# ============================================================================
+# Graphite Vivid — graphite-neutral base, vivid accents
+# Nano theme mirror. Sibling files: .css / .sh / .toml / .nvim.lua /
+# .alacritty.toml / .hypr.conf
+#
+# File này ĐỒNG THỜI là ~/.config/nano/nanorc (package `nano` symlink vào đây):
+# nano không cho phép lệnh `set` trong file được include, nên không tách
+# theme ra import kiểu waybar được — file mirror phải là rcfile chính.
+#
+# Nanorc chỉ nhận hex 3 chữ số (#rgb, nano xấp xỉ sang palette 256 màu của
+# terminal) — mỗi dòng ghi kèm hex gốc của palette để đối chiếu.
+# ============================================================================
+
+# Thanh tiêu đề — chữ sáng trên surface1        (text_bright E7E8EA / surface1 22252C)
+set titlecolor bold,#eee,#223
+# Dòng trạng thái / prompt                       (primary 8388E8, text C8CCD0 / surface1)
+set statuscolor bold,#88e,#223
+set promptcolor #ccc,#223
+set minicolor #ccc,#223
+# Lỗi — chữ sáng trên đỏ đậm                     (text_bright / red700 AF2C2B)
+set errorcolor bold,#eee,#a33
+# Kết quả tìm kiếm đang chọn — nền vàng          (yellow E3B42C)
+set spotlightcolor black,#db3
+# Vùng bôi đen — selection tím than              (selection 2E3252)
+set selectedcolor #eee,#335
+# Cột guide (set guidestripe N)                  (surface2 2C303A)
+set stripecolor ,#333
+# Số dòng                                        (overlay1 696E73)
+set numbercolor #667
+# Phím tắt trong 2 dòng help — violet primary    (primary 8388E8)
+set keycolor #88e
+# Mô tả chức năng trong 2 dòng help              (subtext0 969CA0)
+set functioncolor #999
+# Thanh cuộn                                     (overlay1 696E73)
+set scrollercolor #667
+
+# Syntax highlighting mặc định của nano (Arch tắt sẵn). Các file này dùng màu
+# ANSI có tên (red, green, …) → tự ăn theo Graphite Vivid vì Alacritty đã
+# theme bảng 16 màu ANSI bằng palette.
+include "/usr/share/nano/*.nanorc"

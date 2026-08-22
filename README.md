@@ -45,6 +45,7 @@ sudo systemctl enable --now fcitx5-lotus-server@$USER.service   # see IME sectio
 | WM / desktop | `hypr` `waybar` `swaync` `walker` `wlogout` |
 | Theme / look | `colors` `gtk` `qt` `xsettingsd` |
 | Shell / terminal / tools | `zsh` `fish` `alacritty` `tmux` `starship` `btop` `mpv` |
+| Editors | `nvim` `nano` |
 | Input (Vietnamese IME) | `fcitx5` |
 | Misc | `bash` `git` |
 
@@ -54,7 +55,7 @@ sudo systemctl enable --now fcitx5-lotus-server@$USER.service   # see IME sectio
 sudo pacman -S --needed \
   stow uwsm \
   hyprland hyprpaper hypridle hyprlock hyprpolkitagent waybar swaync walker elephant \
-  wl-clip-persist wlogout fish zsh starship alacritty tmux btop mpv fastfetch \
+  wl-clip-persist wlogout fish zsh starship alacritty tmux btop mpv fastfetch neovim nano \
   qt5ct qt6ct kvantum xsettingsd papirus-icon-theme ttf-jetbrains-mono-nerd inter-font \
   bibata-cursor-theme power-profiles-daemon \
   fcitx5 fcitx5-gtk fcitx5-qt fcitx5-lotus

@@ -33,6 +33,7 @@ proper. The dropped *Solarized Osaka* prefix reflects that.
 | `graphite-vivid.toml` | Generic TOML palette (Walker, custom scripts) |
 | `graphite-vivid.sh` | Shell exports (`$NAME` and `$NAME_HEX`) |
 | `graphite-vivid.nvim.lua` | Neovim palette table |
+| `graphite-vivid.nanorc` | Nano UI theme (also *is* `~/.config/nano/nanorc` via the `nano` package symlink) |
 
 ## Key colors
 
