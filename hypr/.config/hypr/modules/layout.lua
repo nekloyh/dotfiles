@@ -1,0 +1,12 @@
+-- Layout --
+
+hl.config({
+    dwindle = {
+        preserve_split = true,
+
+        -- Window mới LUÔN tách sang phải/xuống dưới — vị trí tiên đoán được,
+        -- không phụ thuộc con trỏ đang ở nửa nào của window (mặc định = 0).
+        -- Muốn quay lại hành vi theo con trỏ: xoá dòng này.
+        force_split = 2,
+    },
+})
