@@ -27,7 +27,37 @@ hl.env("HYPRCURSOR_SIZE", "24")
 -- (__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia <app>).
 -- Nếu sau này muốn ép Intel-only bằng đường colon-free ỔN ĐỊNH: tạo udev symlink
 -- (vd /dev/dri/intel) rồi hl.env("AQ_DRM_DEVICES", "/dev/dri/intel").
--- hl.env("AQ_DRM_DEVICES", ...)   (cố ý để trống)
+-- ── 3c (2026-09-01): ép aquamarine CHỈ dùng iGPU ────────────────────────────
+-- Đo được: dGPU không bao giờ vào D3 khi Hyprland + hyprpaper giữ fd
+-- /dev/nvidia0. Bằng chứng nhân quả (boot 14:31): nvidia-drm khởi tạo lúc
+-- 14:31:21, Hyprland chạy lúc 14:32:35 — cách 74s; runtime_suspended_time
+-- dừng ở 51 931 ms (~52s) rồi KHÔNG tăng thêm một mili-giây nào nữa.
+-- dGPU ở P8 tốn 12,7 W liên tục (đã là sau khi bật GSP; trước đó 17,0 W).
+--
+-- ĐÁNH ĐỔI: HDMI-A-1 hard-wire qua dGPU ⇒ MẤT màn ngoài. User xác nhận
+-- 2026-09-01 hiện không dùng màn rời. Cần lại thì comment 2 dòng dưới rồi
+-- ĐĂNG XUẤT/ĐĂNG NHẬP (hyprctl reload KHÔNG nạp lại env).
+-- CUDA/ollama/Docker KHÔNG ảnh hưởng: chúng mở /dev/nvidia* trực tiếp, không
+-- qua compositor. App đồ hoạ vẫn chạy dGPU được bằng PRIME offload.
+--
+-- Vì sao là /dev/dri/intel chứ không phải by-path hay cardN: xem khối trên.
+-- Symlink do system/udev/61-intel-dri.rules tạo, khớp theo ĐỊA CHỈ PCI
+-- (KERNELS=="0000:00:02.0"), KHÔNG theo ATTRS{vendor} — vendor 0x8086 khớp cả
+-- card NVIDIA vì cha nó là PCI root port của Intel (đã kiểm bằng udevadm).
+--
+-- GUARD: chỉ set khi symlink CÓ THẬT. Fail-closed — nếu udev rule chưa cài,
+-- hay đổi BIOS sang mode Discrete (iGPU tắt hẳn, symlink biến mất), thì env
+-- không được set và aquamarine tự dò như cũ. Không có guard này thì đúng kịch
+-- bản login loop 13/07: config hỏng nằm im tới lần đăng nhập kế tiếp.
+local function readable(path)
+    local f = io.open(path, "r")
+    if f then f:close(); return true end
+    return false
+end
+
+if readable("/dev/dri/intel") then
+    hl.env("AQ_DRM_DEVICES", "/dev/dri/intel")
+end
 
 -- Toolkit backend
 hl.env("GDK_BACKEND", "wayland,x11")

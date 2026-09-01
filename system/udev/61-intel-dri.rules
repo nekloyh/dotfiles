@@ -16,4 +16,19 @@
 # ⚠ Máy CÓ mux BIOS. Ở mode Discrete iGPU tắt hẳn → symlink này biến mất →
 #   login loop. Đổi mode BIOS thì phải bỏ AQ_DRM_DEVICES trước.
 
-SUBSYSTEM=="drm", KERNEL=="card*", ATTRS{vendor}=="0x8086", SYMLINK+="dri/intel"
+# ⚠ KHÔNG dùng ATTRS{vendor}=="0x8086" — đã thử và SAI: udev duyệt ngược toàn bộ
+#   chuỗi cha, mà cha của card NVIDIA là PCI root port 0000:00:01.0 CŨNG là thiết
+#   bị Intel (vendor 0x8086). Kiểm bằng `udevadm info -a -p /sys/class/drm/card0`:
+#   nó khớp ATTRS{vendor}=="0x8086". Rule đó sẽ gán /dev/dri/intel cho CẢ HAI card,
+#   kết quả là symlink trỏ vào card chạy sau — có thể chính là NVIDIA. Đúng ngược
+#   ý định, và gây login loop y như sự cố 13/07.
+#
+# KERNELS khớp tên kernel của thiết bị cha => định danh theo địa chỉ PCI:
+#   card1 -> KERNELS=="0000:00:02.0"  DRIVERS=="i915"   (iGPU)
+#   card0 -> KERNELS=="0000:01:00.0"  DRIVERS=="nvidia" (dGPU)
+# Dùng địa chỉ PCI chứ không dùng DRIVERS=="i915": kernel này có sẵn cả module
+# `xe`, nếu sau đổi sang xe thì rule theo driver sẽ im lặng ngừng khớp ->
+# symlink biến mất -> aquamarine không tìm ra GPU. Địa chỉ PCI do topology phần
+# cứng quyết định, không đổi.
+
+SUBSYSTEM=="drm", KERNEL=="card*", KERNELS=="0000:00:02.0", SYMLINK+="dri/intel"
