@@ -34,11 +34,7 @@
 
 * {
   font-family: "JetBrainsMono Nerd Font";
-  /* eDP-1 = 188.7 DPI ở scale 1, nên px ở đây nhỏ hơn nhiều so với cùng con số
-     trên màn 96 DPI: 12px = 4.58pt vật lý, 13px = 4.96pt. (Chữa bằng px chứ
-     KHÔNG bằng scale phân số — scale 1.25 bắt mỗi surface render thêm một pass
-     downscale và làm XWayland mờ.) */
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   font-feature-settings: "tnum";
   border: none;
@@ -61,7 +57,7 @@ window#waybar.hidden { opacity: 0.2; }
   color: @cyan;
   padding: 0 14px;
   margin: 3px 4px 3px 6px;
-  font-size: 19px;
+  font-size: 18px;
   border-radius: 6px;
 }
 #custom-launcher:hover {
@@ -206,7 +202,7 @@ window#waybar.fullscreen #window {
   color: @subtext0;
   padding: 0 12px;
   margin: 0 4px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
 
   /* Defeat ALL GTK default button chrome that causes "white line on top"
@@ -327,7 +323,7 @@ window#waybar.fullscreen #window {
   padding: 0;
   border-radius: 6px;
   min-height: 22px;
-  font-size: 14px;
+  font-size: 13px;
   color: @text;
 }
 
@@ -341,7 +337,7 @@ window#waybar.fullscreen #window {
 #backlight,
 #custom-nightmode,
 #power-profiles-daemon {
-  font-size: 15px;
+  font-size: 14px;
   min-width: 26px;
 }
 
@@ -486,7 +482,7 @@ window#waybar.fullscreen #window {
   padding: 0 12px;
   margin: 3px 6px 3px 2px;
   border-radius: 6px;
-  font-size: 15px;
+  font-size: 14px;
   min-width: 28px;
   min-height: 22px;
 }
