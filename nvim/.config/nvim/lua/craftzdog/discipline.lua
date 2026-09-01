@@ -3,7 +3,7 @@ local M = {}
 function M.cowboy()
 	---@type table?
 	local ok = true
-	for _, key in ipairs({ "h", "j", "k", "l", "+", "-" }) do
+	for _, key in ipairs({ "h", "j", "k", "l" }) do
 		local count = 0
 		local timer = assert(vim.uv.new_timer())
 		local map = key
