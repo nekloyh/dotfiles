@@ -34,15 +34,17 @@ hl.config({
     },
 })
 
--- ── DEBUG — bật tạm cho Phase 2 (GPU/power), 2026-09-01 ──────────────────────
+-- ── DEBUG ───────────────────────────────────────────────────────────────────
 -- Mặc định Hyprland TẮT log (disable_logs = true). Bật lên để nếu mất display
 -- hay crash backend thì còn bằng chứng — đúng cách đã dùng để tìm ra nguyên nhân
 -- login loop 13/07 (AQ_DRM_DEVICES + by-path, xem modules/env.lua).
 --
 -- Log nằm ở: $XDG_RUNTIME_DIR/hypr/<instance>/hyprland.log
--- TẮT LẠI sau khi xong Phase 2: đổi về true (hoặc xoá block này).
+-- Đang TẮT (mặc định Hyprland). Bật khi cần chẩn đoán: disable_logs = false,
+-- rồi `hyprctl reload`. Log: $XDG_RUNTIME_DIR/hypr/<instance>/hyprland.log
+-- LƯU Ý khi đọc: log có byte nhị phân → `grep` im lặng bỏ qua cả file, phải `grep -a`.
 hl.config({
     debug = {
-        disable_logs = false,
+        disable_logs = true,
     },
 })

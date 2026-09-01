@@ -48,7 +48,6 @@ sudo systemctl enable --now fcitx5-lotus-server@$USER.service   # see IME sectio
 | Editors | `nvim` `nano` |
 | Input (Vietnamese IME) | `fcitx5` |
 | Misc | `bash` `git` |
-| `~/.local/bin` overrides | `localbin` |
 | Fonts | `fontconfig` |
 | GTK theme (generated) | `theme` |
 | systemd user units | `systemd` |
