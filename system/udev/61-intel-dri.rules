@@ -1,0 +1,19 @@
+# Symlink ổn định, KHÔNG chứa dấu ':' cho iGPU Intel → /dev/dri/intel
+#
+# Dùng cho AQ_DRM_DEVICES khi muốn ép Hyprland chỉ render trên iGPU (bước 3c).
+#
+# TẠI SAO PHẢI LÀ SYMLINK, không phải by-path hay cardN:
+#   - aquamarine tách danh sách thiết bị bằng dấu ':'. Tên by-path
+#     (/dev/dri/by-path/pci-0000:00:02.0-card) đầy ':' → bị xé thành rác →
+#     "Found no gpus to use" → CBackend::create() failed → LOGIN LOOP.
+#     Đã xảy ra thật 2026-07-13.
+#   - cardN thì colon-free nhưng máy này đánh số KHÔNG ổn định: NVIDIA quan sát
+#     được ở cả card0 lẫn card2 giữa các lần boot (2026-09-01 đo: card0=nvidia
+#     01:00.0, card1=i915 00:02.0 — ngược với lần đo 07/2026).
+#
+# ⚠ TRƯỚC KHI set AQ_DRM_DEVICES: verify `ls -l /dev/dri/intel` đã tồn tại.
+#   hyprctl reload KHÔNG nạp lại env → config hỏng nằm im tới lần login kế tiếp.
+# ⚠ Máy CÓ mux BIOS. Ở mode Discrete iGPU tắt hẳn → symlink này biến mất →
+#   login loop. Đổi mode BIOS thì phải bỏ AQ_DRM_DEVICES trước.
+
+SUBSYSTEM=="drm", KERNEL=="card*", ATTRS{vendor}=="0x8086", SYMLINK+="dri/intel"

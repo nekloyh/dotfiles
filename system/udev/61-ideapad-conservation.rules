@@ -1,0 +1,6 @@
+# Conservation mode: dừng sạc ở ~60% để cứu tuổi thọ pin.
+# Pin đo 2026-09-01: health 82,66% (66130/80000 mWh), 450 cycle, kẹt 95%
+# ở trạng thái "Not charging" — điều kiện tệ nhất cho Li-poly.
+# ĐÁNH ĐỔI: rút máy đi chỉ còn ~60% pin.
+# Tắt: echo 0 | sudo tee /sys/bus/platform/drivers/ideapad_acpi/VPC2004:00/conservation_mode
+ACTION=="add|change", SUBSYSTEM=="platform", KERNEL=="VPC2004:00", ATTR{conservation_mode}="1"

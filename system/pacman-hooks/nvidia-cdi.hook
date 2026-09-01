@@ -1,0 +1,24 @@
+# Sinh lại /etc/cdi/nvidia.yaml sau mỗi lần nâng cấp driver NVIDIA.
+#
+# TẠI SAO: /etc/cdi/nvidia.yaml HARDCODE đường dẫn thư viện kèm số phiên bản
+# (vd .../libnvidia-ml.so.580.173.02). Nâng driver mà không sinh lại file này
+# thì `docker run --gpus all` gãy IM LẶNG — container khởi động được nhưng
+# không thấy GPU, hoặc lỗi mount khó hiểu. Không có hook nào của gói lo việc
+# này (kiểm 2026-09-01: /etc/pacman.d/hooks chỉ có nvidia.hook lo initramfs).
+
+[Trigger]
+Operation=Install
+Operation=Upgrade
+Type=Package
+Target=nvidia-utils
+Target=nvidia-open
+Target=nvidia-open-dkms
+Target=nvidia-dkms
+Target=nvidia-580xx-utils
+Target=nvidia-container-toolkit
+
+[Action]
+Description=Sinh lại CDI spec cho NVIDIA (/etc/cdi/nvidia.yaml)
+When=PostTransaction
+Depends=nvidia-container-toolkit
+Exec=/usr/bin/nvidia-ctk cdi generate --output=/etc/cdi/nvidia.yaml

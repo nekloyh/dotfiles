@@ -1,0 +1,3 @@
+# Thư mục này KHÔNG phải stow package (file /etc, PKGBUILD…).
+# Regex dưới khớp MỌI thứ nên `stow system` thành no-op thay vì rải rác vào $HOME.
+.*

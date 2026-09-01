@@ -51,7 +51,8 @@ sudo systemctl enable --now fcitx5-lotus-server@$USER.service   # see IME sectio
 | Fonts | `fontconfig` |
 | GTK theme (generated) | `theme` |
 | systemd user units | `systemd` |
-| Package sources | `pkg` |
+| Package sources (**không stow**) | `pkg` |
+| File `/etc` cần sudo (**không stow**) | `system` |
 
 ## Dependencies (Arch/CachyOS names)
 
