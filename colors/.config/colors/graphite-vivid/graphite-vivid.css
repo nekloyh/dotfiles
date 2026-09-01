@@ -20,7 +20,7 @@
 @define-color base04          #070709;
 @define-color base03          #11131a;
 @define-color base02          #1a1c22;
-@define-color base01          #595e63;
+@define-color base01          #676c72;
 @define-color base00          #696e73;
 @define-color base0           #969ca0;
 @define-color base1           #b0b5b9;
@@ -42,7 +42,7 @@
 @define-color bg-statusline   #1a1c22;
 @define-color bg-sidebar      #0c0d10;
 @define-color bg-float        #0c0d10;
-@define-color border          #363b46;
+@define-color border          #5c626e;
 @define-color black           #020203;
 
 /* Foregrounds */
@@ -52,7 +52,7 @@
 @define-color subtext0        #969ca0;
 @define-color overlay2        #7d8388;
 @define-color overlay1        #696e73;
-@define-color overlay0        #595e63;
+@define-color overlay0        #676c72;
 @define-color fg              #c8ccd0;
 @define-color fg-float        #c8ccd0;
 
@@ -92,6 +92,7 @@
 @define-color violet          #8388e8;
 @define-color violet50        #ecedff;
 @define-color violet100       #d4d7ff;
+@define-color violet_fg       #9298f9;  /* violet-làm-CHỮ: giữ chroma của violet500, đạt 7.14:1 (AAA) */
 @define-color violet300       #a5a9ee;
 @define-color violet500       #8388e8;
 @define-color violet700       #4e54c5;

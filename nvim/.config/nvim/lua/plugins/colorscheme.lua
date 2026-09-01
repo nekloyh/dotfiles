@@ -65,7 +65,7 @@ local function apply_light(colors, vivid)
 	-- Nền/chữ theo công thức light của plugin (giá trị lấy từ ramp GỐC)
 	colors.bg = vivid.base3 -- #ece8dc — cream graphite
 	colors.bg_highlight = vivid.base2 -- #d9dedc
-	colors.fg = vivid.base01 -- #595e63 — mực xám đậm
+	colors.fg = vivid.base01 -- #676c72 — mực xám đậm (nâng L cho sàn 3.5:1)
 	-- Token phụ plugin đã tính TRƯỚC on_colors trên palette cũ → tính lại
 	colors.border = colors.base02
 	colors.bg_popup = colors.base04

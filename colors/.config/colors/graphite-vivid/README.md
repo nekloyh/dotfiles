@@ -46,9 +46,10 @@ proper. The dropped *Solarized Osaka* prefix reflects that.
 | surface1 | `#22252c` |
 | surface2 | `#2c303a` |
 | surface3 | `#3a3e4a` |
-| border | `#363b46` |
+| border | `#5c626e` |
 | text | `#c8ccd0` |
 | primary / violet | `#8388e8` |
+| violet_fg (violet làm CHỮ) | `#9298f9` |
 | info / blue | `#3aabf4` |
 | hint / cyan | `#39c0b4` |
 | warning / yellow | `#e3b42c` |

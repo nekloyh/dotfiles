@@ -102,11 +102,32 @@ waybar_body = f"""                // >>> gv-mirror (regen: render-mirrors.py)
 # wrapper marker lines from replace so we don't duplicate.
 waybar_inner = "\n".join(waybar_body.split("\n")[1:-1])
 
+# ---------------------------------------------------------------- FZF (zsh + fish)
+# FZF_DEFAULT_OPTS phải nội suy hex trực tiếp (fzf không đọc CSS/TOML). Trước đây
+# block này được hardcode NHÂN ĐÔI ở zsh/.zshrc và fish/config.fish, và đợt
+# rebalance palette 2026-07 bỏ sót cả hai -> kẹt ở thế hệ màu cũ suốt 2 tháng.
+def fzf_lines():
+    return [
+        f"  --color=fg:{c('text')},bg:{c('base')},hl:{c('yellow')}",
+        f"  --color=fg+:{c('text_bright')},bg+:{c('selection')},hl+:{c('yellow300')}",
+        f"  --color=info:{c('cyan')},prompt:{c('violet')},pointer:{c('magenta')}",
+        f"  --color=marker:{c('green')},spinner:{c('orange')},header:{c('cyan300')}",
+        f"  --color=border:{c('border')},gutter:{c('base')}",
+    ]
+
+_common = ["  --height=40%", "  --layout=reverse", "  --border", "  --info=inline"] + fzf_lines()
+fzf_zsh  = 'export FZF_DEFAULT_OPTS="\n' + "\n".join(_common) + '\n"'
+fzf_fish = 'set -gx FZF_DEFAULT_OPTS "\n' + "\n".join(_common) + '\n"'
+
 print("Regenerating mirrors from graphite-vivid.sh:")
 replace_between(f"{HOME}/.config/starship/starship.toml",
                 "# >>> gv-mirror", "# <<< gv-mirror", starship_body)
 replace_between(f"{HOME}/.config/waybar/config.jsonc",
                 "// >>> gv-mirror", "// <<< gv-mirror", waybar_inner)
+replace_between(f"{HOME}/.config/zsh/.zshrc",
+                "# >>> gv-mirror fzf", "# <<< gv-mirror fzf", fzf_zsh)
+replace_between(f"{HOME}/.config/fish/config.fish",
+                "# >>> gv-mirror fzf", "# <<< gv-mirror fzf", fzf_fish)
 
 # ---------------------------------------------------------------- Reference
 print("\nManual-sync reference (interleaved alpha/decimal — paste as needed):")

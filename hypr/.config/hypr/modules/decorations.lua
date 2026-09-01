@@ -9,9 +9,11 @@ local c = require("modules/colors")
 -- ngữ nghĩa accent trên waybar: violet = identity/focus, orange = group.
 -- Bản gradient cũ (violet→blue / orange→yellow 45deg): xem git log file này.
 local activeBorderColor   = c.primary    -- rgb(8388E8) — tím đặc
-local inactiveBorderColor = "rgba(" .. c.overlay1Alpha .. "55)"
+-- Màu ĐẶC, không alpha: overlay1@0x55 chỉ đạt 1.42:1 trên base — dưới ngưỡng
+-- WCAG 1.4.11 (>=3:1 cho ranh giới UI phi văn bản). $border mới #5C626E = 3.03:1.
+local inactiveBorderColor = c.border
 local groupActiveColor    = c.secondary  -- rgb(EA7B47) — cam đặc
-local groupInactiveColor  = "rgba(" .. c.overlay1Alpha .. "55)"
+local groupInactiveColor  = c.border
 
 hl.config({
     general = {
