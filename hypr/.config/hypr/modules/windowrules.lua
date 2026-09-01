@@ -89,6 +89,19 @@ hl.window_rule({
     workspace = "special:magic",
 })
 
+-- Shadow chỉ cho cửa sổ FLOAT.
+-- Lý do: shadow.range = 12 lớn gấp 3 lần gaps_in = 4, nên trong lưới tiled bóng
+-- của hai cửa sổ kề nhau chồng HOÀN TOÀN lên nhau — đọc ra là vệt bẩn chứ không
+-- phải chiều sâu. Bóng chỉ có nghĩa khi có nền để đổ lên; trong lưới tiled thì
+-- "nền" chính là cửa sổ bên cạnh. Bỏ ở đây trả lại cho bóng đúng một nghĩa:
+-- thứ gì có bóng là thứ NỔI LÊN TRÊN (dialog, pavucontrol, PiP, scratchpad).
+-- Tín hiệu focus của cửa sổ tiled do decoration.glow lo (xem decorations.lua).
+hl.window_rule({
+    name  = "no-shadow-tiled",
+    match = { float = false },
+    no_shadow = true,
+})
+
 -- Smart gaps: no gaps when only 1 tiled window or fullscreen
 hl.workspace_rule({ workspace = "w[tv1]", gaps_out = 0, gaps_in = 0 })
 hl.workspace_rule({ workspace = "f[1]",   gaps_out = 0, gaps_in = 0 })
@@ -118,7 +131,10 @@ hl.layer_rule({
 
 hl.layer_rule({
     match = { namespace = "walker" },
-    no_anim = true,
+    -- no_anim ĐÃ BỎ: walker là bề mặt được gọi ra có ý thức nhiều nhất trong
+    -- ngày, mà lại là bề mặt duy nhất xuất hiện không một chuyển động nào.
+    -- Giờ nó dùng layersIn (easeOutExpo 220ms, popin 92%) — 80% quãng đường
+    -- xong ở 51ms nên KHÔNG chậm hơn về cảm giác, chỉ là có đà tới.
     blur = true,
     ignore_alpha = 0.1,
 })
