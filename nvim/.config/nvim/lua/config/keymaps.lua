@@ -50,9 +50,19 @@ keymap.set("n", "<C-w><right>", "<C-w>>")
 keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
 
--- Diagnostics
+-- Di chuyển giữa split nvim VÀ pane tmux bằng cùng một phím
+-- (smart-splits + block is_vim trong tmux.conf; diagnostic next dùng ]d)
+keymap.set("n", "<C-h>", function()
+	require("smart-splits").move_cursor_left()
+end, opts)
 keymap.set("n", "<C-j>", function()
-	vim.diagnostic.goto_next()
+	require("smart-splits").move_cursor_down()
+end, opts)
+keymap.set("n", "<C-k>", function()
+	require("smart-splits").move_cursor_up()
+end, opts)
+keymap.set("n", "<C-l>", function()
+	require("smart-splits").move_cursor_right()
 end, opts)
 
 keymap.set("n", "<leader>r", function()

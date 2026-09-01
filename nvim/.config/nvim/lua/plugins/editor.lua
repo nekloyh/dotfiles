@@ -2,6 +2,12 @@ return {
 	-- flash.nvim tắt: prefix `s` đã dành cho split/di chuyển cửa sổ
 	{ "folke/flash.nvim", enabled = false },
 
+	-- Điều hướng liền mạch nvim ⇆ tmux pane (cặp với block is_vim trong tmux.conf)
+	{
+		"mrjones2014/smart-splits.nvim",
+		opts = {},
+	},
+
 	{
 		"brenoprata10/nvim-highlight-colors",
 		event = "BufReadPre",

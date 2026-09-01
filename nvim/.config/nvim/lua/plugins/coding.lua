@@ -47,5 +47,10 @@ return {
 		end,
 	},
 
-
+	-- Mở .ipynb như plain text hai chiều qua jupytext CLI (`uv tool install jupytext`)
+	{
+		"GCBallesteros/jupytext.nvim",
+		lazy = false,
+		opts = {},
+	},
 }
