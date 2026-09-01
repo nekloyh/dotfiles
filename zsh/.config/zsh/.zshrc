@@ -175,6 +175,14 @@ alias gcm='git commit -m'
 alias gl='git log --oneline --graph --decorate'
 alias gst='git stash'
 
+# Parity với fish: 4 abbr này chỉ có bên fish (xem README "Shell parity").
+alias fcf='nvim ~/.config/fish/config.fish'
+alias gpl='git pull'
+alias gs='git status'
+# sfr: bên fish là 'source ~/.config/fish/config.fish'. Sao chép nguyên văn sang
+# zsh sẽ nạp cú pháp fish vào zsh -> lỗi. Giữ TÊN, đổi cho đúng shell.
+alias sfr='source ${ZDOTDIR:-$HOME/.config/zsh}/.zshrc'
+
 # ── Nhắc ~/Dotfiles chưa commit/push ─────────────────────────────────────────
 # Đặt $DOTFILES_DIRTY cho [env_var.DOTFILES_DIRTY] của starship. Chi phí
 # (git status ~2ms + rev-list ~1ms) được throttle 300s nên biên độ trên prompt

@@ -105,10 +105,15 @@ alias semantics, and the `hcf` shortcut all had to be fixed in both shells. So:
   must mean the same thing in both. Fish's `conf.d/abbreviations.fish` is the
   source of truth for the git shortcuts; oh-my-zsh's 250 aliases are overridden
   where they collide (see the block near `starship init zsh`).
+- **Parity means same name, same intent — not blind copying.** `sfr` reloads the
+  shell's own rc, so it is `source config.fish` in fish and `source .zshrc` in
+  zsh. Copying the fish body into zsh would feed fish syntax to zsh.
 - Before finishing a change that touches shell config, diff the two:
 
 ```sh
-diff <(fish -c 'abbr --list | sort') <(zsh -ic 'alias' 2>/dev/null | cut -d= -f1 | sort)
+# fish -ic, not -c: conf.d/ is only sourced for interactive shells
+diff <(fish -ic 'abbr --list' 2>/dev/null | sort) \
+     <(zsh  -ic 'alias'       2>/dev/null | cut -d= -f1 | sort) | grep '^<'
 ```
 
 ### Hyprland config: Lua only, no hyprlang fallback (2026-09-01)
