@@ -1,12 +1,60 @@
 [user]
 	name = nekloyh
-    email = nlminky04@gmail.com
-    
+	email = nlminky04@gmail.com
+
 [core]
 	excludesfile = ~/.config/git/ignore
+
 [init]
 	defaultBranch = main
+
 [push]
 	autoSetupRemote = true
+
 [credential]
-	helper = store
+	# libsecret thay cho `store` (2026-09-01): `store` ghi PAT dạng plaintext vào
+	# ~/.git-credentials. gnome-keyring + libsecret đã cài sẵn nên không có lý do dùng plaintext.
+	helper = /usr/lib/git-core/git-credential-libsecret
+
+[diff]
+	# histogram: bản cải tiến của patience, tách hunk chuẩn hơn ở code có block lặp
+	algorithm = histogram
+	# tô riêng dòng bị DI CHUYỂN vs dòng thật sự thêm/xoá — đọc refactor dễ hơn hẳn
+	colorMoved = default
+	colorMovedWS = allow-indentation-change
+
+[merge]
+	# zdiff3: hiện cả base chung trong conflict marker, bỏ phần trùng nhau ở 2 nhánh
+	conflictstyle = zdiff3
+
+[rerere]
+	# ghi nhớ cách giải conflict đã làm, tự áp lại khi gặp đúng conflict đó
+	enabled = true
+	autoupdate = true
+
+[fetch]
+	prune = true
+	pruneTags = true
+
+[commit]
+	# nhét diff vào editor lúc viết commit message — viết body root-cause dễ hơn
+	verbose = true
+
+[pull]
+	rebase = true
+
+[rebase]
+	autosquash = true
+	autostash = true
+
+[branch]
+	sort = -committerdate
+
+[tag]
+	sort = -version:refname
+
+[column]
+	ui = auto
+
+[help]
+	autocorrect = prompt
