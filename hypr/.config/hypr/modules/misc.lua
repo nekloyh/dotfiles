@@ -17,6 +17,15 @@ hl.config({
         animate_manual_resizes = false,
 
         middle_click_paste = false,
+
+        -- Đánh thức màn hình khi DPMS off. CẢ HAI mặc định của Hyprland là
+        -- false — nghĩa là màn tắt xong thì gõ phím / rê chuột KHÔNG bật lại
+        -- được, chỉ `dispatch dpms` mới bật. Đó là lý do "tắt màn tạm thời rồi
+        -- mở lại bị lỗi": không phải driver hỏng, mà là không có đường thức.
+        -- Đo 2026-09-01: chu trình dpms off->on modeset lại eDP-1 2560x1600@165
+        -- sạch sẽ, kernel log không một lỗi drm/i915/nvidia.
+        key_press_enables_dpms = true,
+        mouse_move_enables_dpms = true,
         background_color = c.crust,
 
         -- Nếu hyprlock crash, phiên lock mới được phép tiếp quản thay vì
