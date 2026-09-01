@@ -48,6 +48,10 @@ sudo systemctl enable --now fcitx5-lotus-server@$USER.service   # see IME sectio
 | Editors | `nvim` `nano` |
 | Input (Vietnamese IME) | `fcitx5` |
 | Misc | `bash` `git` |
+| Fonts | `fontconfig` |
+| GTK theme (generated) | `theme` |
+| systemd user units | `systemd` |
+| Package sources | `pkg` |
 
 ## Dependencies (Arch/CachyOS names)
 
@@ -81,6 +85,51 @@ The `fcitx5` package carries the config (incl. `conf/lotus.conf` → `Mode="Uinp
   (system unit from the `fcitx5-lotus` package). Enable it:
   `sudo systemctl enable --now fcitx5-lotus-server@$USER.service`. If uinput typing
   misbehaves in an app, fall back to `Mode="Preedit"` in `conf/lotus.conf`.
+
+## Architecture decisions
+
+### Hyprland config: Lua only, no hyprlang fallback (2026-09-01)
+
+`hyprland.conf` + `modules/*.conf` used to be kept as a rollback layer beside the
+Lua config. Every single `.conf` had drifted — last touched `2026-07-13` while
+every `.lua` moved on to `2026-08-22` — so the "safety net" would have restored a
+**different desktop**, silently. Worse than no net.
+
+They are removed. Rollback is git:
+
+```sh
+git checkout hypr-hyprlang-fallback -- hypr/     # tag = last commit where .conf was correct
+mv ~/.config/hypr/hyprland.lua ~/.config/hypr/hyprland.lua.off
+hyprctl reload full-reset                        # only way to switch provider live
+```
+
+Under provider `lua`, `hyprctl keyword` is refused and `hyprctl dispatch <old-name>`
+exits 7 — scripts must use `hyprctl eval 'hl.config({...})'` and
+`hyprctl dispatch 'hl.dsp.*(...)'`.
+
+### GTK theme is generated, not hand-edited
+
+`theme/.themes/Graphite-Vivid-Dark/` and `gtk/.config/gtk-4.0/graphite-vivid-theme.css`
+are **generated** from the upstream `graphite-gtk-theme` package. Do not edit by hand —
+regenerate:
+
+```sh
+python3 ~/Dotfiles/theme/regen-from-upstream.py
+```
+
+The script carries a fixed `SEMANTIC` map (upstream hex → palette token) plus an
+OKLab-nearest fallback for colours that appear after an upstream update; it prints
+any colour that hit the fallback so it can be reviewed and pinned. Assets are copied
+in as **real files**, so the theme does not depend on `graphite-gtk-theme` staying
+installed.
+
+### CSS `@import` uses relative paths
+
+GTK resolves `@import` against the path it was *given*, not the resolved symlink
+target — verified empirically (a deliberately broken relative import reports
+`Error opening file /home/<user>/.config/colors/...`). So `../colors/graphite-vivid/…`
+works through the stow symlink and the repo carries no absolute `/home/<user>` paths
+in CSS. Same for waybar's `include`, which accepts `~`.
 
 ## ⚠️ Machine-specific — review after cloning
 

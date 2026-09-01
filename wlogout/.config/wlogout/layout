@@ -6,7 +6,7 @@
 }
 {
     "label" : "hibernate",
-    "action" : "systemctl hibernate",
+    "action" : "notify-send -u critical -a wlogout 'Hibernate đã tắt' 'hibernate.target đang masked có chủ đích (lỗi resume trên hybrid GPU). Dùng Shutdown, hoặc bỏ mask: sudo systemctl unmask hibernate.target'",
     "text" : "Hibernate",
     "keybind" : "h"
 }
@@ -24,7 +24,7 @@
 }
 {
     "label" : "suspend",
-    "action" : "systemctl suspend",
+    "action" : "notify-send -u critical -a wlogout 'Suspend đã tắt' 'suspend.target đang masked có chủ đích (lỗi resume trên hybrid GPU). Dùng Lock (màn vẫn sáng) hoặc Shutdown.'",
     "text" : "Suspend",
     "keybind" : "u"
 }

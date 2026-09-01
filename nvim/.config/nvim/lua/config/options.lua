@@ -56,3 +56,9 @@ vim.filetype.add({
 vim.g.lazyvim_prettier_needs_config = true
 vim.g.lazyvim_picker = "telescope"
 vim.g.lazyvim_cmp = "blink.cmp"
+
+-- Python LSP: LazyVim mặc định `pyright` (bản đóng của Microsoft, thiếu nhiều
+-- tính năng ở bản free). basedpyright là fork mã nguồn mở, đầy đủ inlay hints +
+-- strict mode. Phải set TRƯỚC khi extras.lang.python load nên đặt ở options.lua.
+vim.g.lazyvim_python_lsp = "basedpyright"
+vim.g.lazyvim_python_ruff = "ruff"
