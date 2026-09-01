@@ -1,4 +1,4 @@
-/* Graphite Vivid — palette mirrored from ~/.config/colors/graphite-vivid/graphite-vivid.css */
+/* Graphite Vivid — palette @import TRỰC TIẾP từ ~/.config/colors/graphite-vivid/ */
 /* ── Thang radius (P3) ────────────────────────────────────────────────────────
  * GTK3 CSS KHÔNG có custom property, nên thang này là quy ước chứ không phải
  * biến. Chỉ dùng 4 bậc, đừng thêm giá trị mới:
@@ -29,11 +29,17 @@
  * Đổ bóng rgba(0,0,0,X) và `opacity:` của element là TRỤC RIÊNG — không nằm
  * trong thang này, đừng gộp vào.
  * ─────────────────────────────────────────────────────────────────────────── */
-@define-color window_bg_color #1a1c22;  /* surface0 */
-@define-color accent_bg_color #8388e8;  /* violet (primary) */
-@define-color theme_fg_color  #c8ccd0;  /* text */
-@define-color error_bg_color  #ea6b62;  /* red */
-@define-color error_fg_color  #11131a;  /* base (dark text on bright error) */
+/* Palette lấy TRỰC TIẾP từ nguồn canonical, không copy hex nữa.
+ * Đường dẫn tương đối đi qua symlink Stow được (giải theo path chữ, không
+ * canonicalize) — swaync và waybar đã chạy đúng cùng pattern này. */
+@import url("../../../colors/graphite-vivid/graphite-vivid.css");
+
+/* Alias tool-specific — chỉ ánh xạ, không định nghĩa màu mới */
+@define-color window_bg_color @surface0;
+@define-color accent_bg_color @violet;
+@define-color theme_fg_color  @text;
+@define-color error_bg_color  @red;
+@define-color error_fg_color  @base;
 
 * {
   all: unset;
@@ -41,7 +47,7 @@
 
 popover {
   background: lighter(@window_bg_color);
-  border: 1px solid darker(@accent_bg_color);
+  border: 1px solid @border;
   border-radius: 12px;
   padding: 10px;
 }
@@ -59,13 +65,13 @@ scrollbar {
 }
 
 .box-wrapper {
-  box-shadow:
-    0 19px 38px rgba(0, 0, 0, 0.3),
-    0 15px 12px rgba(0, 0, 0, 0.22);
+  /* Cùng một ngôn ngữ bóng với swaync .control-center. Bản cũ là Material
+     elevation-16 (0 19px 38px + 0 15px 12px) — nặng gấp mấy lần phần còn lại. */
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
   background: alpha(@window_bg_color, 0.92);
   padding: 20px;
   border-radius: 16px;
-  border: 1px solid darker(@accent_bg_color);
+  border: 1px solid @border;
   font-family: "JetBrainsMono Nerd Font";
   font-size: 13px;
 }
