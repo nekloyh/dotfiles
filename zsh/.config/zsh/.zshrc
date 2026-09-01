@@ -120,7 +120,7 @@ alias zrc='nvim ~/.config/zsh/.zshrc'
 
 alias ncf='nvim ~/.config/nvim/init.lua'
 alias acf='nvim ~/.config/alacritty/alacritty.toml'
-alias hcf='nvim ~/.config/hypr/hyprland.conf'
+alias hcf='nvim ~/.config/hypr/hyprland.lua'
 alias nv='nvim'
 
 alias docs='cd ~/Documents'
@@ -163,6 +163,18 @@ fi
 # starship prompt
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 if command -v starship >/dev/null 2>&1; then
+# ── Ghi đè alias git của oh-my-zsh cho khớp abbr fish ─────────────────────────
+# oh-my-zsh (qua gói cachyos-zsh-config) nạp 250 alias git, trong đó 5 cái TRÙNG
+# TÊN với abbr tự viết trong fish/conf.d/abbreviations.fish nhưng NGƯỢC nghĩa.
+# Nguy hiểm nhất là `gcm`: fish = `git commit -m`, oh-my-zsh = `git checkout main`
+# — gõ theo thói quen ở nhầm shell là nhảy nhánh thay vì commit.
+# Nguồn sự thật là abbr fish (do user viết); zsh khớp theo.
+alias gc='git commit'
+alias gca='git commit --amend'
+alias gcm='git commit -m'
+alias gl='git log --oneline --graph --decorate'
+alias gst='git stash'
+
   eval "$(starship init zsh)"
 
   # Minimal-unique abbreviated cwd: mỗi thư mục cha rút xuống tiền tố ngắn nhất

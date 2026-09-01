@@ -16,7 +16,7 @@ abbr -a zrc 'nvim ~/.config/zsh/.zshrc'
 abbr -a fcf 'nvim ~/.config/fish/config.fish'
 abbr -a ncf 'nvim ~/.config/nvim/init.lua'
 abbr -a acf 'nvim ~/.config/alacritty/alacritty.toml'
-abbr -a hcf 'nvim ~/.config/hypr/hyprland.conf'
+abbr -a hcf 'nvim ~/.config/hypr/hyprland.lua'
 abbr -a sfr 'source ~/.config/fish/config.fish'
 
 # Git
