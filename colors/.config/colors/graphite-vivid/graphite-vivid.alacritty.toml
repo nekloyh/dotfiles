@@ -52,7 +52,7 @@ background = "#e3b42c"          # yellow — all matches
 
 [colors.search.focused_match]
 foreground = "#11131a"
-background = "#ea7b47"          # orange — current match, hotter than yellow
+background = "#e58130"          # orange — current match, hotter than yellow
 
 
 [colors.hints.start]

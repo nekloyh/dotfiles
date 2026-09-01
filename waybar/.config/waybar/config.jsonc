@@ -364,13 +364,13 @@
             "on-scroll": 1,
             // Hex bắt buộc hardcode (Pango markup không đọc @define-color).
             // SYNC TAY với ~/.config/colors/graphite-vivid/ khi đổi palette:
-            // violet #8388e8 · text #c8ccd0 · cyan #39c0b4 · orange #ea7b47 · red #ea6b62
+            // violet #8388e8 · text #c8ccd0 · cyan #39c0b4 · orange #e58130 · red #ea6b62
             "format": {
                 // >>> gv-mirror (regen: render-mirrors.py)
                 "months":   "<span color='#8388e8'><b>{}</b></span>",
                 "days":     "<span color='#c8ccd0'>{}</span>",
                 "weeks":    "<span color='#39c0b4'><i>w{}</i></span>",
-                "weekdays": "<span color='#ea7b47'><b>{}</b></span>",
+                "weekdays": "<span color='#e58130'><b>{}</b></span>",
                 "today":    "<span color='#ea6b62'><b><u>{}</u></b></span>"
                 // <<< gv-mirror
             }

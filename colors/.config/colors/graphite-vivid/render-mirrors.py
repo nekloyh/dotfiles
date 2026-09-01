@@ -135,9 +135,12 @@ print(f"  SwayNC ~/.config/swaync/style.css  :root")
 print(f"    --cc-bg: rgba({rgb('base')}, 0.92)         base @92%")
 print(f"    --noti-bg: {rgb('surface0')}               surface0")
 print(f"    --noti-bg-darker: rgb({rgb('mantle')})     mantle")
-print(f"    --noti-bg-hover: rgba({rgb('surface1')}, 0.75)")
-print(f"    --noti-bg-focus: rgba({rgb('violet')}, 0.16)   violet")
-print(f"    --noti-close-bg-hover: rgba({rgb('red')}, 0.20) red")
+# Alpha ĐÃ chuẩn hoá về thang 7 bậc (.15 .22 .30 .45 .55 .70 .92) — trước đây
+# khối reference này in 0.75/0.16/0.20 trong khi style.css thật là 0.70/0.15/0.22,
+# và đó CHÍNH LÀ nguồn gây drift comment. Sửa ở đây thì hết tái phát.
+print(f"    --noti-bg-hover: rgba({rgb('surface1')}, 0.70)")
+print(f"    --noti-bg-focus: rgba({rgb('violet')}, 0.15)   violet")
+print(f"    --noti-close-bg-hover: rgba({rgb('red')}, 0.22) red")
 print(f"    --text-color: {c('text')}  --text-color-disabled: {c('overlay2')}  --bg-selected: {c('violet')}")
 print(f"  tmux ~/.config/tmux/tmux.conf (inline fg=/bg= trong status format)")
-print(f"    accent bar violet {c('violet')} · window-current green {c('green')} · clock {c('orange')} · host {c('blue')} · date {c('violet300')}")
+print(f"    accent bar violet {c('violet')} · window-current {c('violet')} · clock {c('orange')} · host {c('blue')} · date {c('violet300')}")

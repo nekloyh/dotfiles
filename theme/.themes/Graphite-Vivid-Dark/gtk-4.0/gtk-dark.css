@@ -994,8 +994,8 @@ button.card:checked.has-open-popup {
 }
 
 button.card:drop(active) {
-  color: #ea7b47;
-  box-shadow: inset 0 0 0 1px #ea7b47;
+  color: #e58130;
+  box-shadow: inset 0 0 0 1px #e58130;
 }
 
 stackswitcher > button > label {
@@ -2881,8 +2881,8 @@ tabthumbnail > box {
 }
 
 tabthumbnail:drop(active) {
-  box-shadow: inset 0 0 0 2px alpha(#ea7b47, 0.4);
-  background-color: alpha(#ea7b47, 0.1);
+  box-shadow: inset 0 0 0 2px alpha(#e58130, 0.4);
+  background-color: alpha(#e58130, 0.1);
 }
 
 tabthumbnail .needs-attention:dir(ltr) {
@@ -7219,7 +7219,7 @@ carousel.card {
 }
 
 .context-tile-lozenge.details-rating-15 {
-  color: #ff9c6f;
+  color: #faa161;
   background-color: rgba(255, 152, 0, 0.15);
 }
 
@@ -7493,13 +7493,13 @@ avatar.color5 {
 }
 
 avatar.color6 {
-  background-image: linear-gradient(#fbd064, #ea7b47);
-  color: #ffdfc8;
+  background-image: linear-gradient(#fbd064, #e58130);
+  color: #ffdfca;
 }
 
 avatar.color7 {
-  background-image: linear-gradient(#ff9c6f, #ea7b47);
-  color: #ffdfc8;
+  background-image: linear-gradient(#faa161, #e58130);
+  color: #ffdfca;
 }
 
 avatar.color8 {
@@ -7523,7 +7523,7 @@ avatar.color11 {
 }
 
 avatar.color12 {
-  background-image: linear-gradient(#ffb88a, #a27d00);
+  background-image: linear-gradient(#feb889, #a27d00);
   color: #ece8dc;
 }
 
@@ -8054,15 +8054,15 @@ FIXME this is really an API */
 @define-color budgie_tasklist_indicator_color_active white;
 @define-color budgie_tasklist_indicator_color_active_window #7d8388;
 @define-color budgie_tasklist_indicator_color_attention #e3b42c;
-@define-color STRAWBERRY_100 #ff9c6f;
-@define-color STRAWBERRY_300 #ea7b47;
+@define-color STRAWBERRY_100 #faa161;
+@define-color STRAWBERRY_300 #e58130;
 @define-color STRAWBERRY_500 #ea6b62;
-@define-color STRAWBERRY_700 #ab4400;
+@define-color STRAWBERRY_700 #9f5000;
 @define-color STRAWBERRY_900 #af2c2b;
 @define-color ORANGE_100 #ffe999;
 @define-color ORANGE_300 #fbd064;
 @define-color ORANGE_500 #e3b42c;
-@define-color ORANGE_700 #ea7b47;
+@define-color ORANGE_700 #e58130;
 @define-color ORANGE_900 #a27d00;
 @define-color BANANA_100 #ecffd0;
 @define-color BANANA_300 #d6ffa0;

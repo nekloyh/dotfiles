@@ -17,7 +17,7 @@ set -g fish_color_param         c8ccd0
 set -g fish_color_comment       969ca0 --italics
 set -g fish_color_selection     --background=2e3252
 set -g fish_color_search_match  --background=2e3252
-set -g fish_color_operator      ea7b47
+set -g fish_color_operator      e58130
 set -g fish_color_escape        e36da7
 set -g fish_color_autosuggestion 696e73
 set -g fish_color_valid_path    --underline
@@ -27,7 +27,7 @@ set -g fish_color_user          99be42
 set -g fish_color_host          3aabf4
 set -g fish_color_host_remote   e3b42c
 set -g fish_color_cancel        ea6b62
-set -g fish_color_option        ea7b47
+set -g fish_color_option        e58130
 set -g fish_color_history_current --bold
 
 # Pager (autocomplete dropdown)

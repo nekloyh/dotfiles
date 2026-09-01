@@ -53,7 +53,7 @@ export FZF_DEFAULT_OPTS="
   --color=fg:#c8ccd0,bg:#11131a,hl:#e3b42c
   --color=fg+:#e7e8ea,bg+:#2e3252,hl+:#fbd064
   --color=info:#39c0b4,prompt:#8388e8,pointer:#e36da7
-  --color=marker:#99be42,spinner:#ea7b47,header:#6bdace
+  --color=marker:#99be42,spinner:#e58130,header:#6bdace
   --color=border:#5c626e,gutter:#11131a
 "
 # <<< gv-mirror fzf

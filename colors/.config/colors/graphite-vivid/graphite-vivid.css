@@ -65,14 +65,14 @@
 @define-color yellow700       #a27d00;
 @define-color yellow900       #4a3805;
 @define-color yellow950       #261c02;
-@define-color orange          #ea7b47;
-@define-color orange50        #ffdfc8;
-@define-color orange100       #ffb88a;
-@define-color orange300       #ff9c6f;
-@define-color orange500       #ea7b47;
-@define-color orange700       #ab4400;
-@define-color orange900       #4f2306;
-@define-color orange950       #2a1102;
+@define-color orange          #e58130;
+@define-color orange50        #ffdfca;
+@define-color orange100       #feb889;
+@define-color orange300       #faa161;
+@define-color orange500       #e58130;
+@define-color orange700       #9f5000;
+@define-color orange900       #4e2401;
+@define-color orange950       #2a1101;
 @define-color red             #ea6b62;
 @define-color red50           #ffd6d4;
 @define-color red100          #ffa19e;
@@ -125,7 +125,7 @@
 
 /* Semantic aliases — all vivid, consistent */
 @define-color primary         #8388e8;
-@define-color secondary       #ea7b47;
+@define-color secondary       #e58130;
 @define-color error           #ea6b62;
 @define-color warning         #e3b42c;
 @define-color success         #99be42;
@@ -148,7 +148,7 @@
 @define-color teal            #39c0b4;  /* → cyan (hint) */
 @define-color lavender        #a5a9ee;  /* → violet300 (lighter primary) */
 @define-color maroon          #af2c2b;  /* → red700 (darker red) */
-@define-color peach           #ea7b47;  /* → orange (secondary) */
+@define-color peach           #e58130;  /* → orange (secondary) */
 @define-color rosewater       #ff95c6;  /* → magenta100 (soft pink) */
 @define-color flamingo        #fa8dc1;  /* → magenta300 */
 @define-color pink            #e36da7;  /* → magenta */

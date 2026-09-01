@@ -17,7 +17,7 @@ local activeBorderColor   = c.primary    -- rgb(8388E8) — tím đặc
 --   CR(active/inactive)  1.94:1 -> 3.38:1
 --   dL OKLCH             0.170  -> 0.300
 local inactiveBorderColor = c.surface3
-local groupActiveColor    = c.secondary  -- rgb(EA7B47) — cam đặc
+local groupActiveColor    = c.secondary  -- rgb(E58130) — cam đặc
 local groupInactiveColor  = c.border
 
 hl.config({

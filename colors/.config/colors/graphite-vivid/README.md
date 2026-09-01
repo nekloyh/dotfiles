@@ -55,7 +55,7 @@ proper. The dropped *Solarized Osaka* prefix reflects that.
 | warning / yellow | `#e3b42c` |
 | error / red | `#ea6b62` |
 | success / green | `#99be42` |
-| secondary / orange | `#ea7b47` |
+| secondary / orange | `#e58130` |
 | special / magenta | `#e36da7` |
 | selection | `#2e3252` |
 
