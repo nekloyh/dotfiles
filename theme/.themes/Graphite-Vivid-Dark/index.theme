@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Graphite-Vivid-Dark
+Comment=Graphite-purple-Dark mapped to Graphite Vivid palette
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Graphite-Vivid-Dark
+MetacityTheme=Graphite-Vivid-Dark
+IconTheme=Papirus-Dark
+CursorTheme=Bibata-Modern-Classic

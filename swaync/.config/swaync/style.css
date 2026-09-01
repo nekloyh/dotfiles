@@ -1,5 +1,5 @@
 /* SwayNC — Graphite Vivid, đồng bộ ngôn ngữ pill/card với Waybar.
- * Palette: colors/colors.css → /home/n91ym1nhky/.config/colors/graphite-vivid/graphite-vivid.css */
+ * Palette: colors/colors.css → ../../colors/graphite-vivid/graphite-vivid.css (đường TƯƠNG ĐỐI) */
 @import 'colors/colors.css';
 
 /* SwayNC 0.12 still uses CSS variables in parts of the packaged stylesheet.
@@ -7,7 +7,7 @@
  * sync tay với colors/graphite-vivid/graphite-vivid.css khi đổi palette). */
 :root {
   --cc-bg: rgba(17, 19, 26, 0.92);                /* base #11131a @ 92% */
-  --noti-border-color: rgba(105, 110, 115, 0.20); /* overlay1 #696e73 @ 20% */
+  --noti-border-color: #5c626e;                   /* @border — đặc, 3.03:1 (WCAG 1.4.11) */
   --noti-bg: 26, 28, 34;                          /* surface0 #1a1c22 */
   --noti-bg-alpha: 0.72;
   --noti-bg-darker: rgb(12, 13, 16);              /* mantle #0c0d10 */

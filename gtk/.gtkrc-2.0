@@ -1,19 +1,25 @@
-# DO NOT EDIT! This file will be overwritten by nwg-look.
-# Any customization should be done in ~/.gtkrc-2.0.mine instead.
+# GTK2 settings.
+#
+# File này TỪNG do nwg-look sinh ra (gói đã gỡ khỏi hệ thống 2026), và nằm im ở
+# cấu hình cũ Gruvbox/Rubik/cursor mặc định trong khi GTK3/GTK4/Qt/xsettingsd đều
+# đã chuyển sang Graphite Vivid — nên mọi app GTK2 còn lại (Wine dialog, GIMP 2.x,
+# một số tool Java/Motif) render sai hoàn toàn. Đồng bộ 2026-09-01.
+#
+# Dòng `include "~/.gtkrc-2.0.mine"` cũ trỏ vào file KHÔNG TỒN TẠI -> đã bỏ.
+# Sửa trực tiếp file này (nó được track trong ~/Dotfiles/gtk).
 
-include "/home/n91ym1nhky/.gtkrc-2.0.mine"
-gtk-theme-name="Gruvbox-BL-MB-Dark"
-gtk-icon-theme-name="AdwaitaLegacy"
-gtk-font-name="Rubik 11"
-gtk-cursor-theme-name="default"
+gtk-theme-name="Graphite-Vivid-Dark"
+gtk-icon-theme-name="Papirus-Dark"
+gtk-font-name="Inter 11"
+gtk-cursor-theme-name="Bibata-Modern-Classic"
 gtk-cursor-theme-size=24
 gtk-toolbar-style=GTK_TOOLBAR_ICONS
 gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
 gtk-button-images=0
 gtk-menu-images=0
-gtk-enable-event-sounds=1
+gtk-enable-event-sounds=0
 gtk-enable-input-feedback-sounds=0
 gtk-xft-antialias=1
 gtk-xft-hinting=1
 gtk-xft-hintstyle="hintslight"
-gtk-xft-rgba="rgb"
+gtk-xft-rgba="none"

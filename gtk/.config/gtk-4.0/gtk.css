@@ -7,8 +7,8 @@
  * diff với /usr/share/themes/Graphite-purple-Dark/gtk-4.0/gtk.css.
  * Rollback: xoá 2 file này, tạo lại symlink:
  *   ln -sf /usr/share/themes/Graphite-purple-Dark/gtk-4.0/gtk.css ~/.config/gtk-4.0/gtk.css */
-@import url("file:///home/n91ym1nhky/.config/gtk-4.0/graphite-vivid-theme.css");
-@import url("file:///home/n91ym1nhky/.config/colors/graphite-vivid/graphite-vivid.css");
+@import url("graphite-vivid-theme.css");
+@import url("../colors/graphite-vivid/graphite-vivid.css");
 
 /* Accent */
 @define-color accent_bg_color @violet;
