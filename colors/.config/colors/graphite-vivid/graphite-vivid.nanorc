@@ -25,14 +25,14 @@ set spotlightcolor black,#db3
 set selectedcolor #eee,#335
 # Cột guide (set guidestripe N)                  (surface2 2C303A)
 set stripecolor ,#333
-# Số dòng                                        (overlay1 696E73)
-set numbercolor #667
+# Số dòng                                        (overlay1 72777D)
+set numbercolor #777
 # Phím tắt trong 2 dòng help — violet primary    (primary 8388E8)
 set keycolor #88e
 # Mô tả chức năng trong 2 dòng help              (subtext0 969CA0)
 set functioncolor #999
-# Thanh cuộn                                     (overlay1 696E73)
-set scrollercolor #667
+# Thanh cuộn                                     (overlay1 72777D)
+set scrollercolor #777
 
 # Syntax highlighting mặc định của nano (Arch tắt sẵn). Các file này dùng màu
 # ANSI có tên (red, green, …) → tự ăn theo Graphite Vivid vì Alacritty đã

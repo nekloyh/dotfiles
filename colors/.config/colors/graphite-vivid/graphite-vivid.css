@@ -21,7 +21,7 @@
 @define-color base03          #11131a;
 @define-color base02          #1a1c22;
 @define-color base01          #676c72;
-@define-color base00          #696e73;
+@define-color base00          #72777d;
 @define-color base0           #969ca0;
 @define-color base1           #b0b5b9;
 @define-color base2           #d9dedc;
@@ -51,7 +51,7 @@
 @define-color subtext1        #b0b5b9;
 @define-color subtext0        #969ca0;
 @define-color overlay2        #7d8388;
-@define-color overlay1        #696e73;
+@define-color overlay1        #72777d;
 @define-color overlay0        #676c72;
 @define-color fg              #c8ccd0;
 @define-color fg-float        #c8ccd0;

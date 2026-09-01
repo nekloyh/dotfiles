@@ -7533,7 +7533,7 @@ avatar.color13 {
 }
 
 avatar.color14 {
-  background-image: linear-gradient(#b0b5b9, #696e73);
+  background-image: linear-gradient(#b0b5b9, #72777d);
   color: #d9dedc;
 }
 
@@ -8085,7 +8085,7 @@ FIXME this is really an API */
 @define-color GRAPE_700 #4e54c5;
 @define-color GRAPE_900 #25285b;
 @define-color COCOA_100 #969ca0;
-@define-color COCOA_300 #696e73;
+@define-color COCOA_300 #72777d;
 @define-color COCOA_500 #5c626e;
 @define-color COCOA_700 #3a3e4a;
 @define-color COCOA_900 #2c303a;

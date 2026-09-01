@@ -19,7 +19,7 @@ set -g fish_color_selection     --background=2e3252
 set -g fish_color_search_match  --background=2e3252
 set -g fish_color_operator      e58130
 set -g fish_color_escape        e36da7
-set -g fish_color_autosuggestion 696e73
+set -g fish_color_autosuggestion 72777d
 set -g fish_color_valid_path    --underline
 set -g fish_color_cwd           3aabf4
 set -g fish_color_cwd_root      ea6b62

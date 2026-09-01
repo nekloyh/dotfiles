@@ -43,7 +43,7 @@
   --noti-bg-darker: rgb(12, 13, 16);              /* mantle #0c0d10 */
   --noti-bg-hover: rgba(34, 37, 44, 0.70);        /* surface1 #22252c @ 70% */
   --noti-bg-focus: rgba(131, 136, 232, 0.15);     /* violet #8388e8 @ 15% */
-  --noti-close-bg: rgba(105, 110, 115, 0.22);     /* overlay1 @ 22% */
+  --noti-close-bg: rgba(114, 119, 125, 0.22);     /* overlay1 @ 22% */
   --noti-close-bg-hover: rgba(234, 107, 98, 0.22); /* red #ea6b62 @ 22% */
   --text-color: #c8ccd0;                          /* text */
   --text-color-disabled: #7d8388;                 /* overlay2 */

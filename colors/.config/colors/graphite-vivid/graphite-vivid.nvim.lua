@@ -18,7 +18,7 @@ return {
   base03         = "#11131a",
   base02         = "#1a1c22",
   base01         = "#676c72",
-  base00         = "#696e73",
+  base00         = "#72777d",
   base0          = "#969ca0",
   base1          = "#b0b5b9",
   base2          = "#d9dedc",
@@ -43,7 +43,7 @@ return {
   subtext1       = "#b0b5b9",
   subtext0       = "#969ca0",
   overlay2       = "#7d8388",
-  overlay1       = "#696e73",
+  overlay1       = "#72777d",
   overlay0       = "#676c72",
   selection      = "#2e3252",
 
