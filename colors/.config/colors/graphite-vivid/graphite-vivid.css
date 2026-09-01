@@ -136,8 +136,13 @@
 @define-color selection-text  #e7e8ea;
 
 /* Catppuccin-name compat aliases — for tools/styles authored against Catppuccin.
- * Mapped semantically to nearest Graphite Vivid equivalent so existing CSS
- * (Waybar, SwayNC, wlogout) keeps working without per-file rewrites. */
+ * Mapped semantically to nearest Graphite Vivid equivalent.
+ *
+ * TÌNH TRẠNG sau đợt dọn 2026-09-01: waybar / swaync / wlogout / walker đã
+ * chuyển HẾT sang tên canonical — không file CSS nào còn dùng khối này nữa.
+ * VẪN GIỮ vì: (a) starship.toml cố ý giữ từ vựng này ở namespace riêng của nó,
+ * (b) config mới viết theo Catppuccin cắm vào là chạy được ngay.
+ * Đây là lớp tương thích, KHÔNG phải từ vựng chính — code mới dùng tên canonical. */
 @define-color sapphire        #3aabf4;  /* → blue (info-leaning blue accent) */
 @define-color sky             #76c5ff;  /* → blue300 (lighter info blue) */
 @define-color teal            #39c0b4;  /* → cyan (hint) */

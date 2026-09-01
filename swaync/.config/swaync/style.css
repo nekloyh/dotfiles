@@ -39,12 +39,12 @@
   --cc-bg: rgba(17, 19, 26, 0.92);                /* base #11131a @ 92% */
   --noti-border-color: #5c626e;                   /* @border — đặc, 3.03:1 (WCAG 1.4.11) */
   --noti-bg: 26, 28, 34;                          /* surface0 #1a1c22 */
-  --noti-bg-alpha: 0.72;
+  --noti-bg-alpha: 0.70;
   --noti-bg-darker: rgb(12, 13, 16);              /* mantle #0c0d10 */
-  --noti-bg-hover: rgba(34, 37, 44, 0.70);        /* surface1 #22252c @ 75% */
-  --noti-bg-focus: rgba(131, 136, 232, 0.15);     /* violet #8388e8 @ 16% */
-  --noti-close-bg: rgba(105, 110, 115, 0.22);     /* overlay1 @ 18% */
-  --noti-close-bg-hover: rgba(234, 107, 98, 0.22); /* red #ea6b62 @ 20% */
+  --noti-bg-hover: rgba(34, 37, 44, 0.70);        /* surface1 #22252c @ 70% */
+  --noti-bg-focus: rgba(131, 136, 232, 0.15);     /* violet #8388e8 @ 15% */
+  --noti-close-bg: rgba(105, 110, 115, 0.22);     /* overlay1 @ 22% */
+  --noti-close-bg-hover: rgba(234, 107, 98, 0.22); /* red #ea6b62 @ 22% */
   --text-color: #c8ccd0;                          /* text */
   --text-color-disabled: #7d8388;                 /* overlay2 */
   --bg-selected: #8388e8;                         /* violet */
@@ -55,8 +55,8 @@
   --border-radius: 12px;
   --font-size-body: 12px;
   --font-size-summary: 13px;
-  --mpris-album-art-overlay: rgba(12, 13, 16, 0.70); /* mantle @ 68% */
-  --mpris-button-hover: rgba(131, 136, 232, 0.22);   /* violet @ 18% */
+  --mpris-album-art-overlay: rgba(12, 13, 16, 0.70); /* mantle @ 70% */
+  --mpris-button-hover: rgba(131, 136, 232, 0.22);   /* violet @ 22% */
   --mpris-album-art-icon-size: 96px;
   --mpris-album-art-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
   --widget-volume-row-icon-size: 24px;
@@ -367,8 +367,8 @@ blankwindow,
   margin: -6px;
 }
 
-.widget-volume trough slider:hover  { background-color: @lavender; }
-.widget-volume trough slider:active { background-color: @pink; }
+.widget-volume trough slider:hover  { background-color: @violet300; }
+.widget-volume trough slider:active { background-color: @magenta; }
 
 /* Per-app rows */
 .widget-volume .per-app-volume {

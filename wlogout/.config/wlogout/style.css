@@ -4,18 +4,19 @@
 * {
     background-image: none;
     box-shadow: none;
-    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+    /* 180ms = token hover feedback dùng chung với waybar + swaync */
+    transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
 }
 
 window {
-    background-color: rgba(17, 19, 26, 0.92);   /* base #11131a @ 85% */
+    background-color: rgba(17, 19, 26, 0.92);   /* base #11131a @ 92% */
     font-family: "JetBrainsMono Nerd Font", monospace;
 }
 
 button {
     color: @text;
     background-color: @surface0;
-    border: 2px solid @overlay0;
+    border: 2px solid @border;
     border-radius: 12px;
     margin: 12px;
     background-repeat: no-repeat;
@@ -34,8 +35,8 @@ button:hover {
 }
 
 button:active {
-    background-color: @lavender;
-    border-color: @lavender;
+    background-color: @violet300;
+    border-color: @violet300;
 }
 
 #shutdown:hover,
@@ -46,8 +47,8 @@ button:active {
 
 #reboot:hover,
 #reboot:focus {
-    background-color: @peach;
-    border-color: @peach;
+    background-color: @orange;
+    border-color: @orange;
 }
 
 #logout:hover,
@@ -66,8 +67,8 @@ button:active {
 #suspend:focus,
 #hibernate:hover,
 #hibernate:focus {
-    background-color: @sky;
-    border-color: @sky;
+    background-color: @blue300;
+    border-color: @blue300;
 }
 
 #lock      { background-image: image(url("/usr/share/wlogout/icons/lock.png")); }

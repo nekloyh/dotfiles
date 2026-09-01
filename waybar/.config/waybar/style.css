@@ -40,6 +40,7 @@
   border: none;
   border-radius: 0;
   min-height: 0;
+  /* 180ms = token hover feedback dùng chung với swaync + wlogout */
   transition: background-color 180ms ease, color 180ms ease;
 }
 
@@ -226,7 +227,10 @@ window#waybar.fullscreen #window {
   /* Cross-fade màu khi chuyển ws = "trượt" khả thi nhất trong GTK: nút cũ phai
      cyan→trong, nút mới hiện cyan→đầy, cùng 190ms → highlight như lướt qua.
      (GTK/waybar không dời được 1 pill giữa các nút — mỗi ws là 1 button riêng.)
-     Không transition background-image (gây blur ghost). */
+     Không transition background-image (gây blur ghost).
+     190ms CỐ Ý khác 180ms của hover: đây là chuyển TRẠNG THÁI (ws nào đang
+     active), không phải phản hồi con trỏ — hai ngữ nghĩa khác nhau thì không
+     ép về một token. */
   transition: background-color 190ms ease, color 190ms ease;
 }
 
