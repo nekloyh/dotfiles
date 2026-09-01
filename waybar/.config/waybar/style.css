@@ -152,7 +152,7 @@ window#waybar.hidden { opacity: 0.2; }
 /* .paused PHẢI đứng sau các class player: cùng specificity (1,1,0) nên rule sau
    thắng → paused luôn xám bất kể đang phát bằng app nào. */
 #mpris.paused {
-  color: @overlay2;
+  color: @subtext0; /* overlay2 chỉ đạt 4.44:1 trên wallpaper-blur — subtext0 6.13:1 */
   font-style: italic;
 }
 
