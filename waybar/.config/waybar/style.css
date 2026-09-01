@@ -191,8 +191,9 @@ window#waybar.fullscreen #window {
  * tmux, glow cửa sổ focus. Trước đây câu hỏi đó có ba câu trả lời khác nhau
  * (violet / cyan / green) nên mỗi lần liếc là một bước dịch.
  * base trên violet = 5.88:1 (trước là 8.28:1 trên cyan) — vẫn thừa AA 4.5:1.
- * cyan được giải phóng về đúng nghĩa palette của nó: hint/secondary — nó vẫn
- * là màu gạch chân "workspace này có cửa sổ". ===== */
+ * CẢ CỤM đã về violet (2026-09-01): pill active, gạch chân "có cửa sổ" và
+ * "đang hiện ở màn khác" trước đây là cyan nên cụm workspace bị chẻ làm hai hệ
+ * màu. cyan giờ về đúng vai palette của nó (hint) ở cụm trái/phải. ===== */
 
 #workspaces {
   background-color: transparent;
@@ -234,10 +235,18 @@ window#waybar.fullscreen #window {
   transition: background-color 190ms ease, color 190ms ease;
 }
 
-/* --- State: has windows but not active/visible/urgent — 60%-wide cyan underline --- */
+/* Cụm workspace mã hoá bằng CƯỜNG ĐỘ, không bằng MÀU: cả 4 nấc đều là violet,
+ * chỉ khác hình thức (gạch chân -> capsule đặc) và alpha. Đọc được mà không cần
+ * học bảng màu->trạng thái. Thang alpha ở đây bị CONTRAST ÉP chứ không chọn theo
+ * cảm giác — violet tối hơn cyan (L 0.665 vs 0.734) nên trên dải wallpaper:
+ *   violet @0.45 = 2.11:1   violet @0.55 = 2.55:1   <- RỚT ngưỡng WCAG 1.4.11
+ *   violet @0.70 = 3.33:1   violet @1.0  = 5.40:1   <- dùng hai nấc này
+ * urgent GIỮ đỏ: báo động thì phải phá hệ màu, đó là cả điểm của nó. */
+
+/* --- State: has windows but not active/visible/urgent — 60%-wide violet underline --- */
 #workspaces button:not(.empty):not(.active):not(.visible):not(.urgent) {
   color: @text;
-  background-image: linear-gradient(alpha(@cyan, 0.70), alpha(@cyan, 0.70));
+  background-image: linear-gradient(alpha(@violet, 0.70), alpha(@violet, 0.70));
 }
 #workspaces button:not(.empty):not(.active):not(.visible):not(.urgent):hover {
   color: @text-bright;
@@ -259,13 +268,13 @@ window#waybar.fullscreen #window {
   background-color: @violet300;
 }
 
-/* --- State: visible on other monitor — brighter underline + text tint, no border ring --- */
+/* --- State: visible on other monitor — gạch chân đặc + chữ tint, no border ring --- */
 #workspaces button.visible:not(.active) {
-  color: @cyan300;
-  background-image: linear-gradient(@cyan, @cyan);
+  color: @violet300;
+  background-image: linear-gradient(@violet, @violet);
 }
 #workspaces button.visible:not(.active):hover {
-  background-color: alpha(@cyan, 0.22);
+  background-color: alpha(@violet, 0.22);
 }
 
 /* --- State: urgent --- */
