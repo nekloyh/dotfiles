@@ -187,6 +187,14 @@ disabled = true
 # PALETTES  —  đổi palette bằng dòng `palette = "..."` ở trên.
 # Aliases đã căn đúng canonical graphite-vivid.css (sapphire=blue, sky=blue300,
 # rosewater=magenta100) — hết drift so với phần còn lại của stack.
+#
+# NGOẠI LỆ CÓ CHỦ Ý: file này giữ TỪ VỰNG Catppuccin (peach/mauve/teal/lavender/
+# sapphire/maroon/rosewater/flamingo/sky/pink) trong khi waybar/swaync/wlogout đã
+# chuyển hết về tên canonical (orange/violet/cyan/violet300/blue/...). Lý do:
+# palette starship là namespace RIÊNG của starship, và tên này bị 20+ module
+# tham chiếu qua `style = "fg:peach"` — đổi tên là sửa 20+ chỗ để đổi lấy đúng
+# 0 thay đổi hình ảnh. GIÁ TRỊ đã đúng canonical, chỉ NHÃN là khác.
+# => Đừng "sửa cho nhất quán". Nếu đổi palette thì chạy render-mirrors.py.
 # ============================================================================
 
 [palettes.graphite_vivid]
