@@ -3,6 +3,11 @@
 
 /* Tool-specific aliases — Graphite Vivid hex */
 @define-color background  rgba(0, 0, 0, 0);        /* fully transparent — bar floats on wallpaper */
+/* ^ SCRIM DỰ PHÒNG (QA 2026-09-01): mọi contrast của bar tính trên wallpaper đã
+ * blur (hiện ~#071d33 — tối, min accent 5.40:1). Nếu đổi sang wallpaper SÁNG,
+ * accent sẽ tụt dưới 4.5:1 — thay rgba(0,0,0,0) ở trên bằng scrim tối, vd
+ * rgba(7, 7, 9, 0.45) (crust @ 45%): đủ kéo nền về vùng tối, vẫn giữ blur,
+ * KHÔNG cần đổi palette. */
 @define-color foreground  @text;
 @define-color card        rgba(26, 28, 34, 0.55);  /* @surface0 @ 55% — readable inner cards */
 @define-color pill_text   @base;                   /* dark text on bright accent pills (active workspace / urgent / power) */
