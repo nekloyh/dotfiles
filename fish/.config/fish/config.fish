@@ -26,17 +26,19 @@ end
 set -gx FZF_DEFAULT_COMMAND 'fd --hidden --strip-cwd-prefix --exclude .git'
 set -gx FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 set -gx FZF_ALT_C_COMMAND 'fd --type d --hidden --strip-cwd-prefix --exclude .git'
+# >>> gv-mirror fzf — regen bằng `python3 ~/.config/colors/graphite-vivid/render-mirrors.py`
 set -gx FZF_DEFAULT_OPTS "
   --height=40%
   --layout=reverse
   --border
   --info=inline
-  --color=fg:#c8ccd0,bg:#11131a,hl:#e0b020
-  --color=fg+:#e7e8ea,bg+:#2e3252,hl+:#f5d04a
-  --color=info:#4cc4b8,prompt:#8388e8,pointer:#e25aa0
-  --color=marker:#9bc23c,spinner:#e26a2c,header:#74d6cc
-  --color=border:#363b46,gutter:#11131a
+  --color=fg:#c8ccd0,bg:#11131a,hl:#e3b42c
+  --color=fg+:#e7e8ea,bg+:#2e3252,hl+:#fbd064
+  --color=info:#39c0b4,prompt:#8388e8,pointer:#e36da7
+  --color=marker:#99be42,spinner:#ea7b47,header:#6bdace
+  --color=border:#5c626e,gutter:#11131a
 "
+# <<< gv-mirror fzf
 
 # Aliases (functions that survive completion)
 if type -q eza

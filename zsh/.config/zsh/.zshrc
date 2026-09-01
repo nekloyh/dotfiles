@@ -1,4 +1,8 @@
 # PATH
+# typeset -U: khử trùng lặp PATH. .zshrc chạy cho MỌI interactive shell và các dòng
+# export PATH bên dưới (+ fnm dòng ~150, opencode dòng ~300) đều prepend không kiểm tra,
+# nên shell lồng nhau (alacritty -> tmux -> subshell) nhân đôi toàn bộ PATH.
+typeset -U path PATH
 export PATH="$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH"
 export PATH="$PATH:$HOME/Applications"
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -40,17 +44,19 @@ export FZF_DEFAULT_COMMAND='fd --hidden --strip-cwd-prefix --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type d --hidden --strip-cwd-prefix --exclude .git'
 
+# >>> gv-mirror fzf — regen bằng `python3 ~/.config/colors/graphite-vivid/render-mirrors.py`
 export FZF_DEFAULT_OPTS="
   --height=40%
   --layout=reverse
   --border
   --info=inline
-  --color=fg:#c8ccd0,bg:#11131a,hl:#e0b020
-  --color=fg+:#e7e8ea,bg+:#2e3252,hl+:#f5d04a
-  --color=info:#4cc4b8,prompt:#8388e8,pointer:#e25aa0
-  --color=marker:#9bc23c,spinner:#e26a2c,header:#74d6cc
-  --color=border:#363b46,gutter:#11131a
+  --color=fg:#c8ccd0,bg:#11131a,hl:#e3b42c
+  --color=fg+:#e7e8ea,bg+:#2e3252,hl+:#fbd064
+  --color=info:#39c0b4,prompt:#8388e8,pointer:#e36da7
+  --color=marker:#99be42,spinner:#ea7b47,header:#6bdace
+  --color=border:#5c626e,gutter:#11131a
 "
+# <<< gv-mirror fzf
 
 # zoxide
 if command -v zoxide >/dev/null 2>&1; then
@@ -228,7 +234,7 @@ if command -v starship >/dev/null 2>&1; then
     done
     local saved_prompt=$PROMPT
     local saved_rprompt=$RPROMPT
-    PROMPT="%B%F{#74bdec}$(_starship_short_pwd)%f%b $(starship module character)"
+    PROMPT="%B%F{#76c5ff}$(_starship_short_pwd)%f%b $(starship module character)"
     RPROMPT=''
     zle .reset-prompt
     PROMPT=$saved_prompt
