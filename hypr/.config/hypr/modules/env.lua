@@ -59,6 +59,35 @@ if readable("/dev/dri/intel") then
     hl.env("AQ_DRM_DEVICES", "/dev/dri/intel")
 end
 
+-- ── GLVND: chỉ nạp EGL vendor của Mesa ──────────────────────────────────────
+-- AQ_DRM_DEVICES ở trên đã đủ để aquamarine CHỈ dùng iGPU (log xác nhận:
+-- "drm: Found 1 GPUs" / "Starting backend for /dev/dri/card1, with driver i915").
+-- NHƯNG dGPU VẪN không ngủ, vì /dev/nvidia0 bị mở qua ĐƯỜNG KHÁC:
+--
+--   /usr/share/glvnd/egl_vendor.d/10_nvidia.json  sắp TRƯỚC  50_mesa.json
+--   → GLVND nạp libEGL_nvidia.so để enumerate thiết bị
+--   → nó mở /dev/nvidia0 (3 fd) + /dev/nvidiactl (2 fd) và giữ suốt đời process
+--   → GPU không bao giờ vào D3cold.
+-- Lưu ý /dev/nvidia0 KHÔNG phải node DRM (/dev/dri/card0) — đây là char device
+-- của stack userspace NVIDIA, nên AQ_DRM_DEVICES không chạm tới được.
+--
+-- Đo trực tiếp trên hyprpaper (process restart được, rủi ro 0): đặt biến này
+-- rồi khởi động lại → 0 fd nvidia, KHÔNG map thư viện nvidia nào, wallpaper
+-- vẫn chạy ("Found 1 output(s)").
+--
+-- ⚠ HỆ QUẢ: mọi app trong session chỉ thấy EGL của Mesa. `prime-run` GỐC của
+-- gói nvidia-prime chỉ set __NV_PRIME_RENDER_OFFLOAD / __VK_LAYER_NV_optimus /
+-- __GLX_VENDOR_LIBRARY_NAME — KHÔNG set biến này, nên app EGL chạy qua nó sẽ
+-- IM LẶNG rơi về Intel. Đã ghi đè bằng ~/.local/bin/prime-run (package `bin`).
+-- KHÔNG ảnh hưởng: CUDA/PyTorch/ollama (libcuda, không qua GLVND), Vulkan
+-- (ICD loader riêng), GLX offload (__GLX_VENDOR_LIBRARY_NAME).
+--
+-- GUARD fail-closed như trên: thiếu file mesa thì không set, GLVND dò như cũ.
+local mesa_egl = "/usr/share/glvnd/egl_vendor.d/50_mesa.json"
+if readable(mesa_egl) then
+    hl.env("__EGL_VENDOR_LIBRARY_FILENAMES", mesa_egl)
+end
+
 -- Toolkit backend
 hl.env("GDK_BACKEND", "wayland,x11")
 hl.env("QT_QPA_PLATFORM", "wayland;xcb")
