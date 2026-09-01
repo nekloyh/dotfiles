@@ -30,3 +30,14 @@ id_ed25519*
 .env
 .env.*
 .netrc
+
+# ── Mở lại ~/.local/bin ───────────────────────────────────────────────────────
+# Global ignore (~/.config/git/ignore) có dòng `bin/` để chặn thư mục build.
+# Pattern không có dấu / đầu ⇒ khớp MỌI thư mục tên `bin` ở MỌI độ sâu, nên nó
+# nuốt luôn `localbin/.local/bin/`. Triệu chứng cực khó thấy: `git add -A` bỏ
+# qua im lặng, `git status` báo sạch, file vẫn nằm trên đĩa và stow vẫn chạy —
+# chỉ máy clone mới là mất trắng.
+# Phải phủ định CẢ thư mục trước rồi mới tới nội dung: git không re-include
+# được file nếu thư mục cha vẫn đang bị loại.
+!localbin/.local/bin/
+!localbin/.local/bin/**

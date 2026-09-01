@@ -48,12 +48,26 @@ sudo systemctl enable --now fcitx5-lotus-server@$USER.service   # see IME sectio
 | Editors | `nvim` `nano` |
 | Input (Vietnamese IME) | `fcitx5` |
 | Misc | `bash` `git` |
-| `~/.local/bin` overrides | `bin` |
+| `~/.local/bin` overrides | `localbin` |
 | Fonts | `fontconfig` |
 | GTK theme (generated) | `theme` |
 | systemd user units | `systemd` |
 | Package sources (**không stow**) | `pkg` |
 | File `/etc` cần sudo (**không stow**) | `system` |
+
+### Đặt tên package: coi chừng global gitignore
+
+Package tên `bin` **im lặng không vào được git**: `~/.config/git/ignore` có dòng
+`bin/` (chặn thư mục build ở mọi repo), nên `git add -A` bỏ qua toàn bộ package
+và `git status` vẫn báo sạch. File có trên đĩa, `stow` chạy đúng, chỉ là máy mới
+clone về sẽ không có gì. Vì vậy package đổi tên thành `localbin`.
+
+Kiểm tra khi thêm package mới:
+
+```sh
+git check-ignore -v <pkg>/…   # phải KHÔNG in ra gì
+git ls-files <pkg>/ | wc -l   # phải > 0 sau khi add
+```
 
 ## Dependencies (Arch/CachyOS names)
 

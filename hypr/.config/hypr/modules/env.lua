@@ -78,7 +78,7 @@ end
 -- ⚠ HỆ QUẢ: mọi app trong session chỉ thấy EGL của Mesa. `prime-run` GỐC của
 -- gói nvidia-prime chỉ set __NV_PRIME_RENDER_OFFLOAD / __VK_LAYER_NV_optimus /
 -- __GLX_VENDOR_LIBRARY_NAME — KHÔNG set biến này, nên app EGL chạy qua nó sẽ
--- IM LẶNG rơi về Intel. Đã ghi đè bằng ~/.local/bin/prime-run (package `bin`).
+-- IM LẶNG rơi về Intel. Đã ghi đè bằng ~/.local/bin/prime-run (package `localbin`).
 -- KHÔNG ảnh hưởng: CUDA/PyTorch/ollama (libcuda, không qua GLVND), Vulkan
 -- (ICD loader riêng), GLX offload (__GLX_VENDOR_LIBRARY_NAME).
 --
