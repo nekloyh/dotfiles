@@ -9,9 +9,14 @@ local c = require("modules/colors")
 -- ngữ nghĩa accent trên waybar: violet = identity/focus, orange = group.
 -- Bản gradient cũ (violet→blue / orange→yellow 45deg): xem git log file này.
 local activeBorderColor   = c.primary    -- rgb(8388E8) — tím đặc
--- Màu ĐẶC, không alpha: overlay1@0x55 chỉ đạt 1.42:1 trên base — dưới ngưỡng
--- WCAG 1.4.11 (>=3:1 cho ranh giới UI phi văn bản). $border mới #5C626E = 3.03:1.
-local inactiveBorderColor = c.border
+-- Viền INACTIVE cố ý tối (surface3 #3A3E4A, 1.74:1 trên base) chứ không phải
+-- $border #5C626E: WCAG 1.4.11 áp cho thành phần CHỈ BÁO TRẠNG THÁI, mà chỉ báo
+-- ở đây là viền ACTIVE (violet, 5.88:1 trên base — thừa ngưỡng). Viền inactive
+-- chỉ là ranh giới trang trí; ranh giới thật đã do gap 4px + rounding lo.
+-- Đổi này nhân đôi tín hiệu focus mà không đụng gì tới tốc độ animation:
+--   CR(active/inactive)  1.94:1 -> 3.38:1
+--   dL OKLCH             0.170  -> 0.300
+local inactiveBorderColor = c.surface3
 local groupActiveColor    = c.secondary  -- rgb(EA7B47) — cam đặc
 local groupInactiveColor  = c.border
 
@@ -80,6 +85,30 @@ hl.config({
             color = "rgba(00000066)",
             color_inactive = "rgba(00000033)",
             offset = { 0, 2 },
+        },
+
+        -- Glow = shadow CÓ MÀU, và chỉ cho cửa sổ đang focus (color_inactive trong
+        -- suốt hoàn toàn) — nên trên màn hình luôn chỉ có ĐÚNG MỘT quầng sáng,
+        -- không bao giờ chồng nhau như shadow. Đây là tín hiệu focus thứ hai,
+        -- độc lập với màu viền: nhận ra ngay cả khi liếc bằng thị giác ngoại vi.
+        -- range 8 > gaps_in 4 nên quầng tràn nhẹ sang cửa sổ kề — có chủ ý.
+        glow = {
+            enabled = true,
+            range = 8,
+            render_power = 3,
+            color = "rgba(8388E866)",          -- violet @ 40%
+            color_inactive = "rgba(00000000)", -- không glow khi mất focus
+        },
+
+        -- Motion blur — vệt mờ theo hướng cửa sổ đang bay (mở/đóng/di chuyển/
+        -- đổi workspace). Đây là hiệu ứng DUY NHẤT ở đây thực sự "để nhìn":
+        -- nó không rút ngắn thời gian hiểu, nó làm chuyển động ĐỌC ĐƯỢC —
+        -- mắt bắt được hướng và tốc độ thay vì thấy vật thể nhảy cóc.
+        -- Chỉ render trong lúc có chuyển động; đứng yên = 0 chi phí.
+        -- samples 5 (mặc định 7): 5 đủ mượt, bớt 2 lần sample mỗi frame động.
+        motion_blur = {
+            enabled = true,
+            samples = 5,
         },
 
         blur = {
