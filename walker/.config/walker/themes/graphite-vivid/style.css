@@ -1,4 +1,34 @@
 /* Graphite Vivid — palette mirrored from ~/.config/colors/graphite-vivid/graphite-vivid.css */
+/* ── Thang radius (P3) ────────────────────────────────────────────────────────
+ * GTK3 CSS KHÔNG có custom property, nên thang này là quy ước chứ không phải
+ * biến. Chỉ dùng 4 bậc, đừng thêm giá trị mới:
+ *
+ *   6px     chip / badge / nút nhỏ / tooltip
+ *   12px    card / panel / nút lớn            = hypr decoration.rounding
+ *   16px    bề mặt nổi cấp cao nhất           = hypr floating rounding
+ *   9999px  capsule (workspace active, switch, slider)
+ *
+ * Trước đây có 11 giá trị (4/5/6/7/8/10/12/14/9999/0/…), trong đó 7px và 8px
+ * cạnh nhau — chênh 1px thì không ai phân biệt được, nên đó là tai nạn chứ
+ * không phải quyết định thiết kế.
+ *
+ * ── Thang alpha (P3) ─────────────────────────────────────────────────────────
+ * 7 bậc. KHÔNG phải 4 — hover / cảnh báo / critical / scrim / panel là các
+ * TRẠNG THÁI khác nhau, ép về 4 là xoá mất phân biệt. Thứ đã bị giết là các
+ * cặp sát nhau không ai phân biệt nổi (0.14/0.15/0.16, 0.18/0.20/0.22,
+ * 0.30/0.35, 0.40/0.45/0.50, 0.65/0.68/0.70/0.75) — 24 giá trị -> 7.
+ *
+ *   0.15  faint   state tint mờ nhất — hover, cảnh báo nhẹ
+ *   0.22  subtle  fill nhạt, viền mờ
+ *   0.30  fill    fill thấy rõ
+ *   0.45  strong  fill đậm, divider
+ *   0.55  scrim   card trong suốt trên wallpaper  (waybar @card)
+ *   0.70  veil    phủ dày trên ảnh / nội dung
+ *   0.92  panel   bề mặt cần đọc chữ dài  (swaync, walker, wlogout)
+ *
+ * Đổ bóng rgba(0,0,0,X) và `opacity:` của element là TRỤC RIÊNG — không nằm
+ * trong thang này, đừng gộp vào.
+ * ─────────────────────────────────────────────────────────────────────────── */
 @define-color window_bg_color #1a1c22;  /* surface0 */
 @define-color accent_bg_color #8388e8;  /* violet (primary) */
 @define-color theme_fg_color  #c8ccd0;  /* text */
@@ -34,7 +64,7 @@ scrollbar {
     0 15px 12px rgba(0, 0, 0, 0.22);
   background: alpha(@window_bg_color, 0.92);
   padding: 20px;
-  border-radius: 14px;
+  border-radius: 16px;
   border: 1px solid darker(@accent_bg_color);
   font-family: "JetBrainsMono Nerd Font";
   font-size: 13px;
@@ -50,7 +80,7 @@ scrollbar {
 }
 
 .search-container {
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 .input placeholder {
@@ -89,20 +119,20 @@ child {
 }
 
 .item-box {
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 10px;
 }
 
 .item-quick-activation {
-  background: alpha(@accent_bg_color, 0.25);
-  border-radius: 5px;
+  background: alpha(@accent_bg_color, 0.22);
+  border-radius: 6px;
   padding: 10px;
 }
 
 /* child:hover .item-box, */
 child:selected .item-box,
 row:selected .item-box {
-  background: alpha(@accent_bg_color, 0.25);
+  background: alpha(@accent_bg_color, 0.22);
 }
 
 .item-text-box {
@@ -123,9 +153,9 @@ row:selected .item-box {
 }
 
 .preview {
-  border: 1px solid alpha(@accent_bg_color, 0.25);
+  border: 1px solid alpha(@accent_bg_color, 0.22);
   /* padding: 10px; */
-  border-radius: 10px;
+  border-radius: 12px;
   color: @theme_fg_color;
 }
 
@@ -175,7 +205,7 @@ row:selected .item-box {
 
 .keybind-label {
   padding: 2px 4px;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid @theme_fg_color;
 }
 

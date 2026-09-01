@@ -1,3 +1,33 @@
+/* ── Thang radius (P3) ────────────────────────────────────────────────────────
+ * GTK3 CSS KHÔNG có custom property, nên thang này là quy ước chứ không phải
+ * biến. Chỉ dùng 4 bậc, đừng thêm giá trị mới:
+ *
+ *   6px     chip / badge / nút nhỏ / tooltip
+ *   12px    card / panel / nút lớn            = hypr decoration.rounding
+ *   16px    bề mặt nổi cấp cao nhất           = hypr floating rounding
+ *   9999px  capsule (workspace active, switch, slider)
+ *
+ * Trước đây có 11 giá trị (4/5/6/7/8/10/12/14/9999/0/…), trong đó 7px và 8px
+ * cạnh nhau — chênh 1px thì không ai phân biệt được, nên đó là tai nạn chứ
+ * không phải quyết định thiết kế.
+ *
+ * ── Thang alpha (P3) ─────────────────────────────────────────────────────────
+ * 7 bậc. KHÔNG phải 4 — hover / cảnh báo / critical / scrim / panel là các
+ * TRẠNG THÁI khác nhau, ép về 4 là xoá mất phân biệt. Thứ đã bị giết là các
+ * cặp sát nhau không ai phân biệt nổi (0.14/0.15/0.16, 0.18/0.20/0.22,
+ * 0.30/0.35, 0.40/0.45/0.50, 0.65/0.68/0.70/0.75) — 24 giá trị -> 7.
+ *
+ *   0.15  faint   state tint mờ nhất — hover, cảnh báo nhẹ
+ *   0.22  subtle  fill nhạt, viền mờ
+ *   0.30  fill    fill thấy rõ
+ *   0.45  strong  fill đậm, divider
+ *   0.55  scrim   card trong suốt trên wallpaper  (waybar @card)
+ *   0.70  veil    phủ dày trên ảnh / nội dung
+ *   0.92  panel   bề mặt cần đọc chữ dài  (swaync, walker, wlogout)
+ *
+ * Đổ bóng rgba(0,0,0,X) và `opacity:` của element là TRỤC RIÊNG — không nằm
+ * trong thang này, đừng gộp vào.
+ * ─────────────────────────────────────────────────────────────────────────── */
 @import "colors.css";
 
 /* ===== Base ===== */
@@ -28,7 +58,7 @@ window#waybar.hidden { opacity: 0.2; }
   padding: 0 14px;
   margin: 3px 4px 3px 6px;
   font-size: 18px;
-  border-radius: 8px;
+  border-radius: 6px;
 }
 #custom-launcher:hover {
   background-color: alpha(@cyan, 0.15);
@@ -52,14 +82,14 @@ window#waybar.hidden { opacity: 0.2; }
 #disk             { color: @blue; }
 
 #cpu:hover, #memory:hover, #temperature:hover, #disk:hover {
-  background-color: alpha(@text, 0.10);
+  background-color: alpha(@text, 0.15);
 }
 
 #cpu.warning,
 #memory.warning,
 #disk.warning {
   color: @yellow;
-  background-color: alpha(@yellow, 0.10);
+  background-color: alpha(@yellow, 0.15);
   box-shadow: inset 0 0 0 1px alpha(@yellow, 0.30);
 }
 
@@ -67,13 +97,13 @@ window#waybar.hidden { opacity: 0.2; }
 #memory.critical,
 #disk.critical {
   color: @red;
-  background-color: alpha(@red, 0.14);
-  box-shadow: inset 0 0 0 1px alpha(@red, 0.40);
+  background-color: alpha(@red, 0.15);
+  box-shadow: inset 0 0 0 1px alpha(@red, 0.45);
 }
 #temperature.critical {
   color: @red;
-  background-color: alpha(@red, 0.14);
-  box-shadow: inset 0 0 0 1px alpha(@red, 0.40);
+  background-color: alpha(@red, 0.15);
+  box-shadow: inset 0 0 0 1px alpha(@red, 0.45);
   animation: pulse 1.2s linear infinite alternate;
 }
 
@@ -99,7 +129,7 @@ window#waybar.hidden { opacity: 0.2; }
 }
 #mpris:hover,
 #window:hover {
-  background-color: alpha(@text, 0.10);
+  background-color: alpha(@text, 0.15);
 }
 
 #mpris  { color: @violet300; }
@@ -150,7 +180,7 @@ window#waybar.fullscreen #window {
   font-weight: 700;
   padding: 0 12px;
   margin: 3px 6px;
-  border-radius: 7px;
+  border-radius: 6px;
   min-height: 22px;
 }
 
@@ -181,7 +211,7 @@ window#waybar.fullscreen #window {
   text-shadow: none;
   -gtk-icon-shadow: none;
 
-  border-radius: 7px;
+  border-radius: 6px;
   /* Uniform width cho MỌI state — active không đổi kích thước nữa nên chuyển ws
      không đẩy hàng xóm (GTK không tween được width/padding → nếu đổi sẽ giật).
      Chuyển ws chỉ còn cross-fade màu qua transition bên dưới → mượt. */
@@ -196,11 +226,11 @@ window#waybar.fullscreen #window {
 /* --- State: has windows but not active/visible/urgent — 60%-wide cyan underline --- */
 #workspaces button:not(.empty):not(.active):not(.visible):not(.urgent) {
   color: @text;
-  background-image: linear-gradient(alpha(@cyan, 0.65), alpha(@cyan, 0.65));
+  background-image: linear-gradient(alpha(@cyan, 0.70), alpha(@cyan, 0.70));
 }
 #workspaces button:not(.empty):not(.active):not(.visible):not(.urgent):hover {
   color: @text-bright;
-  background-color: alpha(@surface2, 0.85);
+  background-color: alpha(@surface2, 0.92);
 }
 
 /* --- State: active (focus this monitor) — full cyan fill, no underline --- */
@@ -224,7 +254,7 @@ window#waybar.fullscreen #window {
   background-image: linear-gradient(@cyan, @cyan);
 }
 #workspaces button.visible:not(.active):hover {
-  background-color: alpha(@cyan, 0.18);
+  background-color: alpha(@cyan, 0.22);
 }
 
 /* --- State: urgent --- */
@@ -245,7 +275,7 @@ window#waybar.fullscreen #window {
 }
 #workspaces button.empty:hover {
   color: @subtext0;
-  background-color: alpha(@surface2, 0.50);
+  background-color: alpha(@surface2, 0.45);
 }
 
 /* ===== RIGHT — quiet strip: uniform icon cells, thin separators between clusters ===== */
@@ -316,7 +346,7 @@ window#waybar.fullscreen #window {
 /* Tray icons */
 #tray > .needs-attention {
   -gtk-icon-effect: highlight;
-  background-color: alpha(@red, 0.18);
+  background-color: alpha(@red, 0.22);
   border-radius: 6px;
 }
 #tray > .passive { -gtk-icon-effect: dim; }
@@ -334,7 +364,7 @@ window#waybar.fullscreen #window {
 #power-profiles-daemon:hover,
 #battery:hover,
 #clock:hover {
-  background-color: alpha(@text, 0.10);
+  background-color: alpha(@text, 0.15);
   color: @text-bright;
 }
 
@@ -433,7 +463,7 @@ window#waybar.fullscreen #window {
   animation: pulse 1.4s ease-in-out infinite alternate;
 }
 #custom-recording:hover {
-  box-shadow: inset 0 0 0 1px alpha(@red, 0.85);
+  box-shadow: inset 0 0 0 1px alpha(@red, 0.92);
 }
 
 /* ===== POWER — outlined wireframe to match right cluster, red accent only ===== */
@@ -441,16 +471,16 @@ window#waybar.fullscreen #window {
 #custom-power-menu {
   background-color: transparent;
   color: @red;
-  box-shadow: inset 0 0 0 1px alpha(@red, 0.40);
+  box-shadow: inset 0 0 0 1px alpha(@red, 0.45);
   padding: 0 12px;
   margin: 3px 6px 3px 2px;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 14px;
   min-width: 28px;
   min-height: 22px;
 }
 #custom-power-menu:hover {
-  background-color: alpha(@red, 0.16);
+  background-color: alpha(@red, 0.15);
   color: @red;
   box-shadow: inset 0 0 0 1px alpha(@red, 0.70);
 }
@@ -458,7 +488,7 @@ window#waybar.fullscreen #window {
 /* ===== Animations ===== */
 
 @keyframes pulse {
-  to { background-color: alpha(@red, 0.28); }
+  to { background-color: alpha(@red, 0.30); }
 }
 
 /* ===== Tooltip ===== */
@@ -466,7 +496,7 @@ window#waybar.fullscreen #window {
 tooltip {
   background-color: @mantle;
   border: 1px solid @surface1;
-  border-radius: 8px;
+  border-radius: 6px;
 }
 tooltip label {
   color: @text;

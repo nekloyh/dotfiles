@@ -1,5 +1,35 @@
 /* SwayNC — Graphite Vivid, đồng bộ ngôn ngữ pill/card với Waybar.
  * Palette: colors/colors.css → ../../colors/graphite-vivid/graphite-vivid.css (đường TƯƠNG ĐỐI) */
+/* ── Thang radius (P3) ────────────────────────────────────────────────────────
+ * GTK3 CSS KHÔNG có custom property, nên thang này là quy ước chứ không phải
+ * biến. Chỉ dùng 4 bậc, đừng thêm giá trị mới:
+ *
+ *   6px     chip / badge / nút nhỏ / tooltip
+ *   12px    card / panel / nút lớn            = hypr decoration.rounding
+ *   16px    bề mặt nổi cấp cao nhất           = hypr floating rounding
+ *   9999px  capsule (workspace active, switch, slider)
+ *
+ * Trước đây có 11 giá trị (4/5/6/7/8/10/12/14/9999/0/…), trong đó 7px và 8px
+ * cạnh nhau — chênh 1px thì không ai phân biệt được, nên đó là tai nạn chứ
+ * không phải quyết định thiết kế.
+ *
+ * ── Thang alpha (P3) ─────────────────────────────────────────────────────────
+ * 7 bậc. KHÔNG phải 4 — hover / cảnh báo / critical / scrim / panel là các
+ * TRẠNG THÁI khác nhau, ép về 4 là xoá mất phân biệt. Thứ đã bị giết là các
+ * cặp sát nhau không ai phân biệt nổi (0.14/0.15/0.16, 0.18/0.20/0.22,
+ * 0.30/0.35, 0.40/0.45/0.50, 0.65/0.68/0.70/0.75) — 24 giá trị -> 7.
+ *
+ *   0.15  faint   state tint mờ nhất — hover, cảnh báo nhẹ
+ *   0.22  subtle  fill nhạt, viền mờ
+ *   0.30  fill    fill thấy rõ
+ *   0.45  strong  fill đậm, divider
+ *   0.55  scrim   card trong suốt trên wallpaper  (waybar @card)
+ *   0.70  veil    phủ dày trên ảnh / nội dung
+ *   0.92  panel   bề mặt cần đọc chữ dài  (swaync, walker, wlogout)
+ *
+ * Đổ bóng rgba(0,0,0,X) và `opacity:` của element là TRỤC RIÊNG — không nằm
+ * trong thang này, đừng gộp vào.
+ * ─────────────────────────────────────────────────────────────────────────── */
 @import 'colors/colors.css';
 
 /* SwayNC 0.12 still uses CSS variables in parts of the packaged stylesheet.
@@ -11,10 +41,10 @@
   --noti-bg: 26, 28, 34;                          /* surface0 #1a1c22 */
   --noti-bg-alpha: 0.72;
   --noti-bg-darker: rgb(12, 13, 16);              /* mantle #0c0d10 */
-  --noti-bg-hover: rgba(34, 37, 44, 0.75);        /* surface1 #22252c @ 75% */
-  --noti-bg-focus: rgba(131, 136, 232, 0.16);     /* violet #8388e8 @ 16% */
-  --noti-close-bg: rgba(105, 110, 115, 0.18);     /* overlay1 @ 18% */
-  --noti-close-bg-hover: rgba(234, 107, 98, 0.20); /* red #ea6b62 @ 20% */
+  --noti-bg-hover: rgba(34, 37, 44, 0.70);        /* surface1 #22252c @ 75% */
+  --noti-bg-focus: rgba(131, 136, 232, 0.15);     /* violet #8388e8 @ 16% */
+  --noti-close-bg: rgba(105, 110, 115, 0.22);     /* overlay1 @ 18% */
+  --noti-close-bg-hover: rgba(234, 107, 98, 0.22); /* red #ea6b62 @ 20% */
   --text-color: #c8ccd0;                          /* text */
   --text-color-disabled: #7d8388;                 /* overlay2 */
   --bg-selected: #8388e8;                         /* violet */
@@ -25,8 +55,8 @@
   --border-radius: 12px;
   --font-size-body: 12px;
   --font-size-summary: 13px;
-  --mpris-album-art-overlay: rgba(12, 13, 16, 0.68); /* mantle @ 68% */
-  --mpris-button-hover: rgba(131, 136, 232, 0.18);   /* violet @ 18% */
+  --mpris-album-art-overlay: rgba(12, 13, 16, 0.70); /* mantle @ 68% */
+  --mpris-button-hover: rgba(131, 136, 232, 0.22);   /* violet @ 18% */
   --mpris-album-art-icon-size: 96px;
   --mpris-album-art-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
   --widget-volume-row-icon-size: 24px;
@@ -49,7 +79,7 @@
 .control-center {
   background-color: @panel_bg;
   border: 1px solid @border_subtle;
-  border-radius: 14px;
+  border-radius: 16px;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
   margin: 8px;
   padding: 12px;
@@ -69,7 +99,7 @@
   min-height: 28px;
 }
 
-.control-center slider:hover  { background-color: alpha(@overlay2, 0.65); }
+.control-center slider:hover  { background-color: alpha(@overlay2, 0.70); }
 .control-center slider:active { background-color: @violet; }
 
 /* ===== Title widget ===== */
@@ -89,7 +119,7 @@
 .widget-title button {
   background-color: @card;
   color: @text;
-  border-radius: 8px;
+  border-radius: 6px;
   padding: 4px 12px;
   margin-right: 4px;
   min-height: 22px;
@@ -146,7 +176,7 @@ blankwindow,
 .floating-notifications .notification-row .notification-background .notification box,
 .floating-notifications .notification-row .notification-background .notification widget,
 .floating-notifications .notification-row .notification-background .notification .notification-content {
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 /* The visible notification card — only this gets a fill */
@@ -243,14 +273,14 @@ blankwindow,
 
 .control-center .notification-row .close-button:hover,
 .floating-notifications.background .close-button:hover {
-  background-color: alpha(@red, 0.20);
+  background-color: alpha(@red, 0.22);
   color: @red;
 }
 
 /* Inline reply */
 .notification-action,
 .notification-default-action {
-  border-radius: 8px;
+  border-radius: 6px;
 }
 
 .notification-action {
@@ -282,7 +312,7 @@ blankwindow,
 }
 
 .widget-dnd switch {
-  background-color: alpha(@overlay1, 0.35);
+  background-color: alpha(@overlay1, 0.30);
   border-radius: 9999px;
   margin-left: 8px;
   min-height: 20px;
@@ -318,7 +348,7 @@ blankwindow,
 .widget-volume label { color: @text; }
 
 .widget-volume trough {
-  background-color: alpha(@overlay1, 0.35);
+  background-color: alpha(@overlay1, 0.30);
   border-radius: 9999px;
   min-height: 6px;
 }
@@ -349,7 +379,7 @@ blankwindow,
 .widget-volume button {
   background-color: transparent;
   color: @text;
-  border-radius: 8px;
+  border-radius: 6px;
   padding: 2px 8px;
 }
 
@@ -398,7 +428,7 @@ blankwindow,
 tooltip {
   background-color: @mantle;
   border: 1px solid @surface1;
-  border-radius: 8px;
+  border-radius: 6px;
 }
 
 tooltip label {
