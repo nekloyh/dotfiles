@@ -5,6 +5,9 @@ return {
 	-- Điều hướng liền mạch nvim ⇆ tmux pane (cặp với block is_vim trong tmux.conf)
 	{
 		"mrjones2014/smart-splits.nvim",
+		-- lazy: keymaps.lua require() nó ở lần bấm C-hjkl đầu tiên (đo được
+		-- eager tốn 4.5ms sourcing lúc boot mà không đổi lấy gì)
+		lazy = true,
 		opts = {},
 	},
 
