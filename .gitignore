@@ -39,5 +39,8 @@ id_ed25519*
 # chỉ máy clone mới là mất trắng.
 # Phải phủ định CẢ thư mục trước rồi mới tới nội dung: git không re-include
 # được file nếu thư mục cha vẫn đang bị loại.
-!localbin/.local/bin/
-!localbin/.local/bin/**
+# (Hiện KHÔNG có package nào dưới .local/bin nên chưa cần dòng phủ định. Khi
+#  thêm, nhớ phủ định CẢ thư mục rồi mới tới nội dung:
+#     !<pkg>/.local/bin/
+#     !<pkg>/.local/bin/**
+#  rồi verify: git check-ignore -v <path>  và  git ls-files <pkg>/ )
