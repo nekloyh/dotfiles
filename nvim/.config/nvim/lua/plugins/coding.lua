@@ -47,28 +47,5 @@ return {
 		end,
 	},
 
-	-- copilot
-	{
-		"zbirenbaum/copilot.lua",
-		-- The local checkout was interrupted during installation. Keep startup
-		-- independent from this optional plugin until it is reinstalled cleanly.
-		enabled = false,
-		opts = {
-			suggestion = {
-				auto_trigger = true,
-				keymap = {
-					accept = "<C-l>",
-					accept_word = "<M-l>",
-					accept_line = "<M-S-l>",
-					next = "<M-]>",
-					prev = "<M-[>",
-					dismiss = "<C-]>",
-				},
-			},
-			filetypes = {
-				markdown = true,
-				help = true,
-			},
-		},
-	},
+
 }
