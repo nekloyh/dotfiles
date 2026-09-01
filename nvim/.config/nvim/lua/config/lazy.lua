@@ -55,7 +55,11 @@ require("lazy").setup({
 		version = false, -- always use the latest git commit
 		-- version = "*", -- try installing the latest stable version for plugins that support semver
 	},
-	checker = { enabled = true }, -- automatically check for plugin updates
+	-- Vẫn tự KIỂM TRA update nền (không tự cài) nhưng im lặng — hết thông báo
+	-- "N plugins to update" mỗi lần mở; xem số update khi chủ động mở :Lazy.
+	checker = { enabled = true, notify = false },
+	-- Không plugin nào cần luarocks — tắt để khỏi dựng hererocks + hết ERROR checkhealth
+	rocks = { enabled = false },
 	performance = {
 		cache = {
 			enabled = true,
