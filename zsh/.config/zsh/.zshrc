@@ -183,30 +183,6 @@ alias gs='git status'
 # zsh sẽ nạp cú pháp fish vào zsh -> lỗi. Giữ TÊN, đổi cho đúng shell.
 alias sfr='source ${ZDOTDIR:-$HOME/.config/zsh}/.zshrc'
 
-# ── Nhắc ~/Dotfiles chưa commit/push ─────────────────────────────────────────
-# Đặt $DOTFILES_DIRTY cho [env_var.DOTFILES_DIRTY] của starship. Chi phí
-# (git status ~2ms + rev-list ~1ms) được throttle 300s nên biên độ trên prompt
-# xấp xỉ 0 — starship KHÔNG fork gì cả, chỉ đọc biến.
-_gv_dotfiles_dirty() {
-    local now=$EPOCHSECONDS
-    (( now - ${_GV_DF_LAST:-0} < 300 )) && return
-    _GV_DF_LAST=$now
-    local d u
-    d=$(git -C "$HOME/Dotfiles" status --porcelain 2>/dev/null | wc -l)
-    u=$(git -C "$HOME/Dotfiles" rev-list --count @{u}..HEAD 2>/dev/null) || u=0
-    # glyph dùng MỘT lần làm tiền tố, rồi mới tới các số.
-    local out=""
-    (( d > 0 )) && out="${d}"
-    (( u > 0 )) && out="${out:+$out }↑${u}"
-    [[ -n $out ]] && out=" $out"
-    export DOTFILES_DIRTY="$out"
-}
-zmodload -F zsh/datetime +p:EPOCHSECONDS 2>/dev/null
-# autoload tại chỗ: add-zsh-hook chỉ được autoload ở cuối file (~dòng 300),
-# sau block này -> nếu không tự autoload thì hook không bao giờ được đăng ký.
-autoload -Uz add-zsh-hook
-add-zsh-hook precmd _gv_dotfiles_dirty
-
   eval "$(starship init zsh)"
 
   # Minimal-unique abbreviated cwd: mỗi thư mục cha rút xuống tiền tố ngắn nhất

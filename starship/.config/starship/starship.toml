@@ -12,24 +12,11 @@ $directory\
 $git_branch\
 $git_state\
 $git_status\
-$env_var\
 """
 
 right_format = "$all"
 
 palette = "graphite_vivid"
-
-[env_var.DOTFILES_DIRTY]
-# Nhắc ~/Dotfiles còn thay đổi chưa commit/push (alacritty.toml từng nằm im 5
-# tuần, lọt qua 5 commit sau đó). Dùng env_var chứ KHÔNG dùng [custom.*]:
-# custom fork một shell MỖI LẦN vẽ prompt — đúng thứ đã bị xoá ở đợt rework
-# starship 2026-07. Biến do hook precmd của zsh/fish đặt, throttle 300s:
-# `git status` trên repo này ~2ms + `rev-list` ~1ms, chạy mỗi prompt sẽ gần gấp
-# đôi độ trễ prompt (đang 4.3ms). Module tự ẩn khi biến rỗng / không set.
-variable = "DOTFILES_DIRTY"
-format = "[$env_value]($style) "
-style = "bold fg:yellow"
-description = "~/Dotfiles có thay đổi chưa commit/push"
 
 [username]
 disabled = false

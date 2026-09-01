@@ -39,20 +39,3 @@ set -g fish_pager_color_selected_background --background=2e3252
 set -g fish_pager_color_selected_completion e7e8ea
 set -g fish_pager_color_selected_description b0b5b9
 set -g fish_pager_color_selected_prefix      fbd064 --underline
-
-# ── Nhắc ~/Dotfiles chưa commit/push ─────────────────────────────────────────
-# Cặp với [env_var.DOTFILES_DIRTY] của starship. Throttle 300s, xem .zshrc.
-function _gv_dotfiles_dirty --on-event fish_prompt
-    set -l now (date +%s)
-    if set -q _GV_DF_LAST; and test (math $now - $_GV_DF_LAST) -lt 300
-        return
-    end
-    set -g _GV_DF_LAST $now
-    set -l d (git -C $HOME/Dotfiles status --porcelain 2>/dev/null | count)
-    set -l u (git -C $HOME/Dotfiles rev-list --count @{u}..HEAD 2>/dev/null); or set -l u 0
-    set -l out ""
-    test "$d" -gt 0; and set out "$d"
-    test "$u" -gt 0; and set out (string trim "$out ↑$u")
-    test -n "$out"; and set out " $out"
-    set -gx DOTFILES_DIRTY "$out"
-end
