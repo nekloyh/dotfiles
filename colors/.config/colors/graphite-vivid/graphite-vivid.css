@@ -135,23 +135,4 @@
 @define-color selection       #2e3252;
 @define-color selection-text  #e7e8ea;
 
-/* Catppuccin-name compat aliases — for tools/styles authored against Catppuccin.
- * Mapped semantically to nearest Graphite Vivid equivalent.
- *
- * TÌNH TRẠNG sau đợt dọn 2026-09-01: waybar / swaync / wlogout / walker đã
- * chuyển HẾT sang tên canonical — không file CSS nào còn dùng khối này nữa.
- * VẪN GIỮ vì: (a) starship.toml cố ý giữ từ vựng này ở namespace riêng của nó,
- * (b) config mới viết theo Catppuccin cắm vào là chạy được ngay.
- * Đây là lớp tương thích, KHÔNG phải từ vựng chính — code mới dùng tên canonical. */
-@define-color sapphire        #3aabf4;  /* → blue (info-leaning blue accent) */
-@define-color sky             #76c5ff;  /* → blue300 (lighter info blue) */
-@define-color teal            #39c0b4;  /* → cyan (hint) */
-@define-color lavender        #a5a9ee;  /* → violet300 (lighter primary) */
-@define-color maroon          #af2c2b;  /* → red700 (darker red) */
-@define-color peach           #e58130;  /* → orange (secondary) */
-@define-color rosewater       #ff95c6;  /* → magenta100 (soft pink) */
-@define-color flamingo        #fa8dc1;  /* → magenta300 */
-@define-color pink            #e36da7;  /* → magenta */
-@define-color mauve           #8388e8;  /* → violet (primary) — legacy compat */
-
 /* GTK CSS does not support :root {}; use @name in Waybar/SwayNC/GTK configs. */
