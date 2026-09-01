@@ -88,6 +88,29 @@ The `fcitx5` package carries the config (incl. `conf/lotus.conf` → `Mode="Uinp
 
 ## Architecture decisions
 
+### Shell parity: zsh and fish stay in sync (2026-09-01)
+
+zsh is the login shell and what alacritty starts; `fish_history` was last touched
+three months ago and no fish process is usually running. Fish is kept anyway, and
+kept **fully in sync** — a deliberate choice so switching shells stays a one-line
+change rather than a migration.
+
+The cost is real and this batch paid it three times: the FZF palette, the git
+alias semantics, and the `hcf` shortcut all had to be fixed in both shells. So:
+
+- **Anything derived from the palette goes through `render-mirrors.py`**, which
+  writes both `zsh/.zshrc` and `fish/config.fish` between `gv-mirror` markers.
+  Never hand-edit inside those markers.
+- **Anything hand-written — aliases, hooks, env — must be added to both**, and
+  must mean the same thing in both. Fish's `conf.d/abbreviations.fish` is the
+  source of truth for the git shortcuts; oh-my-zsh's 250 aliases are overridden
+  where they collide (see the block near `starship init zsh`).
+- Before finishing a change that touches shell config, diff the two:
+
+```sh
+diff <(fish -c 'abbr --list | sort') <(zsh -ic 'alias' 2>/dev/null | cut -d= -f1 | sort)
+```
+
 ### Hyprland config: Lua only, no hyprlang fallback (2026-09-01)
 
 `hyprland.conf` + `modules/*.conf` used to be kept as a rollback layer beside the
