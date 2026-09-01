@@ -42,7 +42,8 @@ fi
 
 if [ -f "${selected_file}" ] && ! cmp -s "${selected_file}" "${target_file}" 2>/dev/null; then
     cp "${selected_file}" "${target_file}"
-    pkill -SIGUSR2 -x waybar 2>/dev/null || true
+    # KHÔNG SIGUSR2 (crash waybar 0.15, xem launch.sh) — restart qua launch.sh
+    "${waybar_dir}/scripts/launch.sh" >/dev/null 2>&1 || true
 fi
 
 # ── Rebind ws 6-10 theo monitor hiện diện ─────────────────────────────────────
@@ -58,12 +59,20 @@ fi
 # hl.workspace_rule. Giữ keyword làm FALLBACK cho trường hợp rollback về
 # hyprland.conf (eval chỉ chạy với provider lua, keyword chỉ với legacy —
 # đúng một trong hai sẽ thành công).
+# def: "default" -> default=true | "nodefault" -> default=false (GHI ĐÈ tường minh)
+# BẪY: hl.workspace_rule MERGE chứ không REPLACE. Bỏ trống `default` KHÔNG xoá
+# được default=true mà workspacerules.lua đã đặt cho ws8 -> ở đơn màn ws8 bị kéo
+# về eDP-1 mà VẪN giữ default=true, thành 2 workspace cùng default trên một màn.
+# Phải set default=false tường minh mới thắng được merge.
 rebind_ws() {
     ws="$1"; mon="$2"; def="${3:-}"
     lua_extra=""; kw_extra=""
-    if [ -n "${def}" ]; then
+    if [ "${def}" = "default" ]; then
         lua_extra=", default = true"
         kw_extra=",default:true"
+    elif [ "${def}" = "nodefault" ]; then
+        lua_extra=", default = false"
+        kw_extra=",default:false"
     fi
     hyprctl eval "hl.workspace_rule({ workspace = \"${ws}\", monitor = \"${mon}\", persistent = true${lua_extra} })" >/dev/null 2>&1 \
         || hyprctl keyword workspace "${ws},monitor:${mon},persistent:true${kw_extra}" >/dev/null 2>&1 \
@@ -81,10 +90,11 @@ if command -v hyprctl >/dev/null 2>&1; then
         rebind_ws 8 "${home_mon}" default
     else
         home_mon="$(printf '%s\n' "${monitor_names}" | head -n1)"
-        # KHÔNG set default cho ws8 ở đơn màn — tránh đụng ws3 (default của eDP-1).
-        for ws in 6 7 8 9 10; do
+        # ws8 phải TẮT default tường minh ở đơn màn — ws3 mới là default của eDP-1.
+        for ws in 6 7 9 10; do
             rebind_ws "${ws}" "${home_mon}"
         done
+        rebind_ws 8 "${home_mon}" nodefault
     fi
 fi
 

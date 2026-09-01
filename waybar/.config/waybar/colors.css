@@ -1,5 +1,5 @@
 /* Waybar — Graphite Vivid. Sources from central palette. */
-@import url("file:///home/n91ym1nhky/.config/colors/graphite-vivid/graphite-vivid.css");
+@import url("../colors/graphite-vivid/graphite-vivid.css");
 
 /* Tool-specific aliases — Graphite Vivid hex */
 @define-color background  rgba(0, 0, 0, 0);        /* fully transparent — bar floats on wallpaper */

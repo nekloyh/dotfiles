@@ -1,6 +1,6 @@
 {
     "include": [
-        "/home/n91ym1nhky/.config/waybar/generated/workspaces.dynamic.jsonc"
+        "~/.config/waybar/generated/workspaces.dynamic.jsonc"
     ],
 
     "layer": "top",

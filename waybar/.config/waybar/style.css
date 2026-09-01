@@ -88,7 +88,7 @@ window#waybar.hidden { opacity: 0.2; }
 #mpris,
 #window {
   background-color: transparent;
-  border-left: 1px solid alpha(@text, 0.25);
+  border-left: 1px solid alpha(@text, 0.45); /* 0.25 chỉ đạt 1.86:1 trên @card; 0.45 ~3.2:1 */
   padding: 0 7px;
   margin: 3px 0;
   /* Góc TRÁI phải vuông (0): border-radius bo cả border-left, nên nếu bo 4 góc thì
@@ -265,7 +265,7 @@ window#waybar.fullscreen #window {
 #connectivity,
 #controls,
 #status {
-  border-left: 1px solid alpha(@text, 0.25);
+  border-left: 1px solid alpha(@text, 0.45); /* 0.25 chỉ đạt 1.86:1 trên @card; 0.45 ~3.2:1 */
 }
 
 /* Base cho mọi module phải — một hệ khoảng cách duy nhất: gap siblings = 6px */
